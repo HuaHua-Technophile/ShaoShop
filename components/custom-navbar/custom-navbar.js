@@ -1,23 +1,22 @@
-// components/custom-navbar/custom-navbar.js
+const app = getApp();
 Component({
-  /**
-   * 组件的属性列表
-   */
-  properties: {
-
-  },
-
-  /**
-   * 组件的初始数据
-   */
+  properties: {},
   data: {
-
+    theme: "", //暗色/亮色
+    navBarFullHeight: 0, // 整个导航栏高度
+    navBarTop: 0, //navbar内容区域顶边距
+    navBarHeight: 0, //navbar内容区域高度
+    navBarWidth: 0, // 胶囊遮挡的不可用区域宽度,用作右外边距/右内边距
   },
-
-  /**
-   * 组件的方法列表
-   */
-  methods: {
-
-  }
-})
+  lifetimes: {
+    attached() {
+      this.setData({
+        navBarFullHeight: app.globalData.navBarFullHeight,
+        navBarTop: app.globalData.navBarTop,
+        navBarHeight: app.globalData.navBarHeight,
+        navBarWidth: app.globalData.navBarWidth,
+      });
+    },
+  },
+  methods: {},
+});

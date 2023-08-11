@@ -1,2 +1,2 @@
-<!--components/custom-navbar/custom-navbar.wxml-->
-<text>components/custom-navbar/custom-navbar.wxml</text>
+<view class="w-100 position-fixed top-0 start-0 z-3 custom-navbar" style="height: {{navBarFullHeight}}px;">
+</view>

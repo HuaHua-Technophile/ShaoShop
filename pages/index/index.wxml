@@ -1,6 +1,5 @@
 <view>
   <custom-navbar></custom-navbar>
-  <view class="vw-100 vh-100 bg-danger bg-opacity-10 d-flex justify-content-center align-items-center">
-    首页
+  <view class="">
   </view>
 </view>
