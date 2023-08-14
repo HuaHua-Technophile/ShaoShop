@@ -1,5 +1,14 @@
 // app.js
+import { https, ajax } from "./api/http";
 App({
+  globalData: {
+    userInfo: null,
+    theme: "", //暗色/亮色
+    navBarFullHeight: 0, // 整个导航栏高度
+    navBarTop: 0, //navbar内容区域顶边距
+    navBarHeight: 0, //navbar内容区域高度
+    navBarWidth: 0, // 胶囊遮挡的不可用区域宽度,用作右外边距/右内边距
+  },
   onLaunch() {
     const that = this; //存储对象备份,避免随着运行环境的变化,this的指向改变
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect(); // 胶囊按钮位置信息
@@ -23,12 +32,6 @@ App({
       },
     }); */
   },
-  globalData: {
-    userInfo: null,
-    theme: "", //暗色/亮色
-    navBarFullHeight: 0, // 整个导航栏高度
-    navBarTop: 0, //navbar内容区域顶边距
-    navBarHeight: 0, //navbar内容区域高度
-    navBarWidth: 0, // 胶囊遮挡的不可用区域宽度,用作右外边距/右内边距
-  },
+  ajax: ajax,
+  https: https,
 });

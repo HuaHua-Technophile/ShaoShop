@@ -1,5 +1,24 @@
-<view>
+<view style="padding-top: {{navBarFullHeight+10}}px;" class="px-3">
   <custom-navbar></custom-navbar>
-  <view class="">
+  <!-- 轮播图 -->
+  <view class="w-100 position-relative" style="padding-bottom: 50%;">
+    <view class="position-absolute start-0 top-0 end-0 bottom-0">
+      <swiper indicator-dots="{{true}}" autoplay="{{true}}" circular="{{true}}" interval="{{5000}}" class="w-100 h-100">
+        <swiper-item wx:for="{{swiperList}}" wx:key="index">
+          <image src="{{item.swiper_image}}" mode="aspectFill" class="w-100 h-100 rounded-4" />
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+  <!-- 分类快速跳转 -->
+  <view class="d-flex flex-wrap justify-content-rounded mt-3">
+    <view class="" style="width: 20%;">
+      <view class="w-100 position-relative" style="padding-bottom: 100%;">
+        <view class="position-absolute start-0 top-0 end-0 bottom-0 rounded-4 overflow-hidden bg-danger bg-opacity-25">
+          <image src="../../image/首页分类推荐/天天鲜果店_苹果.png" mode="aspectFill" class="w-100 h-100" />
+        </view>
+      </view>
+      <view class="w-100 text-center">应季鲜果</view>
+    </view>
   </view>
 </view>

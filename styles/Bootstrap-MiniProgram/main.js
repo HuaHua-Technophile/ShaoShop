@@ -1,7 +1,7 @@
 const 文件模块 = require("fs"); //导入node文件读写模块
 let 小程序可用Dom列表 = [
-  // "scroll-view",
   "view",
+  // "scroll-view",
   "text",
   "button",
   "input",
@@ -11,6 +11,7 @@ let 小程序可用Dom列表 = [
   "image",
   "span",
   "swiper",
+  // "swiper-item",
   "icon",
   "picker",
 ];
