@@ -1,3 +1,7 @@
-<view class="w-100 position-fixed top-0 start-0 z-3 custom-navbar" style="height: {{navBarFullHeight}}px;">
-  韶商汇
+<view class="w-100 position-fixed top-0 start-0 z-3 custom-navbar" style="height: {{navBarFullHeight}}px;padding-top:{{navBarTop}}px">
+  <view class="d-flex align-items-center justify-content-center fs-1" style="font-family:YouSheBiaoTiHei">
+    <!-- <span style="color:rgb(243, 64, 13);">韶</span>
+    商汇 -->
+    <image src="../../image/品牌LOGO/韶商汇logo(首页navbar).png" style="height:{{navBarHeight}}px;width:130px;"></image>
+  </view>
 </view>
