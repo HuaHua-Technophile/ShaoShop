@@ -1,5 +1,25 @@
 @import "./styles/Bootstrap-MiniProgram/bootstrap.wxss";
 @import "./fonts/YouSheBiaoTiHei.wxss";
+@import "./fonts/iconfont.wxss";
+
+page,
+view,
+scroll-view,
+text,
+button,
+input,
+checkbox,
+radio,
+navigator,
+image,
+span,
+swiper,
+swiper-item,
+icon,
+picker {
+  --theme-color-rgb: 243, 64, 13;
+  --theme-color: #f3400d;
+}
 .fs-7 {
   font-size: 0.9rem !important;
 }
@@ -14,4 +34,20 @@
 
 .fs-10 {
   font-size: 0.6rem !important;
+}
+
+.noScrollBar::-webkit-scrollbar {
+  display: none !important;
+}
+.text-truncate2 {
+  display: -webkit-box; /* 设置元素为伸缩盒模型(13-2-1) */
+  -webkit-box-orient: vertical; /* 修改伸缩盒模型的主轴方向为竖直 */
+  -webkit-line-clamp: 2; /* 控制伸缩盒在第几行显示省略号 */
+  overflow: hidden; /* 修剪溢出内容 */
+}
+.text-truncate3 {
+  display: -webkit-box; /* 设置元素为伸缩盒模型(13-2-1) */
+  -webkit-box-orient: vertical; /* 修改伸缩盒模型的主轴方向为竖直 */
+  -webkit-line-clamp: 3; /* 控制伸缩盒在第几行显示省略号 */
+  overflow: hidden; /* 修剪溢出内容 */
 }

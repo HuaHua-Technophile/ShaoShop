@@ -1,66 +1,75 @@
-// pages/classification/classification.js
+const app = getApp(); // 获取应用实例
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    navBarFullHeight: 0, // 整个导航栏高度
+    AllCategories: [], //全部分类
+    level1: 0, //一级分类选中项
+    Classification2: [], //二级分类
+    level2: 0, //二级分类选中项
+    good: [], //分类的商品列表
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-
+  // 点击选择一级菜单
+  SelectCategorization1(e) {
+    this.setData({
+      level1: e.currentTarget.dataset.index,
+      level2: 0,
+      Classification2: this.data.AllCategories[e.currentTarget.dataset.index]
+        .childrenList,
+    });
+    this.queryByPcn();
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  // 点击选择二级菜单
+  SelectCategorization2(e) {
+    this.setData({
+      level2: e.currentTarget.dataset.index,
+    });
+    this.queryByPcn();
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
+  // 封装商品查询
+  async queryByPcn() {
+    await app
+      .ajax({
+        path: "/product/queryByPcn",
+        data: {
+          productClassificationNumber: this.data.Classification2[
+            this.data.level2
+          ].id,
+        },
+      })
+      .then((res) => {
+        this.setData({
+          good: res.data.data.map((item) => {
+            item.proPic = app.globalData.https + item.proPic;
+            return item;
+          }),
+        });
+      });
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  async onLoad(options) {
+    this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
+    // 一级分类菜单及二级分类菜单获取
+    await app.ajax({ path: "/classification/queryAllMenu" }).then((res) => {
+      this.setData({
+        AllCategories: res.data.data.map((item) => {
+          item.childrenList.unshift({
+            classificationName: "全部",
+            id: item.id,
+          });
+          return item;
+        }),
+      });
+      this.setData({
+        Classification2: this.data.AllCategories[0].childrenList,
+      }); //只能分两行,否则同步无法获取
+    });
+    // 商品获取
+    this.queryByPcn();
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
-})
+  onReady() {},
+  onShow() {},
+  onHide() {},
+  onUnload() {},
+  onPullDownRefresh() {},
+  onReachBottom() {},
+  onShareAppMessage() {},
+});

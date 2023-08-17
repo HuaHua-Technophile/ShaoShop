@@ -1,2 +1,48 @@
-<!--pages/classification/classification.wxml-->
-<text>pages/classification/classification.wxml</text>
+<view>
+  <custom-navbar ShowSearch="{{false}}"></custom-navbar>
+  <view class="vh-100 noScrollBar overflow-scroll px-3 classification-page" style="padding-top: {{navBarFullHeight+15}}px;">
+    <!-- 搜索框 -->
+    <view class="w-100 rounded-5 bg-body-secondary border border-3 d-flex align-items-center px-3 mb-2" style="height:40px">
+      <view class="iconfont icon-sousuo fs-4"></view>
+      <view class="flex-grow-1 text-center opacity-50">请输入您要搜索的商品名</view>
+    </view>
+    <!-- 分类本体 -->
+    <view class="d-flex ">
+      <!-- 分类左侧一级分类 -->
+      <view class="flex-shrink-0">
+        <view wx:for="{{AllCategories}}" wx:key="index" class="px-2 py-3 position-relative d-flex align-items-center fs-7 {{level1==index?'classification1-active bg-body-secondary rounded':''}}" bindtap="SelectCategorization1" data-index="{{index}}">{{item.classificationName}}</view>
+      </view>
+      <!-- 右侧二级分类以及分类详情 -->
+      <view class="ms-2 flex-grow-1 overflow-hidden">
+        <!-- 二级分类菜单 -->
+        <view class="border-bottom fs-7 py-2 d-flex overflow-scroll noScrollBar" display-multiple-items="{{4}}">
+          <view wx:for="{{Classification2}}" wx:key="index" class="border border-3 rounded px-2 mx-1 text-nowrap {{level2==index?'classification2-active':''}}" style="padding:4px 0;" bind:tap="SelectCategorization2" data-index="{{index}}">{{item.classificationName}}</view>
+        </view>
+        <!-- 商品列表 -->
+        <view class="overflow-scroll noScrollBar" style="height: calc(100vh - {{navBarFullHeight+15}}px - 48px - 51px);">
+          <view wx:for="{{good}}" wx:key="index" class="d-flex align-items-center {{index!=good.length-1?'border-bottom':''}} py-2">
+            <!-- 图片 -->
+            <image src="{{item.proPic}}" mode="aspectFill" style="height: var(--good-item-height);width: var(--good-item-height);" class="rounded flex-shrink-0 border" />
+            <!-- 商品信息 -->
+            <view class="ms-2 d-flex flex-column justify-content-between">
+              <!-- 商品描述文本 -->
+              <view class="text-truncate2">{{item.productName}}</view>
+              <view>
+                <!-- 商品规格 -->
+                <view class="fs-9 opacity-50">{{item.productSpecifications}}</view>
+                <!-- 商品价格 -->
+                <view style="color:rgb(var(--theme-color-rgb))" class="d-flex align-items-center"><span class="fs-8">￥</span><span wx:if="{{item.discountedPrice}}" style=" font-family: YouSheBiaoTiHei;font-size: 1.15rem;">{{item.discountedPrice}}</span><span class="{{item.discountedPrice?'text-body-tertiary fs-9 ms-1 text-decoration-line-through':''}}">{{item.price}}</span></view>
+                <!-- 商品标签 -->
+                <view class="d-flex">
+                  <view wx:for="{{item.fbk1}}" wx:key="index" class="fs-10 border lh-1 px-1 me-1 rounded-1" style="padding:1px 0 1px;--bs-border-color: rgba(var(--theme-color-rgb),0.4);color: rgba(var(--theme-color-rgb),0.8);">{{item}}</view>
+                </view>
+                <!-- 店铺名称 -->
+                <view class="d-inline-flex align-items-center px-1 lh-1 rounded-5 bg-body-secondary" style="padding:2px 0 3px;"> <span class="fs-9">{{item.store}}</span><span class="ms-1 fs-10 opacity-75">进店</span><span class="iconfont icon-youjiantou fs-10 opacity-25"></span></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,1 +1,19 @@
-/* pages/classification/classification.wxss */
+.classification-page {
+  --good-item-height: 90px;
+}
+
+.classification1-active::before {
+  content: "";
+  display: block;
+  height: 60%;
+  width: 8px;
+  position: absolute;
+  left: -4px;
+  border-radius: 9999px;
+  background: rgba(var(--theme-color-rgb), 0.8);
+}
+.classification2-active {
+  background: rgba(var(--theme-color-rgb), 0.2);
+  border-color: rgba(var(--theme-color-rgb), 0.35) !important;
+  color: rgba(var(--theme-color-rgb), 1);
+}

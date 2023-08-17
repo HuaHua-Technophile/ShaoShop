@@ -1,2 +1,9 @@
-<!--pages/mine/mine.wxml-->
-<text>pages/mine/mine.wxml</text>
+<view>
+  <custom-navbar></custom-navbar>
+  <view class="vh-100 noScrollBar overflow-scroll px-3" style="padding-top: {{navBarFullHeight+15}}px;">
+    <!-- 用户信息(头像,昵称,id) -->
+    <view class="rounded bg-body-scendray d-flex align-items-center">
+      <view></view>
+    </view>
+  </view>
+</view>

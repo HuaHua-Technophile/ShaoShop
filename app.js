@@ -2,7 +2,9 @@
 import { https, ajax } from "./api/http";
 App({
   globalData: {
-    userInfo: null,
+    userInfo: null, //用户登陆状态
+    token: null, //用户登录token
+    https: https, //请求的地址
     theme: "", //暗色/亮色
     navBarFullHeight: 0, // 整个导航栏高度
     navBarTop: 0, //navbar内容区域顶边距
@@ -23,15 +25,36 @@ App({
     });
     /* // 展示本地存储能力
     const logs = wx.getStorageSync("logs") || [];
-    logs.unshift(Date.now());
-    wx.setStorageSync("logs", logs);
+    logs.unshift(Date.now()); 
+    wx.setStorageSync("logs", logs);*/
     // 登录
-    wx.login({
-      success: (res) => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    wx.getStorage({
+      key: "token",
+      success(res) {
+        that.globalData.token = res.data;
       },
-    }); */
+    });
+    wx.login({
+      success: async (loginRes) => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        await that
+          .ajax({
+            path: "/user/WxLogin",
+            data: {
+              code: loginRes.code,
+            },
+            method: "POST",
+            header: that.globalData.token,
+          })
+          .then((res) => {
+            console.log(res.data.data);
+            wx.setStorage({
+              key: "token",
+              data: res.data.data,
+            });
+          });
+      },
+    });
   },
-  ajax: ajax,
-  https: https,
+  ajax: ajax, //封装好的ajax请求方法
 });

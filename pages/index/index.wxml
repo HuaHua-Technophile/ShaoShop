@@ -1,43 +1,45 @@
-<view style="padding-top: {{navBarFullHeight+10}}px;" class="px-3">
+<view>
   <custom-navbar></custom-navbar>
-  <!-- 轮播图推荐 -->
-  <view class="w-100 position-relative" style="padding-bottom: 50%;">
-    <view class="position-absolute start-0 top-0 end-0 bottom-0">
-      <swiper indicator-dots="{{false}}" autoplay="{{true}}" circular="{{true}}" interval="{{5000}}" class="w-100 h-100">
-        <swiper-item wx:for="{{swiperList}}" wx:key="index">
-          <image src="{{item.getSwiperPic}}" mode="aspectFill" class="w-100 h-100 rounded-4" />
+  <view class="vh-100 noScrollBar overflow-scroll px-3" style="padding-top: {{navBarFullHeight+15}}px;">
+    <!-- 轮播图推荐 -->
+    <view class="w-100 position-relative" style="padding-bottom: 50%;">
+      <view class="position-absolute start-0 top-0 end-0 bottom-0">
+        <swiper indicator-dots="{{false}}" autoplay="{{true}}" circular="{{true}}" interval="{{5000}}" class="w-100 h-100">
+          <swiper-item wx:for="{{swiperList}}" wx:key="index">
+
+            <image src="{{item.image}}" mode="aspectFill" lazy-load="true" class="w-100 h-100 rounded-4" />
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+    <!-- 分类推荐 -->
+    <view class="d-flex flex-wrap justify-content-between mt-3">
+      <!-- 每一个item -->
+      <view wx:for="{{Classifieds}}" wx:key="index" style="width: 17%;" class="mb-3">
+        <view class="w-100 position-relative" style="padding-bottom: 100%;">
+          <view class="position-absolute start-0 top-0 end-0 bottom-0 rounded-4 overflow-hidden bg-opacity-75 d-flex justify-content-center align-items-center" style="background-color: rgba({{item.RecommendIconRgb}}, var(--bs-bg-opacity)) !important;">
+            <image src="{{item.recommendIcon}}" lazy-load="true" class="w-75 h-75" />
+          </view>
+        </view>
+        <view class="w-100 text-center fs-8">{{item.recommendName}}</view>
+      </view>
+    </view>
+    <!-- 韶商汇公告 -->
+    <view class="rounded bg-body-secondary px-2 d-flex align-items-center">
+      <!-- 左侧字体 -->
+      <view class="fs-3 me-2" style="font-family:YouSheBiaoTiHei">
+        <span style="color:rgb(var(--theme-color-rgb))">韶商汇</span>公告
+      </view>
+      <!-- 右侧公告 -->
+      <swiper class="flex-grow-1" style="height: 2.5rem;" autoplay="{{true}}" vertical='{{true}}' circular="{{true}}" interval="{{3000}}">
+        <swiper-item wx:for="{{bulletins}}" wx:key="index" class="d-flex align-items-center text-truncate">
+          {{item.content}}
         </swiper-item>
       </swiper>
     </view>
-  </view>
-  <!-- 分类推荐 -->
-  <view class="d-flex flex-wrap justify-content-between mt-3">
-    <!-- 每一个item -->
-    <view wx:for="{{Classifieds}}" wx:key="index" style="width: 17%;" class="mb-3">
-      <view class="w-100 position-relative" style="padding-bottom: 100%;">
-        <view class="position-absolute start-0 top-0 end-0 bottom-0 rounded-4 overflow-hidden bg-opacity-75 d-flex justify-content-center align-items-center" style="background-color: rgba({{item.RecommendIconRgb}}, var(--bs-bg-opacity)) !important;">
-          <image src="{{item.recommendIcon}}" class="w-75 h-75" />
-        </view>
-      </view>
-      <view class="w-100 text-center fs-8">{{item.recommendName}}</view>
+    <!-- 瀑布流推荐 -->
+    <view class="mt-3">
+      <image wx:for="{{WaterfallRecommendationList}}" wx:key="index" src="{{item.image}}" class="w-100 rounded-4 mb-3" style="height: 130px;" mode="aspectFill" lazy-load="true" />
     </view>
-  </view>
-  <!-- 韶商汇公告 -->
-  <view class="rounded bg-body-secondary px-2 d-flex align-items-center">
-    <!-- 左侧字体 -->
-    <view class="fs-3 me-2" style="font-family:YouSheBiaoTiHei">
-      <span class="text-danger">韶商汇</span>公告
-    </view>
-    <!-- 右侧公告 -->
-    <swiper class="flex-grow-1" style="height: 2.5rem;" autoplay="{{true}}" vertical='{{true}}' circular="{{true}}" interval="{{3000}}">
-      <swiper-item wx:for="{{bulletins}}" wx:key="index" class="d-flex align-items-center text-truncate">
-        {{item.content}}
-      </swiper-item>
-    </swiper>
-  </view>
-  <!-- 瀑布流推荐 -->
-  <view class="mt-3">
-    <image wx:for="{{WaterfallRecommendationList}}" wx:key="index" src="{{item.image}}" class="w-100 rounded-4 mb-3" style="height: 130px;" mode="" />
-
   </view>
 </view>

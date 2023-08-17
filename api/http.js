@@ -1,15 +1,20 @@
 export const https = "http://192.168.1.12:8080";
-export const ajax = (path, data) => {
+export const ajax = ({ path, data, method = "GET" }) => {
+  const app = getApp(); // 获取应用实例
   return new Promise((resolve, reject) => {
     wx.request({
-      url: `${https}${path}`,
-      data: data,
+      url: `${https}${path}`, //请求地址
+      data: data, // 请求体
+      method: method, //请求方法
+      header: {
+        authentication: app.globalData.token,
+      }, //请求头
       success: (ret) => {
         resolve(ret);
-      },
+      }, //成功回调
       fail: (err) => {
         reject(err);
-      },
+      }, //失败回调
     });
   });
 };

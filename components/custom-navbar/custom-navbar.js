@@ -1,6 +1,11 @@
 const app = getApp();
 Component({
-  properties: {},
+  properties: {
+    ShowSearch: {
+      type: Boolean,
+      value: true,
+    },
+  },
   data: {
     theme: "", //暗色/亮色
     navBarFullHeight: 0, // 整个导航栏高度

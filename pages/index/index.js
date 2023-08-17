@@ -1,5 +1,4 @@
-// 获取应用实例
-const app = getApp();
+const app = getApp(); // 获取应用实例
 Page({
   data: {
     navBarFullHeight: 0, // 整个导航栏高度
@@ -10,31 +9,36 @@ Page({
   },
   async onLoad() {
     this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
-    await app.ajax("/product/querySwiper").then((res) => {
+    // 轮播图数据获取
+    await app.ajax({ path: "/recommend/querySwiper" }).then((res) => {
+      console.log(res);
       this.setData({
         swiperList: res.data.data.map((item) => {
-          item.getSwiperPic = app.https + item.getSwiperPic;
+          item.image = app.globalData.https + item.image;
           return item;
         }),
       });
     });
-    await app.ajax("/recommend/queryRecommendAll").then((res) => {
+    // 分类推荐数据获取
+    await app.ajax({ path: "/recommend/queryRecommendAll" }).then((res) => {
       this.setData({
         Classifieds: res.data.data.map((item) => {
-          item.recommendIcon = app.https + item.recommendIcon;
+          item.recommendIcon = app.globalData.https + item.recommendIcon;
           return item;
         }),
       });
     });
-    await app.ajax("/notice/queryNotice").then((res) => {
+    // 公告数据获取
+    await app.ajax({ path: "/notice/queryNotice" }).then((res) => {
       this.setData({
         bulletins: res.data.data,
       });
     });
-    await app.ajax("/recommend/queryWaterfallsAll").then((res) => {
+    // 瀑布流推荐获取
+    await app.ajax({ path: "/recommend/queryWaterfallsAll" }).then((res) => {
       this.setData({
-        WaterfallRecommendationList: res.data.data.map(item=>{
-          item.image = app.https + item.image;
+        WaterfallRecommendationList: res.data.data.map((item) => {
+          item.image = app.globalData.https + item.image;
           return item;
         }),
       });

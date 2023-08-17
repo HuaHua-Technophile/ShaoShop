@@ -3,7 +3,23 @@
     "pages/index/index",
     "pages/classification/classification",
     "pages/cart/cart",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/productDetail/productDetail"
+  ],
+  "subPackages": [
+    {
+      "root": "packageClassification",
+      "pages": [
+        "pages/classification/classification"
+      ]
+    },
+    {
+      "root": "packageCart",
+      "name": "pack2",
+      "pages": [
+        "pages/cart/cart"
+      ]
+    }
   ],
   "window": {
     "navigationStyle": "custom"
@@ -40,5 +56,6 @@
     ]
   },
   "sitemapLocation": "sitemap.json",
-  "style": "v2"
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
 }
