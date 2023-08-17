@@ -6,17 +6,6 @@
     "pages/mine/mine",
     "pages/productDetail/productDetail"
   ],
-  "subPackages": [
-    {
-      "root": "packageClassification",
-      "pages": ["pages/classification/classification"]
-    },
-    {
-      "root": "packageCart",
-      "name": "pack2",
-      "pages": ["pages/cart/cart"]
-    }
-  ],
   "window": {
     "navigationStyle": "custom"
   },

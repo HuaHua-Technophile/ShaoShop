@@ -7,31 +7,5 @@
     "preloadBackgroundData": false
   },
   "libVersion": "3.0.0",
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "分类",
-          "pathName": "pages/classification/classification",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "购物车",
-          "pathName": "pages/cart/cart",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "我的",
-          "pathName": "pages/mine/mine",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        }
-      ]
-    }
-  }
+  "condition": {}
 }

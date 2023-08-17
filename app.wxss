@@ -1,5 +1,5 @@
 @import "./styles/Bootstrap-MiniProgram/bootstrap.wxss";
-@import "./fonts/YouSheBiaoTiHei.wxss";
+/* @import "./fonts/YouSheBiaoTiHei.wxss"; */
 @import "./fonts/iconfont.wxss";
 
 page,

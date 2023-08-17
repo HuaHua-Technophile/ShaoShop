@@ -5,7 +5,6 @@ Page({
   },
   async onLoad(options) {
     this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
-    console.log(options.id);
     await app
       .ajax({
         path: "/product/queryProductDetail",

@@ -2,8 +2,7 @@
 import { https, ajax } from "./api/http";
 App({
   globalData: {
-    userInfo: null, //用户登陆状态
-    token: null, //用户登录token
+    userInfo: { token: null }, //用户登陆状态,包含token等
     https: https, //请求的地址
     theme: "", //暗色/亮色
     navBarFullHeight: 0, // 整个导航栏高度
@@ -29,9 +28,9 @@ App({
     wx.setStorageSync("logs", logs);*/
     // 登录
     wx.getStorage({
-      key: "token",
+      key: "userInfo",
       success(res) {
-        that.globalData.token = res.data;
+        that.globalData.userInfo = res.data;
       },
     });
     wx.login({
@@ -44,12 +43,11 @@ App({
               code: loginRes.code,
             },
             method: "POST",
-            header: that.globalData.token,
           })
           .then((res) => {
             console.log(res.data.data);
             wx.setStorage({
-              key: "token",
+              key: "userInfo",
               data: res.data.data,
             });
           });

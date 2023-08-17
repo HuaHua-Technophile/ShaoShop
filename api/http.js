@@ -7,7 +7,7 @@ export const ajax = ({ path, data, method = "GET" }) => {
       data: data, // 请求体
       method: method, //请求方法
       header: {
-        authentication: app.globalData.token,
+        authentication: app.globalData.userInfo.token,
       }, //请求头
       success: (ret) => {
         resolve(ret);

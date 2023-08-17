@@ -22,7 +22,7 @@
         <view class="overflow-scroll noScrollBar" style="height: calc(100vh - {{navBarFullHeight+15}}px - 48px - 51px);">
           <view wx:for="{{good}}" wx:key="index" class="d-flex align-items-center {{index!=good.length-1?'border-bottom':''}} py-2" bind:tap="toProductDetail" data-id="{{item.id}}">
             <!-- 图片 -->
-            <image src="{{item.proPic}}" mode="aspectFill" style="height: var(--good-item-height);width: var(--good-item-height);" class="rounded flex-shrink-0 border" />
+            <image src="{{item.proPic}}" mode="aspectFill" style="height: var(--good-item-height);width: var(--good-item-height);" class="rounded flex-shrink-0" />
             <!-- 商品信息 -->
             <view class="ms-2 d-flex flex-column justify-content-between">
               <!-- 商品描述文本 -->

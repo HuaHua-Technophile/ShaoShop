@@ -4,7 +4,7 @@
     <!-- 放大镜 -->
     <view class="iconfont icon-sousuo position-absolute start-0 top-50 translate-middle-y fs-2 ms-2 d-flex align-items-center justify-content-center" style="height:100%;width:{{navBarHeight}}px" wx:if="{{ShowSearch}}" bind:tap="toSearch"></view>
     <!-- 返回按钮 -->
-    <view class="iconfont icon-fanhui8 position-absolute start-0 top-50 translate-middle-y fs-2 ms-2 d-flex align-items-center justify-content-center" style="height:100%;width:{{navBarHeight}}px" wx:if="{{ShowBackBtn}}" bind:tap="goBack"></view>
+    <view class="iconfont icon-fanhui position-absolute start-0 top-50 translate-middle-y fs-2 ms-2 d-flex align-items-center justify-content-center opacity-50" style="height:100%;width:{{navBarHeight}}px" wx:if="{{ShowBackBtn}}" bind:tap="goBack"></view>
     <!-- 商城品牌形象 -->
     <view class="text-center">
       <view class="fs-2" style="line-height: 100%;"><span style="color:rgb(var(--theme-color-rgb));">韶</span>商汇</view>
