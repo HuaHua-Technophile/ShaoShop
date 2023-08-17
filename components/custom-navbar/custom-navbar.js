@@ -5,6 +5,10 @@ Component({
       type: Boolean,
       value: true,
     },
+    ShowBackBtn: {
+      type: Boolean,
+      value: false,
+    },
   },
   data: {
     theme: "", //暗色/亮色
@@ -23,5 +27,12 @@ Component({
       });
     },
   },
-  methods: {},
+  methods: {
+    toSearch() {
+      console.log("跳转至搜索");
+    },
+    goBack() {
+      wx.navigateBack();
+    },
+  },
 });

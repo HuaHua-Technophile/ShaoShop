@@ -1,2 +1,6 @@
-<!--pages/productDetail/productDetail.wxml-->
-<text>pages/productDetail/productDetail.wxml</text>
+<view>
+  <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
+  <view class="vh-100 noScrollBar overflow-scroll" style="padding-top: {{navBarFullHeight+15}}px;">
+
+  </view>
+</view>

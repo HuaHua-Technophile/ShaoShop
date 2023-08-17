@@ -9,24 +9,20 @@
   "subPackages": [
     {
       "root": "packageClassification",
-      "pages": [
-        "pages/classification/classification"
-      ]
+      "pages": ["pages/classification/classification"]
     },
     {
       "root": "packageCart",
       "name": "pack2",
-      "pages": [
-        "pages/cart/cart"
-      ]
+      "pages": ["pages/cart/cart"]
     }
   ],
   "window": {
     "navigationStyle": "custom"
   },
   "tabBar": {
-    "color": "#8a8a8a",
-    "selectedColor": "#000000",
+    "color": "#2c2c2c",
+    "selectedColor": "#f3400d",
     "borderStyle": "white",
     "list": [
       {

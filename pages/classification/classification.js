@@ -45,7 +45,13 @@ Page({
         });
       });
   },
-  async onLoad(options) {
+  // 封装点击商品跳转,只传递商品id
+  toProductDetail(e) {
+    wx.navigateTo({
+      url: `/pages/productDetail/productDetail?id=${e.currentTarget.dataset.id}`,
+    });
+  },
+  async onLoad() {
     this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
     // 一级分类菜单及二级分类菜单获取
     await app.ajax({ path: "/classification/queryAllMenu" }).then((res) => {
