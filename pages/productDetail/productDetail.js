@@ -11,7 +11,7 @@ Page({
         data: { productId: options.id },
       })
       .then((res) => {
-        console.log(res);
+        console.log("获取到了商品数据=>", res);
       });
   },
   onReady() {},

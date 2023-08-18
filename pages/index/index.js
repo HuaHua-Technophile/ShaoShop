@@ -11,7 +11,6 @@ Page({
     this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
     // 轮播图数据获取
     await app.ajax({ path: "/recommend/querySwiper" }).then((res) => {
-      console.log(res);
       this.setData({
         swiperList: res.data.data.map((item) => {
           item.image = app.globalData.https + item.image;

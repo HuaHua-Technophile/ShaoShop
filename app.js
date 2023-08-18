@@ -45,12 +45,26 @@ App({
             method: "POST",
           })
           .then((res) => {
-            console.log(res.data.data);
+            res.data.data.UserInfo.avatarUrl =
+              https + "/" + res.data.data.UserInfo.avatarUrl;
             wx.setStorage({
               key: "userInfo",
               data: res.data.data,
             });
+            console.log("服务器返回用户信息,存入本地", res);
           });
+      },
+    });
+    // 下载网络字体
+    wx.loadFontFace({
+      global: true,
+      family: "YouSheBiaoTiHei",
+      source: `url("${that.globalData.https}/font/myfont.ttf")`,
+      success: (res) => {
+        console.log("字体加载成功", res);
+      },
+      fail: (err) => {
+        console.log("字体加载失败", err);
       },
     });
   },

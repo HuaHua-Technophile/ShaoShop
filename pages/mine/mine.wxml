@@ -1,9 +1,105 @@
 <view>
   <custom-navbar></custom-navbar>
-  <view class="vh-100 noScrollBar overflow-scroll px-3" style="padding-top: {{navBarFullHeight+15}}px;">
+  <view class="vh-100 noScrollBar overflow-scroll" style="padding-top: {{navBarFullHeight+15}}px;">
     <!-- 用户信息(头像,昵称,id) -->
-    <view class="rounded bg-body-scendray d-flex align-items-center">
-      <view></view>
+    <view class="rounded-4 d-flex align-items-center py-3 px-4 mx-3 bg-body-tertiary shadow" style="height: calc(80px + 2rem);">
+      <!-- 用户头像 -->
+      <image src="{{userInfo.avatarUrl}}" mode="aspectFill" class="rounded-4 shadow-sm me-4 bg-body h-100" style="width: 80px;" />
+      <!-- 用户信息 -->
+      <view class="h-100 d-flex flex-column justify-content-around ">
+        <view class="d-flex align-items-center">
+          <view class="fs-5 fw-bolder ">{{userInfo.nickName}}</view>
+          <view class="ms-2 fs-9 border rounded text-light shadow-sm" style="background: rgba(var(--theme-color-rgb),0.8);font-family: 'YouSheBiaoTiHei';padding:2px 3px;">韶商汇VIP</view>
+        </view>
+        <!-- <view class="opacity-75 d-flex">账号 : {{userInfo.id}}</view> -->
+        <view class="opacity-75 d-flex">账号 : 15914888888</view>
+      </view>
     </view>
+    <!-- 卡卷\积分信息 -->
+    <view class="mt-3 rounded-4 d-flex align-items-center py-3 mx-3 bg-body-tertiary shadow">
+      <!-- 优惠卷 -->
+      <view class="text-center col-4 border-end">
+        <view class="fs-3 fw-bolder">3</view>
+        <view class="opacity-50">优惠卷</view>
+      </view>
+      <!-- 韶商卡 -->
+      <view class="text-center col-4 border-end">
+        <view class="fs-3 fw-bolder">1</view>
+        <view class="opacity-50">韶商卡</view>
+      </view>
+      <!-- 积分 -->
+      <view class="text-center col-4">
+        <view class="fs-3 fw-bolder">25</view>
+        <view class="opacity-50">积分</view>
+      </view>
+    </view>
+    <!-- 订单管理 -->
+    <view class="mt-3 p-3 rounded-4 bg-body-tertiary shadow mx-3">
+      <!-- 头部 -->
+      <view class="pb-3 d-flex align-items-center justify-content-between border-bottom">
+        <view class="fw-bolder">我的订单</view>
+        <view class="fs-7 opacity-50">全部订单<span class="iconfont icon-youjiantou"></span></view>
+      </view>
+      <!-- 订单5大金刚键 -->
+      <view class="mt-3 d-flex" style="height: 70px;">
+        <view class="text-center h-100 d-flex flex-column justify-content-between" style="width: 20%;">
+          <view class="iconfont lh-1 icon-a-daifukuan2x" style="color:rgba(var(--theme-color-rgb),1);font-size: 50px;"></view>
+          <view class="fs-8 lh-1">待付款</view>
+        </view>
+        <view class="text-center h-100 d-flex flex-column justify-content-between" style="width: 20%;">
+          <view class="iconfont lh-1 icon-daifahuo3" style="color:rgba(var(--theme-color-rgb),1);font-size: 37px;margin-top: 6px;"></view>
+          <view class="fs-8 lh-1">待发货</view>
+        </view>
+        <view class="text-center h-100 d-flex flex-column justify-content-between" style="width: 20%;">
+          <view class="iconfont lh-1 icon-a-ziyuan6" style="color:rgba(var(--theme-color-rgb),1);font-size: 35px;margin-top: 8px;"></view>
+          <view class="fs-8 lh-1">待收货</view>
+        </view>
+        <view class="text-center h-100 d-flex flex-column justify-content-between" style="width: 20%;">
+          <view class="iconfont lh-1 icon-yiwancheng1" style="color:rgba(var(--theme-color-rgb),1);font-size: 35px;margin-top: 7px;"></view>
+          <view class="fs-8 lh-1">已完成</view>
+        </view>
+        <view class="text-center h-100 d-flex flex-column justify-content-between" style="width: 20%;">
+          <view class="iconfont lh-1 icon-shouhou1" style="color:rgba(var(--theme-color-rgb),1);font-size: 40px;margin-top: 4px;"></view>
+          <view class="fs-8 lh-1">退款/售后</view>
+        </view>
+      </view>
+    </view>
+    <!-- 其他信息 -->
+    <view class="mt-3 mx-3 p-3 rounded-4 bg-body-tertiary shadow d-flex" style="height: calc(70px + 2rem);">
+      <view class="text-center h-100 d-flex flex-column justify-content-between col-3">
+        <view class="iconfont lh-1  icon-dizhi" style="color:rgba(var(--theme-color-rgb),1);font-size:40px;"></view>
+        <view class="fs-8 lh-1">地址</view>
+      </view>
+      <view class="text-center h-100 d-flex flex-column justify-content-between col-3">
+        <view class="iconfont lh-1  icon-qiandao1" style="color:rgba(var(--theme-color-rgb),1);font-size:35px;margin-top: 2.5px;"></view>
+        <view class="fs-8 lh-1">签到</view>
+      </view>
+      <view class="text-center h-100 d-flex flex-column justify-content-between col-3">
+        <view class="iconfont lh-1  icon-guanyu" style="color:rgba(var(--theme-color-rgb),1);font-size:35px;margin-top: 2.5px;"></view>
+        <view class="fs-8 lh-1">关于</view>
+      </view>
+      <view class="text-center h-100 d-flex flex-column justify-content-between col-3">
+        <view class="iconfont lh-1  icon-shezhi2" style="color:rgba(var(--theme-color-rgb),1);font-size:40px;"></view>
+        <view class="fs-8 lh-1">设置</view>
+      </view>
+    </view>
+    <!-- 活动信息 -->
+    <swiper class="mt-2">
+      <swiper-item class="d-flex justify-content-center">
+        <view class="shadow mt-2 px-3 rounded-4 overflow-hidden d-flex justify-content-between align-items-center" style="width: calc(100% - 2rem); height: calc(100% - 2rem);">
+          <!-- 左边推广文本 -->
+          <view>
+            <view class="fs-2" style="font-family: YouSheBiaoTiHei;"><span style="color:rgba(var(--theme-color-rgb),1)">积分</span>大派兑</view>
+            <view class="mt-3 fs-8" style="color:rgba(214, 178, 169,1)"><span class="rounded text-light" style="background: rgba(var(--theme-color-rgb),1);padding:1px 5px;font-family: YouSheBiaoTiHei;">会员专享</span>优惠卷<span class="ms-2">积分兑换再下单</span></view>
+          </view>
+          <!-- 右边图片 -->
+          <view class="position-relative" style="width: 33%;padding-bottom: 30%;">
+            <view class="position-absolute start-0 end-0 top-0 bottom-0">
+              <image src="../../image/临时/积分兑换_压缩.png" class="w-100 h-100" mode="aspectFill" />
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
   </view>
 </view>
