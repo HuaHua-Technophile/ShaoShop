@@ -57,5 +57,52 @@
         </view>
       </view>
     </view>
+    <!-- 商品规格与详情图片 -->
+    <view class="rounded-top-5 shadow mt-3">
+      <view class="px-3 py-3">
+        <view class="pb-3">
+          商品详情
+        </view>
+        <!-- 商品规格表 -->
+        <view class="border-top fs-7">
+          <view class="d-flex text-center border border-top-0">
+            <view class="w-25 border-end opacity-50" style="padding: 0.7rem 0;">
+              规格
+            </view>
+            <view class="ps-4" style="padding: 0.7rem 0;">
+              {{goodData.productSpecifications}}
+            </view>
+          </view>
+          <view class="d-flex text-center border border-top-0">
+            <view class="w-25 border-end opacity-50" style="padding: 0.7rem 0;">
+              产地
+            </view>
+            <view class="ps-4" style="padding: 0.7rem 0;">
+              {{goodData.productOrigin}}
+            </view>
+          </view>
+          <view class="d-flex text-center border border-top-0">
+            <view class="w-25 border-end opacity-50" style="padding: 0.7rem 0;">
+              保质期
+            </view>
+            <view class="ps-4" style="padding: 0.7rem 0;">
+              {{goodData.productShelfLife}}
+            </view>
+          </view>
+          <view class="d-flex text-center border border-top-0">
+            <view class="w-25 border-end opacity-50" style="padding: 0.7rem 0;">
+              包装
+            </view>
+            <view class="ps-4" style="padding: 0.7rem 0;">
+              {{goodData.productPackaging}}
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 图片 -->
+      <view>
+        <image wx:for="{{productIntro}}" wx:key="index" class="w-100" src="{{item.image}}" mode="widthFix" />
+      </view>
+    </view>
   </view>
 </view>
