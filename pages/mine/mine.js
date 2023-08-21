@@ -4,7 +4,7 @@ Page({
     navBarFullHeight: 0, // 整个导航栏高度
     userInfo: null, //用户信息
   },
-  async onLoad(options) {
+  onLoad(options) {
     this.setData({
       navBarFullHeight: app.globalData.navBarFullHeight,
       userInfo: app.globalData.userInfo.UserInfo,

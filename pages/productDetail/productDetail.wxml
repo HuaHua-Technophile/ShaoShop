@@ -1,6 +1,61 @@
 <view>
   <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
   <view class="vh-100 noScrollBar overflow-scroll" style="padding-top: {{navBarFullHeight+15}}px;">
-
+    <!-- 商品轮播图 -->
+    <view class="position-relative" style="height: 90vw;">
+      <swiper class="w-100 h-100" autoplay="{{false}}" indicator-dots="{{false}}" indicator-active-color="rgba(243,64,13,.8)" circular="{{true}}" bindchange="changeActiveIndex">
+        <swiper-item wx:for="{{goodSwiper}}" wx:key="index">
+          <view class="overflow-hidden shadow rounded-4 mx-auto mt-2 position-relative" style="width: calc(100vw - 2rem);height: calc(90vw - 2rem);">
+            <view class="position-absolute top-50 start-50 translate-middle" style="width: calc(100vw - 2rem + 4px);height: calc(90vw - 2rem);">
+              <image src=" {{item.image}}" mode="aspectFill" class="w-100 h-100 " />
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+      <!-- 右下角序号 -->
+      <view class="position-absolute end-0 bottom-0 text-light bg-black bg-opacity-50 px-2 rounded-start-3">
+        <span style="color:rgba(243, 154, 103,1)">{{activeIndex+1}}</span>/{{goodSwiper.length}}
+      </view>
+    </view>
+    <!-- 商品价格\标题\分享 -->
+    <view class="mx-3 mt-1 px-3 pt-2 pb-3 rounded-4 shadow">
+      <view class="d-flex align-items-center">
+        <view>
+          <!-- 商品价格 -->
+          <view style="color:rgb(var(--theme-color-rgb))" class="d-flex lh-1 align-items-center mb-1"><span class="fs-3">￥</span><span wx:if="{{goodData.discountedPrice}}" style="font-family: YouSheBiaoTiHei;font-size: 2.5rem;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)">{{goodData.discountedPrice}}</span><span class="{{goodData.discountedPrice?'text-body-tertiary ms-2 text-decoration-line-through':'fs-1'}}">{{goodData.price}}</span></view>
+          <!-- 商品说明文本 -->
+          <view>{{goodData.productName}}</view>
+        </view>
+        <!-- 分享到微信 -->
+        <view class="ps-3 ms-2 border-start text-center lh-1" style="color:rgba(16, 226, 101,1);">
+          <view class="iconfont icon-weixin fs-1 mb-1" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.2);"></view>
+          <view class="text-nowrap fs-8">分享</view>
+        </view>
+      </view>
+    </view>
+    <!-- 商品选择规格\发货地\配送地址\是否包邮 -->
+    <view class="mx-3 mt-3 p-3 rounded-4 shadow">
+      <!-- 商品规格选择 -->
+      <view class="d-flex align-items-center mb-3">
+        <view class="opacity-50 pe-2 border-end border-black me-2 fs-7 text-center flex-shrink-0 text-nowrap" style="width:65px">已选规格</view>
+        <view class="flex-grow-1 d-flex align-items-center justify-content-between">
+          <view>{{goodData.productSpecifications}}</view>
+          <view class="iconfont icon-xiangxiajiantou fs-2 lh-1"></view>
+        </view>
+      </view>
+      <!-- 发货地 -->
+      <view class="d-flex align-items-center mb-3">
+        <view class="opacity-50 pe-2 border-end border-black me-2 fs-7 text-center flex-shrink-0 text-nowrap" style="width:65px">发货地</view>
+        <view class="flex-grow-1 d-flex align-items-center justify-content-between opacity-50">韶关市</view>
+      </view>
+      <!-- 配送地址 -->
+      <view class="d-flex align-items-center">
+        <view class="opacity-50 pe-2 border-end border-black me-2 fs-7 text-center flex-shrink-0 text-nowrap" style="width:65px">配送至</view>
+        <view class="flex-grow-1 d-flex align-items-center justify-content-between">
+          <view>广东省 韶关市 曲江区</view>
+          <view class="iconfont icon-xiangxiajiantou fs-2 lh-1"></view>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

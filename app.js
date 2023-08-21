@@ -34,9 +34,9 @@ App({
       },
     });
     wx.login({
-      success: async (loginRes) => {
+      success: (loginRes) => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        await that
+        that
           .ajax({
             path: "/user/WxLogin",
             data: {

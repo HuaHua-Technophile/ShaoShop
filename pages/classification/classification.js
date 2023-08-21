@@ -37,8 +37,9 @@ Page({
         },
       })
       .then((res) => {
+        console.log("查询到了如下商品=>", res);
         this.setData({
-          good: res.data.data.map((item) => {
+          good: res.data.data.records.map((item) => {
             item.proPic = app.globalData.https + item.proPic;
             return item;
           }),
@@ -51,10 +52,11 @@ Page({
       url: `/pages/productDetail/productDetail?id=${e.currentTarget.dataset.id}`,
     });
   },
-  async onLoad() {
+  onLoad() {
     this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
     // 一级分类菜单及二级分类菜单获取
-    await app.ajax({ path: "/classification/queryAllMenu" }).then((res) => {
+    app.ajax({ path: "/classification/queryAllMenu" }).then((res) => {
+      console.log("获取到了分类数据=>", res);
       this.setData({
         AllCategories: res.data.data.map((item) => {
           item.childrenList.unshift({
@@ -67,9 +69,9 @@ Page({
       this.setData({
         Classification2: this.data.AllCategories[0].childrenList,
       }); //只能分两行,否则同步无法获取
+      // 商品获取
+      this.queryByPcn();
     });
-    // 商品获取
-    this.queryByPcn();
   },
   onReady() {},
   onShow() {},

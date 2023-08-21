@@ -19,6 +19,7 @@ icon,
 picker {
   --theme-color-rgb: 243, 64, 13;
   --theme-color: #f3400d;
+  /* --theme-color: #f33f0da1; */
 }
 .fs-7 {
   font-size: 0.9rem !important;

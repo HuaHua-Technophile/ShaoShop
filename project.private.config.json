@@ -6,8 +6,27 @@
     "urlCheck": false,
     "preloadBackgroundData": false,
     "bigPackageSizeSupport": true,
-    "autoAudits": true
+    "autoAudits": false
   },
   "libVersion": "3.0.0",
-  "condition": {}
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "",
+          "pathName": "pages/productDetail/productDetail",
+          "query": "id=3",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/classification/classification",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

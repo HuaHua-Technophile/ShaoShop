@@ -4,7 +4,7 @@
     <!-- 轮播图推荐 -->
     <view class="w-100 position-relative" style="padding-bottom: 50%;">
       <view class="position-absolute start-0 top-0 end-0 bottom-0">
-        <swiper indicator-dots="{{false}}" autoplay="{{false}}" circular="{{true}}" interval="{{5000}}" class="w-100 h-100">
+        <swiper indicator-dots="{{false}}" indicator-active-color="rgba(243,64,13,.8)" autoplay="{{true}}" circular="{{true}}" interval="{{5000}}" class="w-100 h-100">
           <swiper-item wx:for="{{swiperList}}" wx:key="index" class="d-flex justify-content-center">
             <image src="{{item.image}}" mode="aspectFill" lazy-load="true" class="rounded-4 mt-2" style="width: calc(100% - 2rem);height: calc(100% - 2rem);box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.45);" />
           </swiper-item>
