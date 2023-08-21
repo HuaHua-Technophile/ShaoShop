@@ -10,7 +10,8 @@
       <!-- 商城品牌形象 -->
       <view class="text-center">
         <view class="fs-2" style="line-height: 100%;"><span style="color:rgb(var(--theme-color-rgb));">韶</span>商汇</view>
-        <view class=" fs-10 opacity-50" style="margin-top: -5px;">便捷一站式本地购物平台
+        <view class=" fs-10 opacity-50" style="margin-top: -5px;">
+          韶汇苑,更惠源,为会员
         </view>
       </view>
     </view>

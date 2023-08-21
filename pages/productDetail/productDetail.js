@@ -5,6 +5,7 @@ Page({
     goodData: {}, //商品的所有文本信息
     goodSwiper: [], //商品的头部轮播图
     activeIndex: 0, //商品的头部轮播图的激活序号
+    productLabel: [], //商品标签
     productIntro: [], //商品的下方介绍图
   },
   //轮播图变更时,修改右下方序号
@@ -16,6 +17,7 @@ Page({
   },
   onLoad(options) {
     this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
+    // 获取商品轮播图
     app
       .ajax({
         path: "/product/queryProductSwiper",
@@ -30,6 +32,7 @@ Page({
           }),
         });
       });
+    // 获取商品详情文本
     app
       .ajax({
         path: "/product/queryProductDetail",
@@ -41,6 +44,7 @@ Page({
           goodData: res.data.data,
         });
       });
+    // 获取商品标签
     app
       .ajax({
         path: "/product/queryProductLabel",
@@ -48,7 +52,11 @@ Page({
       })
       .then((res) => {
         console.log("获取到了商品标签=>", res);
+        this.setData({
+          productLabel: res.data.data,
+        });
       });
+    // 获取商品底部介绍图(多图拼凑)
     app
       .ajax({
         path: "/product/queryProductIntro",
