@@ -1,6 +1,6 @@
 <view>
   <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
-  <view class="vh-100 noScrollBar overflow-scroll" style="padding-top: {{navBarFullHeight+15}}px;">
+  <view class="vh-100 productDetail-view noScrollBar overflow-scroll" style="padding-top: {{navBarFullHeight+15}}px;padding-bottom:{{cartTabbarHeight+13}}px;">
     <!-- 商品轮播图 -->
     <view class="position-relative" style="height: 90vw;">
       <swiper class="w-100 h-100" autoplay="{{false}}" indicator-dots="{{false}}" indicator-active-color="rgba(243,64,13,.8)" circular="{{true}}" bindchange="changeActiveIndex">
@@ -40,7 +40,7 @@
     <!-- 商品选择规格\发货地\配送地址\是否包邮 -->
     <view class="mx-3 mt-3 p-3 rounded-4 shadow">
       <!-- 商品规格选择 -->
-      <view class="d-flex align-items-center mb-3">
+      <view class="d-flex align-items-center mb-3" bind:tap="showPageContainer" data-status="0">
         <view class="opacity-50 pe-2 border-end border-black me-2 fs-7 text-center flex-shrink-0 text-nowrap" style="width:65px">已选规格</view>
         <view class="flex-grow-1 d-flex align-items-center justify-content-between">
           <view>{{goodData.productSpecifications}}</view>
@@ -109,4 +109,36 @@
       </view>
     </view>
   </view>
+  <!-- 购物车底栏 tabbar -->
+  <view class="cart-tabbar position-fixed bottom-0 w-100 bg-light rounded-top-4">
+    <view class="py-1 d-flex px-3 align-items-center justify-content-between" style="height: 95rpx;">
+      <!-- 其他信息/客服/店铺/ -->
+      <view class="flex-grow-1 d-flex align-items-center justify-content-around">
+        <view class="iconfont icon-kefu3" style="font-size: 2.1rem;"></view>
+        <view class="iconfont icon-gouwuche" style="font-size: 2.1rem;"></view>
+      </view>
+      <!-- 加购/购买按钮 -->
+      <view class="h-100 rounded-pill overflow-hidden text-light d-flex" style="width: 470rpx;">
+        <view class="col-6 d-flex align-items-center justify-content-center" style="background:rgba(var(--theme-color-rgb),1)" bind:tap="showPageContainer" data-status="1">加入购物车</view>
+        <view class="col-6 bg-warning d-flex align-items-center justify-content-center" bind:tap="showPageContainer" data-status="2">立即购买</view>
+      </view>
+    </view>
+    <!-- 下方安全区域 -->
+    <view class="safe-area-inset-bottom" style="height:calc(env(safe-area-inset-bottom) - 28rpx);"></view>
+  </view>
+  <!-- 假页面容器组件 -->
+  <page-container show="{{pageContainerShow}}" custom-style="background: transparent !important;backdrop-filter: blur(6px);display:flex;justify-content:center;">
+    <view class="w-100 bg-body-secondary rounded-top-5 position-relative" style="height: 80vh;">
+      <!-- 购物车底栏 tabbar -->
+      <view class="w-100 position-absolute bottom-0">
+        <view class="mx-auto w-75 d-flex align-items-center rounded-pill overflow-hidden text-light" style="height: 95rpx;">
+          <!-- 加购/购买按钮 -->
+          <view class="flex-grow-1 d-flex align-items-center justify-content-center h-100" style="background:rgba(var(--theme-color-rgb),1);flex-basis:0" bind:tap="showPageContainer" data-status="1" hidden="{{hiddenTabbarBtn==2}}">加入购物车</view>
+          <view class="flex-grow-1 bg-warning d-flex align-items-center justify-content-center h-100" style="flex-basis:0" bind:tap="showPageContainer" data-status="1" hidden="{{hiddenTabbarBtn==1}}">立即购买</view>
+        </view>
+        <!-- 下方安全区域 -->
+        <view class="safe-area-inset-bottom" style="height:calc(env(safe-area-inset-bottom) - 24rpx);"></view>
+      </view>
+    </view>
+  </page-container>
 </view>
