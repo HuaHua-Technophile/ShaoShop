@@ -10,6 +10,7 @@ Page({
     cartTabbarHeight: 0, //底部"加购/购买"栏的高度
     pageContainerShow: false, //假页面容器显示状态
     hiddenTabbarBtn: 0, //是同时展示加购/购买,还是其中一个
+    optionPrice: 0, // 当前选择项的价格
   },
   //轮播图变更时,修改右下方序号
   changeActiveIndex(e) {
@@ -64,6 +65,17 @@ Page({
         this.setData({
           goodData: res.data.data.productDetails,
         });
+      });
+    // 获取商品规格
+    app
+      .ajax({
+        path: "/product/queryPs",
+        data: {
+          productId: options.id,
+        },
+      })
+      .then((res) => {
+        console.log("获取到了商品规格=>", res);
       });
     // 获取商品标签
     app

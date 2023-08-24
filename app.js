@@ -45,6 +45,7 @@ App({
             method: "POST",
           })
           .then((res) => {
+            console.log('获取到了服务器返回的用户登录数据=>',res)
             res.data.data.UserInfo.avatarUrl =
               https + "/" + res.data.data.UserInfo.avatarUrl;
             wx.setStorage({

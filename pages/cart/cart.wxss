@@ -1,1 +1,27 @@
-/* pages/cart/cart.wxss */
+.cart-nothing {
+  width: 6px;
+  height: 20px;
+  background: rgba(var(--theme-color-rgb), 1);
+  border-radius: 9999px;
+  position: absolute;
+  left: 55%;
+  top: -12%;
+}
+.cart-nothing::before,
+.cart-nothing::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 6px;
+  height: 20px;
+  background: rgba(var(--theme-color-rgb), 1);
+  border-radius: 9999px;
+}
+.cart-nothing::before {
+  left: -400%;
+  transform: rotate(-20deg);
+}
+.cart-nothing::after {
+  left: 400%;
+  transform: rotate(20deg);
+}
