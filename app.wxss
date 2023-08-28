@@ -21,6 +21,19 @@ picker {
   --theme-color: #f3400d;
   /* --theme-color: #f33f0da1; */
 }
+.bg-orange {
+  --bs-bg-opacity: 1;
+  background-color: rgba(
+    var(--theme-color-rgb),
+    var(--bs-bg-opacity)
+  ) !important;
+}
+.bg-opacity-10 {
+  --bs-bg-opacity: 0.1 !important;
+}
+.bg-opacity-25 {
+  --bs-bg-opacity: 0.25 !important;
+}
 .fs-7 {
   font-size: 0.9rem !important;
 }

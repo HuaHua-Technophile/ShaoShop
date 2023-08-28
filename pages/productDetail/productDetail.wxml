@@ -43,7 +43,7 @@
       <view class="d-flex align-items-center mb-3" bind:tap="showPageContainer" data-status="0">
         <view class="opacity-50 pe-2 border-end border-black me-2 fs-7 text-center flex-shrink-0 text-nowrap" style="width:65px">已选规格</view>
         <view class="flex-grow-1 d-flex align-items-center justify-content-between">
-          <view>{{goodData.productSpecifications}}</view>
+          <view>{{sum}}</view>
           <view class="iconfont icon-xiangxiajiantou fs-2 lh-1"></view>
         </view>
       </view>
@@ -135,6 +135,17 @@
         <view class="d-flex align-items-center">
           <image src="{{goodSwiper[0].image}}" mode="" class="rounded-4" style="width:200rpx;height:200rpx" />
           <view class="ms-3 fs-1" style="color:rgb(var(--theme-color-rgb));font-family:'YouSheBiaoTiHei';">￥{{optionPrice}}</view>
+        </view>
+        <!-- 商品的规格详情 -->
+        <view>
+          <view wx:for="{{SpecAndSpecValue}}" wx:key="indexi" wx:for-index="indexi" wx:for-item="i">
+            <!-- 规格组名称与规格数量 -->
+            <view class="my-3">{{i.specificationsName}}({{i.productSpecificationsValueList.length}})</view>
+            <!-- 规格详情 -->
+            <view class="d-flex flex-wrap">
+              <view wx:for="{{i.productSpecificationsValueList}}" wx:key="indexj" wx:for-index="indexj" wx:for-item="j" class="py-2 px-5 me-4 mb-2 rounded {{currentSpecifications[i.specificationsName]==j.specificationsValueName?'bg-orange bg-opacity-10':'bg-dark bg-opacity-10'}}" style="{{currentSpecifications[i.specificationsName]==j.specificationsValueName?'color:rgba(var(--theme-color-rgb),1);border:1px solid rgba(var(--theme-color-rgb),0.5)':'border:1px solid transparent'}}" bind:tap="selectThisNorm" data-optionname="{{i.specificationsName}}" data-option="{{j.specificationsValueName}}">{{j.specificationsValueName}}</view>
+            </view>
+          </view>
         </view>
       </view>
       <!-- 购物车底栏 tabbar -->

@@ -14,15 +14,15 @@
       "list": [
         {
           "name": "",
-          "pathName": "pages/cart/cart",
-          "query": "",
+          "pathName": "pages/productDetail/productDetail",
+          "query": "id=1",
           "launchMode": "default",
           "scene": null
         },
         {
           "name": "",
-          "pathName": "pages/productDetail/productDetail",
-          "query": "id=3",
+          "pathName": "pages/cart/cart",
+          "query": "",
           "launchMode": "default",
           "scene": null
         },
