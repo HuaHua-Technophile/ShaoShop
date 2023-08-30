@@ -1,4 +1,4 @@
-export const https = "http://192.168.1.12:8080";
+export const https = "http://192.168.1.8:8080";
 export const ajax = ({ path, data, method = "GET" }) => {
   const app = getApp(); // 获取应用实例
   return new Promise((resolve, reject) => {

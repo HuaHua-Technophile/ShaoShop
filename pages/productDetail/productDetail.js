@@ -1,7 +1,6 @@
 const app = getApp(); // 获取应用实例
 import { isObjectEqual } from "../../utils/util";
-const computedBehavior = require("../../node_modules/miniprogram-computed/dist/index")
-  .behavior;
+const computedBehavior = require("miniprogram-computed").behavior; //安装npm之后，工具---构建npm，再直接导入
 Component({
   // 组件的属性可以用于接收页面的参数
   properties: {
@@ -152,7 +151,7 @@ Component({
             }),
           });
         });
-      // 获取商品规格的所有排列组合
+      // 获取商品规格的所有排列组合(包含价格\库存)
       await app
         .ajax({
           path: "/product/querySpecAndStock",
@@ -167,8 +166,10 @@ Component({
           console.log("获取到了商品规格的排列组合=>", res);
         });
       // 设置默认选择规格
+      console.log("设置默认选择规格", this.data.SpecAndStock);
       this.setData({
         currentSpecifications: this.data.SpecAndStock[0].productSpecList,
+        optionPrice: this.data.SpecAndStock[0].price,
       });
     },
     onReady() {},

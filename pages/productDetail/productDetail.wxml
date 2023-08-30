@@ -22,7 +22,8 @@
       <view class="d-flex align-items-center">
         <view class="flex-grow-1">
           <!-- 商品价格 -->
-          <view style="color:rgb(var(--theme-color-rgb))" class="d-flex lh-1 align-items-center mb-1"><span class="fs-3">￥</span><span wx:if="{{goodData.discountedPrice}}" style="font-family: YouSheBiaoTiHei;font-size: 2.5rem;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)">{{goodData.discountedPrice}}</span><span class="{{goodData.discountedPrice?'text-body-tertiary ms-2 text-decoration-line-through':'fs-1'}}">{{goodData.price}}</span></view>
+          <!-- <view style="color:rgb(var(--theme-color-rgb))" class="d-flex lh-1 align-items-center mb-1"><span class="fs-3">￥</span><span wx:if="{{goodData.discountedPrice}}" style="font-family: YouSheBiaoTiHei;font-size: 2.5rem;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)">{{goodData.discountedPrice}}</span><span class="{{goodData.discountedPrice?'text-body-tertiary ms-2 text-decoration-line-through':'fs-1'}}">{{goodData.price}}</span></view> -->
+          <view style="color:rgb(var(--theme-color-rgb))" class="d-flex lh-1 align-items-center mb-1"><span class="fs-3">￥</span><span style="font-family: YouSheBiaoTiHei;font-size: 2.5rem;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)">{{optionPrice}}</span></view>
           <!-- 商品说明文本 -->
           <view>{{goodData.productName}}</view>
         </view>
