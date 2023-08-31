@@ -7,7 +7,7 @@ Page({
     bulletins: [], //首页公告
     WaterfallRecommendationList: [], // 首页瀑布流推荐
   },
-  onLoad() {
+  onLoadUser() {
     this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
     // 轮播图数据获取
     app.ajax({ path: "/recommend/querySwiper" }).then((res) => {
@@ -43,5 +43,17 @@ Page({
       });
     });
     // console.log(this.data.swiperList, this.data.Classifieds);
+    // 创建用户购物车
+    if (!app.globalData.cart) {
+      app
+        .ajax({
+          path: "/shoppingCart/createShopCart",
+          method: "POST",
+        })
+        .then((res) => {
+          console.log("创建购物车成功=>", res.data);
+          app.globalData.cart = res.data.data;
+        });
+    }
   },
 });

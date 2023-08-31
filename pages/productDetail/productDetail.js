@@ -71,6 +71,8 @@ Component({
         });
       }
     },
+    // 加入购物车
+    addCart() {},
     async onLoad(options) {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
       // 查询底部"加购/购买"栏高度为多少

@@ -131,7 +131,7 @@
   <page-container show="{{pageContainerShow}}" custom-style="background: transparent !important;backdrop-filter: blur(6px);display:flex;justify-content:center;">
     <view class="w-100 pt-3 px-3 bg-body-secondary rounded-top-5 position-relative" style="height: 80vh;">
       <!-- 规格内容区域 -->
-      <view class="border">
+      <view>
         <!-- 当前规格大图，与当前规格价格 -->
         <view class="d-flex align-items-center">
           <image src="{{goodSwiper[0].image}}" mode="" class="rounded-4" style="width:200rpx;height:200rpx" />
@@ -153,7 +153,7 @@
       <view class="w-100 position-absolute bottom-0 start-0">
         <view class="mx-auto my-1 w-75 d-flex align-items-center rounded-pill overflow-hidden text-light" style="height: 95rpx;">
           <!-- 加购/购买按钮 -->
-          <view class="flex-grow-1 d-flex align-items-center justify-content-center h-100" style="background:rgba(var(--theme-color-rgb),1);flex-basis:0" bind:tap="showPageContainer" data-status="1" hidden="{{hiddenTabbarBtn==2}}">加入购物车</view>
+          <view class="flex-grow-1 d-flex align-items-center justify-content-center h-100" style="background:rgba(var(--theme-color-rgb),1);flex-basis:0" bind:tap="addCart" hidden="{{hiddenTabbarBtn==2}}">加入购物车</view>
           <view class="flex-grow-1 bg-warning d-flex align-items-center justify-content-center h-100" style="flex-basis:0" bind:tap="showPageContainer" data-status="1" hidden="{{hiddenTabbarBtn==1}}">立即购买</view>
         </view>
         <!-- 下方安全区域 -->

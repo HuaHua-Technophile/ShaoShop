@@ -1,16 +1,34 @@
 // app.js
 import { https, ajax } from "./api/http";
-App({
-  globalData: {
-    userInfo: { token: null }, //用户登陆状态,包含token等
-    https: https, //请求的地址
-    theme: "", //暗色/亮色
-    navBarFullHeight: 0, // 整个导航栏高度
-    navBarTop: 0, //navbar内容区域顶边距
-    navBarHeight: 0, //navbar内容区域高度
-    navBarWidth: 0, // 胶囊遮挡的不可用区域宽度,用作右外边距/右内边距
+//注册自定义钩子
+import CustomHook from "spa-custom-hooks";
+// 提前在外部定义globaldata
+let globalData = {
+  userInfo: { token: "" }, //用户登陆状态,包含token等
+  https: https, //请求的地址
+  theme: "", //暗色/亮色
+  navBarFullHeight: 0, // 整个导航栏高度
+  navBarTop: 0, //navbar内容区域顶边距
+  navBarHeight: 0, //navbar内容区域高度
+  navBarWidth: 0, // 胶囊遮挡的不可用区域宽度,用作右外边距/右内边距
+  cart: undefined, // 购物车信息
+};
+CustomHook.install(
+  {
+    User: {
+      name: "User",
+      watchKey: "userInfo.token",
+      onUpdate(val) {
+        //获取到userinfo则触发此钩子
+        return !!val;
+      },
+    },
   },
+  globalData || "globalData"
+);
+App({
   onLaunch() {
+    console.log("app.vue页onLaunch");
     const that = this; //存储对象备份,避免随着运行环境的变化,this的指向改变
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect(); // 胶囊按钮位置信息
     that.globalData.navBarFullHeight =
@@ -22,15 +40,27 @@ App({
     wx.getSystemInfo({
       success: (res) => (that.globalData.theme = res.theme),
     });
-    /* // 展示本地存储能力
-    const logs = wx.getStorageSync("logs") || [];
-    logs.unshift(Date.now()); 
-    wx.setStorageSync("logs", logs);*/
-    // 登录
+    // 加载网络字体.若提示 Failed to load font 可直接忽略,属正常现象
+    wx.loadFontFace({
+      global: true,
+      family: "YouSheBiaoTiHei",
+      source: `url("${that.globalData.https}/font/myfont.ttf")`,
+      success: (res) => {
+        console.log("字体加载成功", res);
+      },
+      fail: (err) => {
+        console.log("字体加载失败", err);
+      },
+    });
+    // 尝试获取本地存储的token
     wx.getStorage({
       key: "userInfo",
       success(res) {
+        console.log("通过wx.getStorage拿本地存储的数据=>", res);
         that.globalData.userInfo = res.data;
+      },
+      fail(err) {
+        console.log("本地数据未存放过", err);
       },
     });
     wx.login({
@@ -45,29 +75,18 @@ App({
             method: "POST",
           })
           .then((res) => {
-            console.log('获取到了服务器返回的用户登录数据=>',res)
+            console.log("获取到了服务器返回的用户登录数据=>", res);
             res.data.data.UserInfo.avatarUrl =
               https + "/" + res.data.data.UserInfo.avatarUrl;
             wx.setStorage({
               key: "userInfo",
               data: res.data.data,
-            });
-            console.log("服务器返回用户信息,存入本地", res);
+            }); //将数据存入本地持久化,以便于在上方的getStorage
+            that.globalData.userInfo = res.data.data;
           });
       },
     });
-    // 下载网络字体
-    wx.loadFontFace({
-      global: true,
-      family: "YouSheBiaoTiHei",
-      source: `url("${that.globalData.https}/font/myfont.ttf")`,
-      success: (res) => {
-        console.log("字体加载成功", res);
-      },
-      fail: (err) => {
-        console.log("字体加载失败", err);
-      },
-    });
   },
-  ajax: ajax, //封装好的ajax请求方法
+  globalData, //提前定义的全局数据
+  ajax, //封装好的ajax请求方法
 });

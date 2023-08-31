@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "miniprogram-computed": "^4.4.0"
+    "miniprogram-computed": "^4.4.0",
+    "spa-custom-hooks": "^1.2.7"
   }
 }
