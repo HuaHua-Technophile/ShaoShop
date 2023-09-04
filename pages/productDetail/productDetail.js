@@ -17,16 +17,22 @@ Component({
     cartTabbarHeight: 0, //底部"加购/购买"栏的高度
     pageContainerShow: false, //假页面容器显示状态
     hiddenTabbarBtn: 0, //是同时展示加购/购买,还是其中一个
-    optionPrice: 0, // 当前选择项的价格
     SpecAndSpecValue: [], //商品的所有规格
     SpecAndStock: [], //商品的全部规格的排列组合
     currentSpecifications: {}, // 当前商品点击了哪些选项
+    optionPrice: 0, // 当前选择项的价格
+    specCombId: -1, // 当前规格的排列组合的id
+    stock: -1, //当前规格的剩余库存
   },
   computed: {
-    sum(data) {
-      // 注意： computed 函数中不能访问 this ，只有 data 对象可供访问
+    SelectedSpecification(data) {
+      // 注意：computed 函数中不能访问 this ，只有 data 对象可供访问
       // 这个函数的返回值会被设置到 this.data.sum 字段中
-      return JSON.stringify(data.currentSpecifications);
+      let arr = [];
+      for (let key in data.currentSpecifications) {
+        arr.push(data.currentSpecifications[key]);
+      }
+      return arr;
     },
   },
   methods: {
@@ -37,7 +43,7 @@ Component({
         activeIndex: e.detail.current,
       });
     },
-    // 点击选择规格,并加入购物车/立即购买
+    // 点击选择规格/加入购物车/立即购买,展示假页面容器
     showPageContainer(e) {
       this.setData({
         pageContainerShow: true,
@@ -47,32 +53,63 @@ Component({
     },
     // 点击详细规格,展示价格,与切换预览图
     selectThisNorm(e) {
-      let currentSpecifications = this.data.currentSpecifications;
+      const A = this.data.currentSpecifications; // 当前商品点击了哪些选项
+      const SpecAndStock = this.data.SpecAndStock; //商品的全部规格的排列组合
       if (
-        currentSpecifications[e.currentTarget.dataset.optionname] ==
-        e.currentTarget.dataset.option
+        A[e.currentTarget.dataset.optionname] == e.currentTarget.dataset.option
       ) {
-        currentSpecifications[e.currentTarget.dataset.optionname] = undefined;
+        A[e.currentTarget.dataset.optionname] = undefined; //清空赋值
         this.setData({
+          stock: -1,
+          specCombId: -1,
           optionPrice: 0,
-          currentSpecifications: currentSpecifications,
+          currentSpecifications: A,
         });
       } else {
-        currentSpecifications[e.currentTarget.dataset.optionname] =
-          e.currentTarget.dataset.option;
-        this.setData({ currentSpecifications });
-        this.data.SpecAndStock.forEach((i) => {
-          if (
-            isObjectEqual(i.productSpecList, this.data.currentSpecifications)
-          ) {
-            console.log("匹配到了=>", i);
-            this.setData({ optionPrice: i.price });
+        A[e.currentTarget.dataset.optionname] = e.currentTarget.dataset.option; //赋值
+        this.setData({ currentSpecifications: A });
+        //商品的全部规格的排列组合
+        SpecAndStock.forEach((i) => {
+          if (isObjectEqual(i.productSpecList, A)) {
+            this.setData({
+              optionPrice: i.price,
+              specCombId: i.id,
+              stock: i.stock,
+            });
           }
         });
       }
     },
-    // 加入购物车
-    addCart() {},
+    // 加入购物车/添加购物车
+    addCart() {
+      if (this.data.specCombId != -1 && this.data.stock > 0) {
+        app
+          .ajax({
+            /* path: "/shoppingCart/addGoodsBySpecId",
+            data: {
+              productId: this.data.id, //当前商品id
+              specCombId: this.data.specCombId, //当前规格组合的id
+            },
+            method: "POST", */
+            path: "/shoppingCart/addGoodsBySpecId",
+            method: "POST",
+            data: {
+              specCombId: this.data.specCombId,
+              productId: this.data.id,
+            },
+          })
+          .then((res) => {
+            wx.showToast({ title: "添加成功" });
+            this.setData({ pageContainerShow: false });
+            console.log(
+              `将商品${this.data.id}的组合${this.data.specCombId}添加进了购物车`,
+              res
+            );
+          });
+      } else {
+        wx.showToast({ title: "暂无库存哦", icon: "error" });
+      }
+    },
     async onLoad(options) {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
       // 查询底部"加购/购买"栏高度为多少
@@ -121,9 +158,18 @@ Component({
           },
         })
         .then((res) => {
-          this.setData({
-            SpecAndSpecValue: res.data.data,
+          let SpecAndSpecValue = res.data.data.map((i) => {
+            if (i.isShow) {
+              i.productSpecificationsValueList = i.productSpecificationsValueList.map(
+                (j) => {
+                  j.specImage = app.globalData.https + j.specImage;
+                  return j;
+                }
+              );
+            }
+            return i;
           });
+          this.setData({ SpecAndSpecValue });
           console.log("获取到了商品规格=>", res);
         });
       // 获取商品标签
@@ -165,13 +211,15 @@ Component({
           this.setData({
             SpecAndStock: res.data.data,
           });
-          console.log("获取到了商品规格的排列组合=>", res);
+          console.log("获取到了商品规格的排列组合=>", this.data.SpecAndStock);
         });
       // 设置默认选择规格
       console.log("设置默认选择规格", this.data.SpecAndStock);
       this.setData({
         currentSpecifications: this.data.SpecAndStock[0].productSpecList,
         optionPrice: this.data.SpecAndStock[0].price,
+        specCombId: this.data.SpecAndStock[0].id,
+        stock: this.data.SpecAndStock[0].stock,
       });
     },
     onReady() {},

@@ -8,6 +8,7 @@ Page({
     WaterfallRecommendationList: [], // 首页瀑布流推荐
   },
   onLoadUser() {
+    console.log("进入了onLoadUser生命周期");
     this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
     // 轮播图数据获取
     app.ajax({ path: "/recommend/querySwiper" }).then((res) => {

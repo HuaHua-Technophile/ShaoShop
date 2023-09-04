@@ -4,7 +4,7 @@ import { https, ajax } from "./api/http";
 import CustomHook from "spa-custom-hooks";
 // 提前在外部定义globaldata
 let globalData = {
-  userInfo: { token: "" }, //用户登陆状态,包含token等
+  userInfo: {}, //用户登陆状态,包含token等
   https: https, //请求的地址
   theme: "", //暗色/亮色
   navBarFullHeight: 0, // 整个导航栏高度
@@ -17,10 +17,11 @@ CustomHook.install(
   {
     User: {
       name: "User",
-      watchKey: "userInfo.token",
+      watchKey: "userInfo",
+      deep: true,
       onUpdate(val) {
         //获取到userinfo则触发此钩子
-        return !!val;
+        return !!val.token;
       },
     },
   },
@@ -52,17 +53,6 @@ App({
         console.log("字体加载失败", err);
       },
     });
-    // 尝试获取本地存储的token
-    wx.getStorage({
-      key: "userInfo",
-      success(res) {
-        console.log("通过wx.getStorage拿本地存储的数据=>", res);
-        that.globalData.userInfo = res.data;
-      },
-      fail(err) {
-        console.log("本地数据未存放过", err);
-      },
-    });
     wx.login({
       success: (loginRes) => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
@@ -78,10 +68,6 @@ App({
             console.log("获取到了服务器返回的用户登录数据=>", res);
             res.data.data.UserInfo.avatarUrl =
               https + "/" + res.data.data.UserInfo.avatarUrl;
-            wx.setStorage({
-              key: "userInfo",
-              data: res.data.data,
-            }); //将数据存入本地持久化,以便于在上方的getStorage
             that.globalData.userInfo = res.data.data;
           });
       },

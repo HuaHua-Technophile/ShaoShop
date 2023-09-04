@@ -1,8 +1,18 @@
 <view>
   <custom-navbar></custom-navbar>
   <view class="vh-100 noScrollBar overflow-scroll" style="padding-top: {{navBarFullHeight+15}}px;">
+    <!-- 购物车 -->
+    <view wx:if="{{cart.shoppingcartItemList.length > 0}}" class="overflow-scroll" style="height: calc(100% - {{checkoutTabbarHeight}}px);">
+      <view wx:for="{{cart.shoppingcartItemList}}" wx:key="index" class="border p-5 d-flex align-items-center">
+        <radio checked="{{cart.shoppingcartItemList[index].checked}}" color="rgba(243,64,13,1)" bind:tap="selectThisGoods" data-index="{{index}}" />
+        <view>
+          <view>{{item.productName}}</view>
+          <view>{{index}}<span wx:for="{{productSpecList[index]}}" wx:key="index">{{item}}<span wx:if="{{index < productSpecList[index].length -1}}" class="mx-1 opacity-25">|</span></span></view>
+        </view>
+      </view>
+    </view>
     <!-- 购物车为空 -->
-    <view wx:if="{{cartList.length == 0}}" class="opacity-50 w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+    <view wx:else class="opacity-50 w-100 h-100 d-flex flex-column align-items-center justify-content-center">
       <view class="position-relative">
         <!-- 购物车为空的补充视觉效果 -->
         <view class="cart-nothing"></view>
@@ -10,9 +20,6 @@
       </view>
       <view>购物车空空如也</view>
       <view>来挑几件好货吧!</view>
-    </view>
-    <!-- 购物车 -->
-    <view wx:else class="overflow-scroll" style="height: calc(100% - {{checkoutTabbarHeight}}px);">
     </view>
     <!-- 底栏 -->
     <view class="checkout-tabbar position-fixed bottom-0 shadow-lg w-100 d-flex align-items-center justify-content-between px-3 py-2">
