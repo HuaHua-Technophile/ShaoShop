@@ -7,7 +7,7 @@
         <radio checked="{{cart.shoppingcartItemList[index].checked}}" color="rgba(243,64,13,1)" bind:tap="selectThisGoods" data-index="{{index}}" />
         <view>
           <view>{{item.productName}}</view>
-          <view>{{index}}<span wx:for="{{productSpecList[index]}}" wx:key="index">{{item}}<span wx:if="{{index < productSpecList[index].length -1}}" class="mx-1 opacity-25">|</span></span></view>
+          <view><span wx:for="{{productSpecList[index]}}" wx:for-item="j" wx:for-index="indexj" wx:key="indexj">{{j}}<span wx:if="{{indexj < productSpecList[index].length -1}}" class="mx-1 opacity-25">|</span></span></view>
         </view>
       </view>
     </view>
