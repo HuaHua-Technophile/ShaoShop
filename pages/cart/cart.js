@@ -25,7 +25,7 @@ Component({
     // 点击全选/取消全选
     allSelectChange() {
       let cart = this.data.cart;
-      cart.shoppingcartItemList = cart.shoppingcartItemList.map((i) => {
+      cart.shoppingCartItemList = cart.shoppingCartItemList.map((i) => {
         i.checked = !this.data.allSelect;
         return i;
       });
@@ -36,44 +36,42 @@ Component({
     },
     // 点击勾选某个商品
     selectThisGoods(e) {
-      let cart = this.data.cart;
-      if (cart.shoppingcartItemList[e.currentTarget.dataset.index].checked) {
-        cart.shoppingcartItemList[
-          e.currentTarget.dataset.index
-        ].checked = false;
+      let shoppingCartItemList = this.data.cart.shoppingCartItemList;
+      if (shoppingCartItemList[e.currentTarget.dataset.index].checked) {
+        shoppingCartItemList[e.currentTarget.dataset.index].checked = false;
       } else {
-        cart.shoppingcartItemList[e.currentTarget.dataset.index].checked = true;
+        shoppingCartItemList[e.currentTarget.dataset.index].checked = true;
       }
-      let allSelect = cart.shoppingcartItemList.every((i) => {
+      let allSelect = shoppingCartItemList.every((i) => {
         return i.checked;
       });
       this.setData({
-        cart,
+        "cart.shoppingCartItemList": shoppingCartItemList,
         allSelect,
       });
     },
     // 购物车修改商品数量
     changeGoodsNum(e) {
-      let shoppingcartItemList = this.data.cart.shoppingcartItemList;
+      let shoppingCartItemList = this.data.cart.shoppingCartItemList;
       let initialValue =
-        shoppingcartItemList[e.currentTarget.dataset.index].quantity; //初始值
+        shoppingCartItemList[e.currentTarget.dataset.index].quantity; //初始值
       console.log(
         "对该商品进行加购/减购=>",
-        shoppingcartItemList[e.currentTarget.dataset.index]
+        shoppingCartItemList[e.currentTarget.dataset.index]
       );
       // 如果是点击加减按钮
       if (e.currentTarget.dataset.calculate) {
         if (e.currentTarget.dataset.calculate == "minus")
-          shoppingcartItemList[e.currentTarget.dataset.index].quantity -= 1;
-        else shoppingcartItemList[e.currentTarget.dataset.index].quantity += 1;
+          shoppingCartItemList[e.currentTarget.dataset.index].quantity -= 1;
+        else shoppingCartItemList[e.currentTarget.dataset.index].quantity += 1;
       }
       // 或者是直接输入
       else {
-        shoppingcartItemList[e.currentTarget.dataset.index].quantity =
+        shoppingCartItemList[e.currentTarget.dataset.index].quantity =
           e.detail.value;
       }
       let num = Number(
-        shoppingcartItemList[e.currentTarget.dataset.index].quantity
+        shoppingCartItemList[e.currentTarget.dataset.index].quantity
       );
       if (num >= 1) {
         if (num > 999) {
@@ -90,13 +88,13 @@ Component({
         });
         num = 1;
       }
-      shoppingcartItemList[e.currentTarget.dataset.index].quantity = num;
+      shoppingCartItemList[e.currentTarget.dataset.index].quantity = num;
       app
         .ajax({
           path: "/shoppingCart/updateGoodsNum",
           data: {
             specCombId:
-              shoppingcartItemList[e.currentTarget.dataset.index]
+              shoppingCartItemList[e.currentTarget.dataset.index]
                 .specificationsCombId, //规格的排列组合的id
             quantity: num, //要更新为多少个
           },
@@ -110,14 +108,60 @@ Component({
                 title: "剩余库存不足",
                 icon: "error",
               });
-            shoppingcartItemList[
+            shoppingCartItemList[
               e.currentTarget.dataset.index
             ].quantity = initialValue;
-            this.setData({ "cart.shoppingcartItemList": shoppingcartItemList });
+            this.setData({ "cart.shoppingCartItemList": shoppingCartItemList });
           } else if (res.data.code == 200) {
-            this.setData({ "cart.shoppingcartItemList": shoppingcartItemList });
+            this.setData({ "cart.shoppingCartItemList": shoppingCartItemList });
           }
         });
+    },
+    // 删除商品
+    deleteGoods() {
+      let shoppingCartItemList = this.data.cart.shoppingCartItemList;
+      // 判断当前勾选了多少商品
+      if (this.data.allSelect) {
+        console.log("全选了,全部清空");
+        app
+          .ajax({
+            path: "/shoppingCart/delAllGoods",
+            method: "POST",
+          })
+          .then((res) => {
+            console.log("删除成功=>", res);
+            if (res.data.code == 200) {
+              this.onShow();
+            }
+          });
+      } else {
+        let specCombIds = [];
+        shoppingCartItemList.forEach((i) => {
+          if (i.checked) specCombIds.push(i.specificationsCombId);
+        });
+        if (specCombIds.length > 0) {
+          console.log("勾选了这些规格组合=>", specCombIds);
+          app
+            .ajax({
+              path: "/shoppingCart/delGoods",
+              data: {
+                specCombIds: specCombIds,
+              },
+              method: "POST",
+            })
+            .then((res) => {
+              console.log("删除成功=>", res);
+              if (res.data.code == 200) {
+                this.onShow();
+              }
+            });
+        } else {
+          wx.showToast({
+            title: "您未勾选商品",
+            icon: "error",
+          });
+        }
+      }
     },
     onLoad(options) {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
@@ -142,10 +186,10 @@ Component({
           let cart = res.data.data;
           console.log("获取到了当前用户的购物车=>", cart);
           if (
-            cart.shoppingcartItemList &&
-            cart.shoppingcartItemList.length > 0
+            cart.shoppingCartItemList &&
+            cart.shoppingCartItemList.length > 0
           ) {
-            cart.shoppingcartItemList = cart.shoppingcartItemList.map((i) => {
+            cart.shoppingCartItemList = cart.shoppingCartItemList.map((i) => {
               i.specImages = app.globalData.https + i.specImages;
               i.productSpec = Object.keys(i.productSpec).map((j) => {
                 return i.productSpec[j];
