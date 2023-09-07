@@ -173,7 +173,7 @@
           </view>
         </view>
       </view>
-      <!-- 购物车底栏 tabbar -->
+      <!-- 购物车底栏tabbar -->
       <view class="w-100 flex-shrink-0 {{stock == 0 ?'opacity-50':''}}">
         <view class="mx-auto my-1 w-75 d-flex align-items-center text-light" style="height: 95rpx;">
           <!-- 加购/购买按钮 -->

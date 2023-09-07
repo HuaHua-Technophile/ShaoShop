@@ -5,6 +5,7 @@ Component({
   data: {
     navBarFullHeight: 0, // 整个导航栏高度
     cart: {}, //购物车列表
+    specCombIds: [], //已勾选的组合id
     allSelect: false, //是否购物车全选
     allPrice: 0, //所有商品的价格
     checkoutTabbarHeight: 0, //底部"结算"栏高度
@@ -24,15 +25,23 @@ Component({
   methods: {
     // 点击全选/取消全选
     allSelectChange() {
-      let cart = this.data.cart;
-      cart.shoppingCartItemList = cart.shoppingCartItemList.map((i) => {
-        i.checked = !this.data.allSelect;
-        return i;
-      });
+      let shoppingCartItemList = this.data.cart.shoppingCartItemList.map(
+        (i) => {
+          i.checked = !this.data.allSelect;
+          return i;
+        }
+      );
+      let specCombIds = [];
+      if (!this.data.allSelect)
+        specCombIds = shoppingCartItemList.map((i) => {
+          return i.specificationsCombId;
+        });
       this.setData({
         allSelect: !this.data.allSelect,
-        cart,
+        "cart.shoppingCartItemList": shoppingCartItemList,
+        specCombIds: specCombIds,
       });
+      this.changeAllPrice();
     },
     // 点击勾选某个商品
     selectThisGoods(e) {
@@ -42,15 +51,36 @@ Component({
       } else {
         shoppingCartItemList[e.currentTarget.dataset.index].checked = true;
       }
-      let allSelect = shoppingCartItemList.every((i) => {
-        return i.checked;
+      let specCombIds = [];
+      shoppingCartItemList.forEach((i) => {
+        if (i.checked) specCombIds.push(i.specificationsCombId);
       });
+      let allSelect = null;
+      if (specCombIds.length == shoppingCartItemList.length) allSelect = true;
+      else allSelect = false;
       this.setData({
         "cart.shoppingCartItemList": shoppingCartItemList,
         allSelect,
+        specCombIds,
       });
+      this.changeAllPrice();
     },
-    // 购物车修改商品数量
+    // 修改商品总价
+    changeAllPrice() {
+      app
+        .ajax({
+          path: "/shoppingCart/computeGoodsAndPrice",
+          data: { specCombIds: this.data.specCombIds },
+          method: "POST",
+        })
+        .then((res) => {
+          console.log("购物车总价和总数", res);
+          this.setData({
+            allPrice: res.data.data,
+          });
+        });
+    },
+    // 购物车修改商品数量,维护一个已勾选的数组，需要发送请求计算价格，并为“删除”做准备
     changeGoodsNum(e) {
       let shoppingCartItemList = this.data.cart.shoppingCartItemList;
       let initialValue =
@@ -119,7 +149,6 @@ Component({
     },
     // 删除商品
     deleteGoods() {
-      let shoppingCartItemList = this.data.cart.shoppingCartItemList;
       // 判断当前勾选了多少商品
       if (this.data.allSelect) {
         console.log("全选了,全部清空");
@@ -136,17 +165,13 @@ Component({
             }
           });
       } else {
-        let specCombIds = [];
-        shoppingCartItemList.forEach((i) => {
-          if (i.checked) specCombIds.push(i.specificationsCombId);
-        });
-        if (specCombIds.length > 0) {
-          console.log("勾选了这些规格组合=>", specCombIds);
+        if (this.data.specCombIds.length > 0) {
+          console.log("勾选了这些规格组合=>", this.data.specCombIds);
           app
             .ajax({
               path: "/shoppingCart/delGoods",
               data: {
-                specCombIds: specCombIds,
+                specCombIds: this.data.specCombIds,
               },
               method: "POST",
             })
