@@ -140,9 +140,10 @@
           </view>
           <view hidden="{{stock <= -1}}" class="opacity-50">库存:{{stock}}</view>
         </view>
-        <!-- 商品的规格详情 -->
+        <!-- 商品的规格详情与加入购物车数量选择 -->
         <view class="overflow-scroll noScrollBar">
-          <view wx:for="{{SpecAndSpecValue}}" wx:key="indexi" wx:for-index="indexi" wx:for-item="i">
+          <!-- 商品的规格详情 -->
+          <view wx:for="{{SpecAndSpecValue}}" wx:key="indexi" wx:for-index="indexi" wx:for-item="i" class="overflow-hidden">
             <!-- 规格组名称与规格数量 -->
             <view class="my-3">{{i.specificationsName}}({{i.productSpecificationsValueList.length}})</view>
             <!-- 规格详情 -->
@@ -156,6 +157,16 @@
             </view>
             <view wx:else class="d-flex flex-wrap">
               <view wx:for="{{i.productSpecificationsValueList}}" wx:key="indexj" wx:for-index="indexj" wx:for-item="j" class="py-2 px-5 me-4 mb-2 rounded {{currentSpecifications[i.specificationsName]==j.specificationsValueName?'bg-orange bg-opacity-10':'bg-dark bg-opacity-10'}}" style="{{currentSpecifications[i.specificationsName]==j.specificationsValueName?'color:rgba(var(--theme-color-rgb),1);border:1px solid rgba(var(--theme-color-rgb),0.5)':'border:1px solid transparent'}}" bind:tap="selectThisNorm" data-optionname="{{i.specificationsName}}" data-option="{{j.specificationsValueName}}">{{j.specificationsValueName}}</view>
+            </view>
+          </view>
+          <!-- 单次加入购物车的数量 -->
+          <view class="mt-3 d-flex align-items-center justify-content-between">
+            数量
+            <!-- 商品数量加减 -->
+            <view class="border rounded-pill d-inline-flex justify-content-center align-items-center fs-8 opacity-50" style="height:45rpx;padding:0 13rpx;">
+              <view class="iconfont icon-function_minus" bind:tap="changeQuantity" data-calculate="minus"></view>
+              <input class="h-100 border-start border-end d-flex align-items-center text-center" style="width: 50rpx;margin: 0 10rpx;" type="number" maxlength="3" value="{{quantity}}" bind:blur="changeQuantity" ></input>
+              <view class="iconfont icon-jia" bind:tap="changeQuantity" data-calculate="add"></view>
             </view>
           </view>
         </view>

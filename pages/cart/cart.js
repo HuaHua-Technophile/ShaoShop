@@ -126,12 +126,13 @@ Component({
         app
           .ajax({
             path: "/shoppingCart/delAllGoods",
-            method: "POST",
+            method: "DELETE",
           })
           .then((res) => {
             console.log("删除成功=>", res);
             if (res.data.code == 200) {
               this.onShow();
+              this.setData({ allSelect: false });
             }
           });
       } else {

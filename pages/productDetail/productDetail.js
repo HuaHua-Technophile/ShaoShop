@@ -23,6 +23,7 @@ Component({
     optionPrice: 0, // 当前选择项的价格
     specCombId: -1, // 当前规格的排列组合的id
     stock: -1, //当前规格的剩余库存
+    quantity: 1, //商品的要加入购物车的数量
   },
   computed: {
     SelectedSpecification(data) {
@@ -64,6 +65,7 @@ Component({
           specCombId: -1,
           optionPrice: 0,
           currentSpecifications: A,
+          quantity: 1,
         });
       } else {
         A[e.currentTarget.dataset.optionname] = e.currentTarget.dataset.option; //赋值
@@ -75,6 +77,7 @@ Component({
               optionPrice: i.price,
               specCombId: i.id,
               stock: i.stock,
+              quantity: 1,
             });
           }
         });
@@ -96,6 +99,7 @@ Component({
             data: {
               specCombId: this.data.specCombId,
               productId: this.data.id,
+              quantity: this.data.quantity,
             },
           })
           .then((res) => {
@@ -109,6 +113,39 @@ Component({
       } else {
         wx.showToast({ title: "暂无库存哦", icon: "error" });
       }
+    },
+    // 修改要加入购物车的数量
+    changeQuantity(e) {
+      let initialValue = this.data.quantity; //初始值
+      let num = this.data.quantity;
+      console.log("初始值=>", initialValue);
+      // 如果是点击加减按钮
+      if (e.currentTarget.dataset.calculate) {
+        if (e.currentTarget.dataset.calculate == "minus") num -= 1;
+        else num += 1;
+      }
+      // 或者是直接输入
+      else {
+        num = e.detail.value;
+      }
+      if (num >= 1) {
+        if (num > this.data.stock) {
+          wx.showToast({
+            title: "超出库存",
+            icon: "error",
+          });
+          num = this.data.stock;
+        }
+      } else {
+        wx.showToast({
+          title: "最少一件",
+          icon: "error",
+        });
+        num = 1;
+      }
+      this.setData({
+        quantity: num,
+      });
     },
     async onLoad(options) {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
