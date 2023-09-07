@@ -130,6 +130,8 @@
   <!-- 假页面容器组件 -->
   <page-container show="{{pageContainerShow}}" custom-style="background: transparent !important;backdrop-filter: blur(6px);display:flex;justify-content:center;">
     <view class="w-100 pt-3 px-3 d-flex flex-column bg-body-secondary rounded-top-5 position-relative" style="height: 80vh;">
+      <!-- 右上角关闭按钮 -->
+      <view class="position-absolute end-0 top-0 opacity-50 iconfont icon-guanbi-xianxing3-0" style="font-size: 70rpx;margin: 10rpx 10rpx 0 0;text-shadow: 1px 1px 2px rgba(0, 0, 0, .8);" bind:tap="hiddenPageContainer"></view>
       <!-- 规格内容区域 -->
       <view class="flex-grow-1 overflow-hidden d-flex flex-column">
         <!-- 当前规格大图，与当前规格价格 -->

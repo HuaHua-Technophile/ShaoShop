@@ -52,6 +52,10 @@ Component({
       });
       console.log("点击显示规格弹窗", e, this.data.hiddenTabbarBtn);
     },
+    // 点击隐藏假页面容器
+    hiddenPageContainer() {
+      this.setData({ pageContainerShow: false });
+    },
     // 点击详细规格,展示价格,与切换预览图
     selectThisNorm(e) {
       const A = this.data.currentSpecifications; // 当前商品点击了哪些选项
