@@ -1,14 +1,14 @@
 <view>
   <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
   <view class="vh-100 noScrollBar overflow-scroll d-flex flex-column" style="padding-top: {{navBarFullHeight+15}}px;">
-    <view class="flex-grow-1 d-flex justify-content-center align-items-center" style="background:linear-gradient(transparent,#e9ecef)">暂无收货地址</view>
+    <view class="flex-grow-1 d-flex justify-content-center align-items-center" style="background:linear-gradient(transparent,var(--Solitude-color))">暂无收货地址</view>
     <!-- 下方底栏:删除/新建收获地址 -->
     <view class="w-100 flex-shrink-0 bg-Solitude">
       <view class="my-2 px-2 w-100 d-flex justify-content-around align-items-center text-nowrap" style="height: 80rpx;">
         <!-- 批量删除 -->
         <button hover-class="hoverShadowBtn" class="bg-Solitude shadowBtn rounded-pill h-100 d-flex align-items-center justify-content-center text-secondary" style="width: 30%;">批量删除</button>
         <!-- 新建地址 -->
-        <button hover-class="hoverShadowBtn" class="bg-Solitude shadowBtn rounded-pill h-100 d-flex align-items-center justify-content-center" style="width: 45%;color:rgba(var(--theme-color-rgb),1)" bind:tap="">新建地址</button>
+        <button hover-class="hoverShadowBtn" class="bg-Solitude shadowBtn rounded-pill h-100 d-flex align-items-center justify-content-center" style="width: 45%;color:rgba(var(--theme-color-rgb),1)" bind:tap="newAddress">新建地址</button>
       </view>
       <!-- 下方安全区域 -->
       <view class="safe-area-inset-bottom" style="height:calc(env(safe-area-inset-bottom) - 28rpx);"></view>

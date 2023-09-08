@@ -5,7 +5,8 @@
     "pages/cart/cart",
     "pages/mine/mine",
     "pages/productDetail/productDetail",
-    "pages/addressManagement/addressManagement"
+    "pages/addressManagement/addressManagement",
+    "pages/newAddress/newAddress"
   ],
   "window": {
     "navigationStyle": "custom"

@@ -1,0 +1,42 @@
+<view>
+  <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
+  <view class="vh-100 noScrollBar overflow-scroll d-flex flex-column" style="padding-top: {{navBarFullHeight+15}}px;">
+    <!-- 编辑地址 -->
+    <view class="flex-grow-1" style="background:linear-gradient(transparent,var(--Solitude-color))">
+      <view class="d-flex px-3 align-items-center">
+        <view class="fs-5 ">收货姓名</view>
+        <view class="ms-3 ps-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 100rpx;background: rgb(245, 245, 245);">
+          <input type="text" placeholder="名字" class="w-100" />
+        </view>
+      </view>
+      <view class="d-flex px-3 align-items-center mt-4">
+        <view class="fs-5 ">手机号码</view>
+        <view class="ms-3 ps-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 100rpx;background: rgb(245, 245, 245);">
+          <input type="text" placeholder="手机号" class="w-100" />
+        </view>
+      </view>
+      <view class="d-flex px-3 align-items-center mt-4">
+        <view class="fs-5 ">所在地区</view>
+        <view class="ms-3 ps-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 100rpx;background: rgb(245, 245, 245);">
+          <input type="text" placeholder="省、市、区、街道" class="w-100" />
+        </view>
+      </view>
+      <view class="d-flex px-3 align-items-center mt-4">
+        <view class="fs-5 ">详细地址</view>
+        <view class="ms-3 ps-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 200rpx;background: rgb(245, 245, 245);">
+          <input type="text" placeholder="乡村名称、小区、楼栋" class="w-100" />
+        </view>
+      </view>
+      <view class="fs-5 d-flex px-3 mt-4 justify-content-between">
+        设为默认收货地址
+        <radio value="" />
+      </view>
+    </view>
+    <!-- 确认保存 -->
+    <view class="shrink-0 bg-Solitude">
+      <!-- 新建地址 -->
+      <button hover-class="hoverShadowBtn" class="bg-Solitude shadowBtn rounded-pill my-2 d-flex align-items-center justify-content-center" style="width: 68%;height:80rpx;color:rgba(var(--theme-color-rgb),1)">确认保存</button>
+      <view class="safe-area-inset-bottom" style="height:calc(env(safe-area-inset-bottom) - 28rpx);"></view>
+    </view>
+  </view>
+</view>
