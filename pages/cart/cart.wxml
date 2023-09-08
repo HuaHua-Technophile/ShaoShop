@@ -46,7 +46,7 @@
       <view>来挑几件好货吧!</view>
     </view>
     <!-- 底栏 -->
-    <view class="flex-shrink-0 checkout-tabbar position-fixed bottom-0 shadow-lg w-100 d-flex align-items-center justify-content-between px-3 py-2">
+    <view class="flex-shrink-0 checkout-tabbar shadow-lg w-100 d-flex align-items-center justify-content-between px-3 py-2 bg-white">
       <view class="d-flex align-items-center" bind:tap="allSelectChange">
         <radio checked="{{allSelect}}" color="rgba(243,64,13,1)" />
         <view>全选</view>

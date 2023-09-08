@@ -4,6 +4,12 @@ Page({
     navBarFullHeight: 0, // 整个导航栏高度
     userInfo: null, //用户信息
   },
+  newPage(e) {
+    console.log("跳转页面", e);
+    wx.navigateTo({
+      url: `/pages/${e.currentTarget.dataset.pageurl}/${e.currentTarget.dataset.pageurl}`,
+    });
+  },
   onLoad(options) {
     this.setData({
       navBarFullHeight: app.globalData.navBarFullHeight,

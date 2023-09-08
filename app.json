@@ -4,7 +4,8 @@
     "pages/classification/classification",
     "pages/cart/cart",
     "pages/mine/mine",
-    "pages/productDetail/productDetail"
+    "pages/productDetail/productDetail",
+    "pages/addressManagement/addressManagement"
   ],
   "window": {
     "navigationStyle": "custom"

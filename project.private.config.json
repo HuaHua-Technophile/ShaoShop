@@ -8,10 +8,17 @@
     "bigPackageSizeSupport": true,
     "autoAudits": false
   },
-  "libVersion": "3.0.0",
+  "libVersion": "3.0.2",
   "condition": {
     "miniprogram": {
       "list": [
+        {
+          "name": "",
+          "pathName": "pages/addressManagement/addressManagement",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
         {
           "name": "",
           "pathName": "pages/productDetail/productDetail",

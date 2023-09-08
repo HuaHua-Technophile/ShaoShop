@@ -18,12 +18,21 @@ icon,
 picker {
   --theme-color-rgb: 243, 64, 13;
   --theme-color: #f3400d;
+  --Solitude-color-rgb: 233, 236, 239;
+  --Solitude-color: #e9ecef;
   /* --theme-color: #f33f0da1; */
 }
 .bg-orange {
   --bs-bg-opacity: 1;
   background-color: rgba(
     var(--theme-color-rgb),
+    var(--bs-bg-opacity)
+  ) !important;
+}
+.bg-Solitude {
+  --bs-bg-opacity: 1;
+  background-color: rgba(
+    var(--Solitude-color-rgb),
     var(--bs-bg-opacity)
   ) !important;
 }
