@@ -6,7 +6,8 @@
     "pages/mine/mine",
     "pages/productDetail/productDetail",
     "pages/addressManagement/addressManagement",
-    "pages/newAddress/newAddress"
+    "pages/newAddress/newAddress",
+    "pages/searchInput/searchInput"
   ],
   "window": {
     "navigationStyle": "custom"

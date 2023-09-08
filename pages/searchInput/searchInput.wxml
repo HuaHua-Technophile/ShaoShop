@@ -1,0 +1,6 @@
+<view>
+  <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
+  <view class="vh-100 noScrollBar overflow-scroll d-flex flex-column" style="padding-top: {{navBarFullHeight+15}}px;">
+
+  </view>
+</view>

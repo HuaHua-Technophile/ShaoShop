@@ -29,7 +29,7 @@ Component({
   },
   methods: {
     toSearch() {
-      console.log("跳转至搜索");
+      wx.navigateTo({ url: "/pages/searchInput/searchInput" });
     },
     goBack() {
       wx.navigateBack();
