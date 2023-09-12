@@ -1,7 +1,32 @@
 <view>
   <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
   <view class="vh-100 noScrollBar overflow-scroll d-flex flex-column" style="padding-top: {{navBarFullHeight+15}}px;">
-    <view class="flex-grow-1 d-flex justify-content-center align-items-center" style="background:linear-gradient(transparent,var(--Solitude-color))">暂无收货地址</view>
+    <!-- 收货地址不为空 -->
+    <view wx:if="{{addressList.length > 0}}" class="flex-grow-1" style="background:linear-gradient(transparent,var(--Solitude-color))">
+      <view wx:for="{{addressList}}" wx:key="index" class="d-flex shadow bg-white p-3 mx-3 mb-3 rounded-4">
+        <!-- 内容区域 -->
+        <view class="flex-grow-1">
+          <!-- 一级粗略地址 -->
+          <view>{{item.areaName}} {{item.cityName}} {{item.provinceName}} {{item.street}}</view>
+          <!-- 二级详细地址 -->
+          <view class="fs-5 fw-bold mt-1 opacity-75">{{item.address}}</view>
+          <!-- 收货人姓名/电话 -->
+          <view class="opacity-50 mt-1">
+            <span class="fw-bold me-2">{{item.name}}</span>
+            {{item.mobile[0]+item.mobile[1]+item.mobile[2]+item.mobile[3]+"****"+item.mobile[7]+item.mobile[8]+item.mobile[9]+item.mobile[10]}}
+          </view>
+        </view>
+        <!-- 右侧编辑图标/多选 -->
+        <view class="flex-shrink-0">
+          <!-- 编辑 -->
+          <view class="iconfont icon-bianji3 fs-5 opacity-50"></view>
+          <!-- 多选框 -->
+          <radio wx:if="{{isSelect}}" checked="" />
+        </view>
+      </view>
+    </view>
+    <!-- 收货地址为空 -->
+    <view wx:else class="flex-grow-1 d-flex justify-content-center align-items-center" style="background:linear-gradient(transparent,var(--Solitude-color))">暂无收货地址</view>
     <!-- 下方底栏:删除/新建收获地址 -->
     <view class="w-100 flex-shrink-0 bg-Solitude">
       <view class="my-2 px-2 w-100 d-flex justify-content-around align-items-center text-nowrap" style="height: 80rpx;">

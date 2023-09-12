@@ -2,6 +2,8 @@ const app = getApp(); // 获取应用实例
 Component({
   data: {
     navBarFullHeight: 0, // 整个导航栏高度
+    addressList: [], //地址的数量
+    isSelect: false, //是否处于多选状态
   },
   methods: {
     newAddress() {
@@ -17,6 +19,7 @@ Component({
         })
         .then((res) => {
           console.log("获取到了收货地址=>", res);
+          this.setData({ addressList: res.data.data });
         });
     },
     onReady() {},
