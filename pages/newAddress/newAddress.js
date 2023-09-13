@@ -35,7 +35,7 @@ Component({
       } else this.setData({ name: e.detail.value });
     },
     // 输入手机号
-    changemobile(e) {
+    changeMobile(e) {
       console.log(`输入了手机号=>"${e.detail.value}"`);
       if (/1(3|4|5|7|8)\d{9}/.test(e.detail.value))
         this.setData({ mobile: e.detail.value });
@@ -97,7 +97,7 @@ Component({
             data: {
               id: this.data.id, //若为二次编辑的地址,则传入非空值表示修改/更新该id所代表的地址
               name: this.data.name, //字符串:收件人姓名
-              mobile: this.data.editMobile, //字符串:手机号
+              mobile: this.data.mobile, //字符串:手机号
               areaName: this.data.areaName,
               cityName: this.data.cityName,
               provinceName: this.data.provinceName,
