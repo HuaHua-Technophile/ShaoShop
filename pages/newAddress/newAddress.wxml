@@ -4,26 +4,26 @@
     <!-- 编辑地址 -->
     <view class="flex-grow-1" style="background:linear-gradient(transparent,var(--Solitude-color))">
       <view class="d-flex px-3 align-items-center">
-        <view class="fs-5 ">收货姓名</view>
-        <view class="ms-3 ps-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 100rpx;background: rgb(245, 245, 245);">
+        <view class="fs-5 flex-shrink-0">收货姓名</view>
+        <view class="ms-3 px-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 100rpx;background: rgb(245, 245, 245);">
           <input type="text" placeholder="名字" maxlength="12" class="w-100" value="{{name}}" bindchange="changeName" />
         </view>
       </view>
       <view class="d-flex px-3 align-items-center mt-4">
-        <view class="fs-5 ">手机号码</view>
-        <view class="ms-3 ps-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 100rpx;background: rgb(245, 245, 245);">
-          <input type="number" placeholder="11位手机号" maxlength="11" bindchange="changePhone" value="{{phone}}" class="w-100" />
+        <view class="fs-5 flex-shrink-0">手机号码</view>
+        <view class="ms-3 px-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 100rpx;background: rgb(245, 245, 245);">
+          <input type="number" placeholder="11位手机号" maxlength="11" bindchange="changePhone" value="{{mobile}}" class="w-100" />
         </view>
       </view>
       <view class="d-flex px-3 align-items-center mt-4">
-        <view class="fs-5 ">所在地区</view>
-        <view class="ms-3 ps-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 100rpx;background: rgb(245, 245, 245);">
-          <picker mode="region" level="sub-district" bindchange="changeRegion" class="w-100 {{regionText=='省、市、区、街道'?'opacity-50':''}}">{{regionText}}</picker>
+        <view class="fs-5 flex-shrink-0">所在地区</view>
+        <view class="ms-3 px-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 100rpx;background: rgb(245, 245, 245);">
+          <picker mode="region" level="sub-district" bindchange="changeRegion" class="w-100 {{areaName=='省'?'opacity-50':''}}">{{areaName}}、{{cityName}}、{{provinceName}}、{{street}}</picker>
         </view>
       </view>
       <view class="d-flex px-3 align-items-center mt-4">
-        <view class="fs-5 ">详细地址</view>
-        <view class="ms-3 ps-3 flex-grow-1 rounded shadow d-flex align-items-center" style="height: 200rpx;background: rgb(245, 245, 245);">
+        <view class="fs-5 flex-shrink-0">详细地址</view>
+        <view class="ms-3 px-3 flex-grow-1 rounded shadow d-flex align-items-center" style="min-height: 200rpx;background: rgb(245, 245, 245);">
           <input type="text" placeholder="乡村名称、小区、楼栋" class="w-100" value="{{address}}" bindchange="changeAddress" />
         </view>
       </view>

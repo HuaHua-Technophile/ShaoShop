@@ -1,14 +1,26 @@
 const app = getApp(); // 获取应用实例
 Component({
+  // 组件的属性可以用于接收页面的参数
+  properties: {
+    id: Number, //若为二次编辑的地址
+    editName: String,
+    editMobile: String,
+    editAreaName: String,
+    editCityName: String,
+    editProvinceName: String,
+    editStreet: String,
+    editAddress: String,
+  },
   data: {
     navBarFullHeight: 0, // 整个导航栏高度
-    id: null, //若为二次编辑的地址
     name: null, //收获姓名
-    phone: null, //手机号
-    region: null, //一级粗略地址
-    regionText: "省、市、区、街道", //一级粗略地址的展示文本
+    mobile: null, //手机号
+    areaName: "省",
+    cityName: "市",
+    provinceName: "区",
+    street: "街道",
     address: null, //二级详细地址
-    default: false, //是否是默认收货地址
+    default: true, //是否是默认收货地址
   },
   methods: {
     // 输入收获姓名
@@ -23,32 +35,33 @@ Component({
       } else this.setData({ name: e.detail.value });
     },
     // 输入手机号
-    changePhone(e) {
+    changemobile(e) {
       console.log(`输入了手机号=>"${e.detail.value}"`);
       if (/1(3|4|5|7|8)\d{9}/.test(e.detail.value))
-        this.setData({ phone: e.detail.value });
+        this.setData({ mobile: e.detail.value });
       else {
         wx.showToast({
           title: "不符合规范",
           icon: "error",
         });
-        this.setData({ phone: null });
+        this.setData({ mobile: null });
       }
     },
-    // 点击修改4级省\市\区\街道的回调函数
+    // 点击修改1级粗略地址省\市\区\街道的回调函数
     changeRegion(e) {
       this.setData({
-        regionText:
-          e.detail.value[0] +
-          " " +
-          e.detail.value[1] +
-          " " +
-          e.detail.value[2] +
-          " " +
-          e.detail.value[3],
-        region: e.detail,
+        areaName: e.detail.value[0],
+        cityName: e.detail.value[1],
+        provinceName: e.detail.value[2],
+        street: e.detail.value[3],
       });
-      console.log("选择了区域=>", this.data.regionText, this.data.region);
+      console.log(
+        "选择了区域=>",
+        this.data.areaName,
+        this.data.cityName,
+        this.data.provinceName,
+        this.data.street
+      );
     },
     // 点击修改2级详细地址
     changeAddress(e) {
@@ -69,8 +82,8 @@ Component({
     submit() {
       if (
         this.data.name == null ||
-        this.data.phone == null ||
-        this.data.region == null ||
+        this.data.mobile == null ||
+        this.data.areaName == "省" ||
         this.data.address == null
       ) {
         wx.showToast({
@@ -82,26 +95,37 @@ Component({
           .ajax({
             path: "/address/updateAddress",
             data: {
+              id: this.data.id, //若为二次编辑的地址,则传入非空值表示修改/更新该id所代表的地址
               name: this.data.name, //字符串:收件人姓名
-              mobile: this.data.phone, //字符串:手机号
-              // region: this.data.region, //对象:一级"省市区"粗略地址的对象
-              areaName: this.data.region.value[0],
-              cityName: this.data.region.value[1],
-              provinceName: this.data.region.value[2],
-              street: this.data.region.value[3],
+              mobile: this.data.editMobile, //字符串:手机号
+              areaName: this.data.areaName,
+              cityName: this.data.cityName,
+              provinceName: this.data.provinceName,
+              street: this.data.street,
               address: this.data.address, //字符串:二级详细地址
               isDefault: this.data.default, //是否将该地址替换为默认收货地址
-              id: this.data.id, //若为二次编辑的地址,则传入非空值表示修改/更新该id所代表的地址
             },
             method: "POST",
           })
           .then((res) => {
             console.log("保存/修改了地址=>", res);
+            if (res.data.code == 200) wx.navigateBack();
           });
       }
     },
-    onLoad(options) {
+    onLoad() {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
+      if (this.data.id) {
+        this.setData({
+          name: this.data.editName,
+          mobile: this.data.editMobile,
+          areaName: this.data.editAreaName,
+          cityName: this.data.editCityName,
+          provinceName: this.data.editProvinceName,
+          street: this.data.editStreet,
+          address: this.data.editAddress,
+        });
+      }
     },
     onReady() {},
     onShow() {},
