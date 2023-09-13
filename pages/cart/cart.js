@@ -25,23 +25,28 @@ Component({
   methods: {
     // 点击全选/取消全选
     allSelectChange() {
-      let shoppingCartItemList = this.data.cart.shoppingCartItemList.map(
-        (i) => {
-          i.checked = !this.data.allSelect;
-          return i;
-        }
-      );
-      let specCombIds = [];
-      if (!this.data.allSelect)
-        specCombIds = shoppingCartItemList.map((i) => {
-          return i.specificationsCombId;
+      if (
+        this.data.cart.shoppingCartItemList &&
+        this.data.cart.shoppingCartItemList.length > 0
+      ) {
+        let shoppingCartItemList = this.data.cart.shoppingCartItemList.map(
+          (i) => {
+            i.checked = !this.data.allSelect;
+            return i;
+          }
+        );
+        let specCombIds = [];
+        if (!this.data.allSelect)
+          specCombIds = shoppingCartItemList.map((i) => {
+            return i.specificationsCombId;
+          });
+        this.setData({
+          allSelect: !this.data.allSelect,
+          "cart.shoppingCartItemList": shoppingCartItemList,
+          specCombIds: specCombIds,
         });
-      this.setData({
-        allSelect: !this.data.allSelect,
-        "cart.shoppingCartItemList": shoppingCartItemList,
-        specCombIds: specCombIds,
-      });
-      this.changeAllPrice();
+        this.changeAllPrice();
+      }
     },
     // 点击勾选某个商品
     selectThisGoods(e) {
@@ -64,6 +69,12 @@ Component({
         specCombIds,
       });
       this.changeAllPrice();
+    },
+    // 点击跳转商品详情
+    toProductDetail(e) {
+      wx.navigateTo({
+        url: `/pages/productDetail/productDetail?id=${e.currentTarget.dataset.id}`,
+      });
     },
     // 修改商品总价
     changeAllPrice() {
@@ -187,6 +198,29 @@ Component({
             icon: "error",
           });
         }
+      }
+    },
+    // 点击结算
+    toSettlement() {
+      if (this.data.specCombIds.length > 0) {
+        let productId = [];
+        this.data.cart.shoppingCartItemList.forEach((i) => {
+          if (i.checked) productId.push(i.id);
+        });
+        console.log("准备结算=>", productId, this.data.specCombIds);
+        app
+          .ajax({
+            path: "/shoppingCart/getSettlement",
+            data: { productId: productId, specCombIds: this.data.specCombIds },
+          })
+          .then((res) => {
+            console.log("点击进入结算=>", res);
+          });
+      } else {
+        wx.showToast({
+          title: "您未勾选商品",
+          icon: "error",
+        });
       }
     },
     onLoad(options) {

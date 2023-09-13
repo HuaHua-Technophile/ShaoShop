@@ -2,13 +2,12 @@
   <custom-navbar></custom-navbar>
   <view class="vh-100 noScrollBar overflow-scroll d-flex flex-column" style="padding-top: {{navBarFullHeight+15}}px;">
     <!-- 收货地址选择,与删除购物车商品按钮 -->
-    <view class="flex-shrink-0 px-3 d-flex justify-content-between align-items-center">
-      <view class="d-flex align-items-center opacity-50">
-        <view class="iconfont icon-dizhi me-3 fs-1"></view>
-        <view>广东省,韶关市,浈江区</view>
-      </view>
+    <view class="px-3 flex-shrink-0 d-flex align-items-center justify-content-between">
+      <!-- 当前购物车数量 -->
+      <view class="opacity-75"><span class="fs-4 fw-bold">购物车</span>({{cart.shoppingCartItemList.length||0}})</view>
+      <!-- 删除按钮 -->
       <view>
-        <button class="fs-7 d-flex justify-content-center align-items-center rounded-pill text-nowrap" style="width: 130rpx;" bind:tap="deleteGoods">删除</button>
+        <button class="fs-7 d-flex justify-content-center align-items-center rounded-pill text-nowrap float-end" style="width: 110rpx;height: 50rpx;" bind:tap="deleteGoods">删除</button>
       </view>
     </view>
     <!-- 购物车 -->
@@ -17,7 +16,7 @@
         <!-- 勾选框 -->
         <radio checked="{{cart.shoppingCartItemList[index].checked}}" color="rgba(243,64,13,1)" bind:tap="selectThisGoods" data-index="{{index}}" />
         <!-- 购物车商品图片 -->
-        <image src="{{item.specImages}}" mode="aspectFill" class="flex-shrink-0 rounded-4 ms-2 me-3 shadow-sm" style="width:170rpx !important;height:170rpx !important" />
+        <image src="{{item.specImages}}" mode="aspectFill" class="flex-shrink-0 rounded-4 ms-2 me-3 shadow-sm" style="width:170rpx !important;height:170rpx !important" bind:tap="toProductDetail" data-id="{{item.id}}" />
         <!-- 右侧购物车商品信息 -->
         <view class="flex-grow-1">
           <view>{{item.productName}}</view>
@@ -48,14 +47,14 @@
     <!-- 底栏 -->
     <view class="flex-shrink-0 checkout-tabbar shadow-lg w-100 d-flex align-items-center justify-content-between px-3 py-2 bg-white">
       <view class="d-flex align-items-center" bind:tap="allSelectChange">
-        <radio checked="{{allSelect}}" color="rgba(243,64,13,1)" />
+        <radio checked="{{allSelect}}" color="rgba(243,64,13,1)" disabled="{{!cart.shoppingCartItemList||cart.shoppingCartItemList.length==0}}" />
         <view>全选</view>
       </view>
       <view class="fs-7 d-flex flex-column align-items-end">
         <view><span class="opacity-75">运费:￥<span class="fw-bolder">0</span>,合计:</span><span class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1);font-family:'YouSheBiaoTiHei';">￥{{allPrice}}</span></view>
         <view class="opacity-50">已减:￥<span class="fw-bolder">0</span>,优惠明细</view>
       </view>
-      <view class="rounded-pill text-light py-2 px-4" style="background: rgba(var(--theme-color-rgb), 1);box-shadow: 0px 2px 5px rgb(194.4, 51.2, 10.4);">去结算</view>
+      <view class="rounded-pill text-light py-2 px-4" style="background: rgba(var(--theme-color-rgb), 1);box-shadow: 0px 2px 5px rgb(194.4, 51.2, 10.4);" bind:tap="toSettlement">去结算</view>
     </view>
   </view>
 </view>

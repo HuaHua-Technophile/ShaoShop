@@ -7,7 +7,8 @@
     "pages/productDetail/productDetail",
     "pages/addressManagement/addressManagement",
     "pages/newAddress/newAddress",
-    "pages/searchInput/searchInput"
+    "pages/searchInput/searchInput",
+    "pages/settlement/settlement"
   ],
   "window": {
     "navigationStyle": "custom"
