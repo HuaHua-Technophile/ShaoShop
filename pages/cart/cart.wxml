@@ -4,31 +4,39 @@
     <!-- 收货地址选择,与删除购物车商品按钮 -->
     <view class="px-3 flex-shrink-0 d-flex align-items-center justify-content-between">
       <!-- 当前购物车数量 -->
-      <view class="opacity-75"><span class="fs-4 fw-bold">购物车</span>({{cart.shoppingCartItemList.length||0}})</view>
+      <view class="opacity-75"><span class="fs-4 fw-bold">购物车</span>({{goodsNum}})</view>
       <!-- 删除按钮 -->
       <view>
         <button class="fs-7 d-flex justify-content-center align-items-center rounded-pill text-nowrap float-end" style="width: 110rpx;height: 50rpx;" bind:tap="deleteGoods">删除</button>
       </view>
     </view>
     <!-- 购物车 -->
-    <view wx:if="{{cart.shoppingCartItemList.length > 0}}" class="flex-grow-1 overflow-scroll noScrollBar">
-      <view wx:for="{{cart.shoppingCartItemList}}" wx:key="index" class="d-flex align-items-center px-3 py-2 bg-light rounded-4 m-2 shadow">
-        <!-- 勾选框 -->
-        <radio checked="{{cart.shoppingCartItemList[index].checked}}" color="rgba(243,64,13,1)" bind:tap="selectThisGoods" data-index="{{index}}" />
-        <!-- 购物车商品图片 -->
-        <image src="{{item.specImages}}" mode="aspectFill" class="flex-shrink-0 rounded-4 ms-2 me-3 shadow-sm" style="width:170rpx !important;height:170rpx !important" bind:tap="toProductDetail" data-id="{{item.id}}" />
-        <!-- 右侧购物车商品信息 -->
-        <view class="flex-grow-1">
-          <view>{{item.productName}}</view>
-          <view class="mt-1 opacity-50"><span wx:for="{{item.productSpec}}" wx:for-item="j" wx:for-index="indexj" wx:key="indexj">{{j}}<span wx:if="{{indexj < item.productSpec.length -1}}" class="mx-1 opacity-25">|</span></span></view>
-          <view class="mt-1 d-flex justify-content-between align-items-center">
-            <!-- 单价 -->
-            <view class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1);font-family:'YouSheBiaoTiHei';">￥{{item.price}}</view>
-            <!-- 商品数量加减 -->
-            <view class="border border-secondary-subtle shadow-sm rounded-pill d-inline-flex justify-content-center align-items-center fs-8 opacity-50" style="height:45rpx;padding:0 18rpx;">
-              <view class="iconfont icon-function_minus" bind:tap="changeGoodsNum" data-calculate="minus" data-index="{{index}}"></view>
-              <input class="h-100 border-secondary-subtle border-start border-end d-flex align-items-center text-center" style="width: 60rpx;margin: 0 13rpx;" type="number" maxlength="3" value="{{item.quantity}}" bind:blur="changeGoodsNum" data-id="{{item.quantity}}" data-index="{{index}}"></input>
-              <view class="iconfont icon-jia" bind:tap="changeGoodsNum" data-calculate="add" data-index="{{index}}"></view>
+    <view wx:if="{{cart.businessAndItemsList.length > 0}}" class="flex-grow-1 overflow-scroll noScrollBar">
+      <!-- 最外层商家 -->
+      <view wx:for="{{cart.businessAndItemsList}}" wx:for-item="i" wx:for-index="ii" wx:key="ii" class="px-3 pt-3 overflow-hidden bg-light rounded-4 m-2 shadow">
+        <!-- 店家名称 -->
+        <view class="d-flex mb-4"><span class="fw-bold opacity-75 me-1 lh-1">{{i.businessName}}</span>
+          <view class="iconfont icon-youjiantou lh-1 opacity-50" style="margin-bottom: -3rpx;"></view>
+        </view>
+        <!-- 每个商品信息 -->
+        <view wx:for="{{i.shoppingCartItemInfoDTOList}}" wx:key="index" class="d-flex align-items-center mb-4">
+          <!-- 勾选框 -->
+          <radio checked="{{cart.businessAndItemsList[ii].shoppingCartItemInfoDTOList[index].checked}}" color="rgba(243,64,13,1)" bind:tap="selectThisGoods" data-out="{{ii}}" data-index="{{index}}" />
+          <!-- 购物车商品图片 -->
+          <image src="{{item.specImages}}" mode="aspectFill" class="flex-shrink-0 rounded-4 ms-2 me-3 shadow-sm" style="width:170rpx !important;height:170rpx !important" bind:tap="toProductDetail" data-id="{{item.id}}" />
+          <!-- 右侧购物车商品信息 -->
+          <view class="flex-grow-1">
+            <view>{{item.productName}}</view>
+            <view class="mt-1 opacity-50"><span wx:for="{{item.productSpec}}" wx:for-item="j" wx:for-index="indexj" wx:key="indexj">{{j}}<span wx:if="{{indexj < item.productSpec.length -1}}" class="mx-1 opacity-25">|</span></span></view>
+            <view class="mt-1 d-flex justify-content-between align-items-center">
+              <!-- 单价 -->
+              <view class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1);font-family:'YouSheBiaoTiHei';">￥{{item.price}}</view>
+              <!-- 商品数量加减 -->
+              <view class="border border-secondary-subtle shadow-sm rounded-pill d-inline-flex justify-content-center align-items-center fs-8 opacity-50" style="height:45rpx;padding:0 18rpx;">
+                <view class="iconfont icon-function_minus" bind:tap="changeGoodsNum" data-calculate="minus" data-index="{{index}}"></view>
+                <input class="h-100 border-secondary-subtle border-start border-end d-flex align-items-center text-center" style="width: 60rpx;margin: 0 13rpx;" type="number" maxlength="3" value="{{item.quantity}}" bind:blur="changeGoodsNum" data-id="{{item.quantity}}" data-index="{{index}}"></input>
+                <view class="iconfont icon-jia" bind:tap="changeGoodsNum" data-calculate="add" data-index="{{index}}"></view>
+              </view>
             </view>
           </view>
         </view>
@@ -47,7 +55,7 @@
     <!-- 底栏 -->
     <view class="flex-shrink-0 checkout-tabbar shadow-lg w-100 d-flex align-items-center justify-content-between px-3 py-2 bg-white">
       <view class="d-flex align-items-center" bind:tap="allSelectChange">
-        <radio checked="{{allSelect}}" color="rgba(243,64,13,1)" disabled="{{!cart.shoppingCartItemList||cart.shoppingCartItemList.length==0}}" />
+        <radio checked="{{allSelect}}" color="rgba(243,64,13,1)" disabled="{{!cart.businessAndItemsList||cart.businessAndItemsList.length==0}}" />
         <view>全选</view>
       </view>
       <view class="fs-7 d-flex flex-column align-items-end">

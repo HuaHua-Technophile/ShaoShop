@@ -5,6 +5,7 @@ Component({
   data: {
     navBarFullHeight: 0, // 整个导航栏高度
     cart: {}, //购物车列表
+    goodsNum: 0, //一共有多少商品
     specCombIds: [], //已勾选的组合id
     allSelect: false, //是否购物车全选
     allPrice: 0, //所有商品的价格
@@ -25,24 +26,37 @@ Component({
   methods: {
     // 点击全选/取消全选
     allSelectChange() {
+      // 加载框,防止快速点击情况下,数据请求延迟造成体验割裂
+      wx.showLoading({
+        title: "",
+        mask: true,
+      });
       if (
-        this.data.cart.shoppingCartItemList &&
-        this.data.cart.shoppingCartItemList.length > 0
+        this.data.cart.businessAndItemsList &&
+        this.data.cart.businessAndItemsList.length > 0
       ) {
-        let shoppingCartItemList = this.data.cart.shoppingCartItemList.map(
+        // 遍历以全部checked/取消
+        let businessAndItemsList = this.data.cart.businessAndItemsList.map(
           (i) => {
-            i.checked = !this.data.allSelect;
+            i.shoppingCartItemInfoDTOList = i.shoppingCartItemInfoDTOList.map(
+              (j) => {
+                j.checked = !this.data.allSelect;
+                return j;
+              }
+            );
             return i;
           }
         );
         let specCombIds = [];
         if (!this.data.allSelect)
-          specCombIds = shoppingCartItemList.map((i) => {
-            return i.specificationsCombId;
+          businessAndItemsList.forEach((i) => {
+            i.shoppingCartItemInfoDTOList.forEach((j) => {
+              specCombIds.push(j.specificationsCombId);
+            });
           });
         this.setData({
           allSelect: !this.data.allSelect,
-          "cart.shoppingCartItemList": shoppingCartItemList,
+          "cart.businessAndItemsList": businessAndItemsList,
           specCombIds: specCombIds,
         });
         this.changeAllPrice();
@@ -50,21 +64,42 @@ Component({
     },
     // 点击勾选某个商品
     selectThisGoods(e) {
-      let shoppingCartItemList = this.data.cart.shoppingCartItemList;
-      if (shoppingCartItemList[e.currentTarget.dataset.index].checked) {
-        shoppingCartItemList[e.currentTarget.dataset.index].checked = false;
-      } else {
-        shoppingCartItemList[e.currentTarget.dataset.index].checked = true;
-      }
-      let specCombIds = [];
-      shoppingCartItemList.forEach((i) => {
-        if (i.checked) specCombIds.push(i.specificationsCombId);
+      // 加载框,防止快速点击情况下,数据请求延迟造成体验割裂
+      wx.showLoading({
+        title: "",
+        mask: true,
       });
+      let businessAndItemsList = this.data.cart.businessAndItemsList;
+      //勾选/取消勾选功能的实现
+      if (
+        businessAndItemsList[e.currentTarget.dataset.out]
+          .shoppingCartItemInfoDTOList[e.currentTarget.dataset.index].checked
+      ) {
+        businessAndItemsList[
+          e.currentTarget.dataset.out
+        ].shoppingCartItemInfoDTOList[
+          e.currentTarget.dataset.index
+        ].checked = false;
+      } else {
+        businessAndItemsList[
+          e.currentTarget.dataset.out
+        ].shoppingCartItemInfoDTOList[
+          e.currentTarget.dataset.index
+        ].checked = true;
+      }
+      //维护"当前已勾选"规格ID数组
+      let specCombIds = [];
+      businessAndItemsList.forEach((i) => {
+        i.shoppingCartItemInfoDTOList.forEach((j) => {
+          if (j.checked) specCombIds.push(j.specificationsCombId);
+        });
+      });
+      //是否全选的判断
       let allSelect = null;
-      if (specCombIds.length == shoppingCartItemList.length) allSelect = true;
+      if (specCombIds.length == this.data.goodsNum) allSelect = true;
       else allSelect = false;
       this.setData({
-        "cart.shoppingCartItemList": shoppingCartItemList,
+        "cart.businessAndItemsList": businessAndItemsList,
         allSelect,
         specCombIds,
       });
@@ -89,30 +124,31 @@ Component({
           this.setData({
             allPrice: res.data.data,
           });
+          wx.hideLoading();
         });
     },
     // 购物车修改商品数量,维护一个已勾选的数组，需要发送请求计算价格，并为“删除”做准备
     changeGoodsNum(e) {
-      let shoppingCartItemList = this.data.cart.shoppingCartItemList;
+      let businessAndItemsList = this.data.cart.businessAndItemsList;
       let initialValue =
-        shoppingCartItemList[e.currentTarget.dataset.index].quantity; //初始值
+        businessAndItemsList[e.currentTarget.dataset.index].quantity; //初始值
       console.log(
         "对该商品进行加购/减购=>",
-        shoppingCartItemList[e.currentTarget.dataset.index]
+        businessAndItemsList[e.currentTarget.dataset.index]
       );
       // 如果是点击加减按钮
       if (e.currentTarget.dataset.calculate) {
         if (e.currentTarget.dataset.calculate == "minus")
-          shoppingCartItemList[e.currentTarget.dataset.index].quantity -= 1;
-        else shoppingCartItemList[e.currentTarget.dataset.index].quantity += 1;
+          businessAndItemsList[e.currentTarget.dataset.index].quantity -= 1;
+        else businessAndItemsList[e.currentTarget.dataset.index].quantity += 1;
       }
       // 或者是直接输入
       else {
-        shoppingCartItemList[e.currentTarget.dataset.index].quantity =
+        businessAndItemsList[e.currentTarget.dataset.index].quantity =
           e.detail.value;
       }
       let num = Number(
-        shoppingCartItemList[e.currentTarget.dataset.index].quantity
+        businessAndItemsList[e.currentTarget.dataset.index].quantity
       );
       if (num >= 1) {
         if (num > 999) {
@@ -129,13 +165,13 @@ Component({
         });
         num = 1;
       }
-      shoppingCartItemList[e.currentTarget.dataset.index].quantity = num;
+      businessAndItemsList[e.currentTarget.dataset.index].quantity = num;
       app
         .ajax({
           path: "/shoppingCart/updateGoodsNum",
           data: {
             specCombId:
-              shoppingCartItemList[e.currentTarget.dataset.index]
+              businessAndItemsList[e.currentTarget.dataset.index]
                 .specificationsCombId, //规格的排列组合的id
             quantity: num, //要更新为多少个
           },
@@ -149,12 +185,12 @@ Component({
                 title: "剩余库存不足",
                 icon: "error",
               });
-            shoppingCartItemList[
+            businessAndItemsList[
               e.currentTarget.dataset.index
             ].quantity = initialValue;
-            this.setData({ "cart.shoppingCartItemList": shoppingCartItemList });
+            this.setData({ "cart.businessAndItemsList": businessAndItemsList });
           } else if (res.data.code == 200) {
-            this.setData({ "cart.shoppingCartItemList": shoppingCartItemList });
+            this.setData({ "cart.businessAndItemsList": businessAndItemsList });
           }
         });
     },
@@ -204,7 +240,7 @@ Component({
     toSettlement() {
       if (this.data.specCombIds.length > 0) {
         let productId = [];
-        this.data.cart.shoppingCartItemList.forEach((i) => {
+        this.data.cart.businessAndItemsList.forEach((i) => {
           if (i.checked) productId.push(i.id);
         });
         console.log("准备结算=>", productId, this.data.specCombIds);
@@ -246,14 +282,24 @@ Component({
           let cart = res.data.data;
           console.log("获取到了当前用户的购物车=>", cart);
           if (
-            cart.shoppingCartItemList &&
-            cart.shoppingCartItemList.length > 0
+            cart.businessAndItemsList &&
+            cart.businessAndItemsList.length > 0
           ) {
-            cart.shoppingCartItemList = cart.shoppingCartItemList.map((i) => {
-              i.specImages = app.globalData.https + i.specImages;
-              i.productSpec = Object.keys(i.productSpec).map((j) => {
-                return i.productSpec[j];
-              });
+            let goodsNum = 0;
+            cart.businessAndItemsList.forEach((i) => {
+              goodsNum += i.shoppingCartItemInfoDTOList.length;
+            });
+            this.setData({ goodsNum });
+            cart.businessAndItemsList = cart.businessAndItemsList.map((i) => {
+              i.shoppingCartItemInfoDTOList = i.shoppingCartItemInfoDTOList.map(
+                (j) => {
+                  j.productSpec = Object.keys(j.productSpec).map((k) => {
+                    return j.productSpec[k];
+                  }); //规格对象转换为数组
+                  j.specImages = app.globalData.https + j.specImages; //图像地址拼接
+                  return j;
+                }
+              );
               return i;
             });
           }
