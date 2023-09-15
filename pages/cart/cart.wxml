@@ -25,9 +25,17 @@
           <!-- 购物车商品图片 -->
           <image src="{{item.specImages}}" mode="aspectFill" class="flex-shrink-0 rounded-4 ms-2 me-3 shadow-sm" style="width:170rpx !important;height:170rpx !important" bind:tap="toProductDetail" data-id="{{item.id}}" />
           <!-- 右侧购物车商品信息 -->
-          <view class="flex-grow-1">
+          <view class="flex-grow-1 overflow-hidden">
+            <!-- 商品名 -->
             <view>{{item.productName}}</view>
-            <view class="mt-1 opacity-50"><span wx:for="{{item.productSpec}}" wx:for-item="j" wx:for-index="indexj" wx:key="indexj">{{j}}<span wx:if="{{indexj < item.productSpec.length -1}}" class="mx-1 opacity-25">|</span></span></view>
+            <!-- 商品当前规格/限制一行 -->
+            <view class="mt-1 fs-7 py-1 px-2 rounded bg-body-secondary d-flex align-items-center">
+              <view class="flex-grow-1 text-truncate">
+                <span wx:for="{{item.productSpec}}" wx:for-item="j" wx:for-index="indexj" wx:key="indexj" class="opacity-75">{{j}}<span wx:if="{{indexj < item.productSpec.length -1}}" class="mx-1 opacity-25">|</span></span>
+              </view>
+              <view class="flex-shrink-0 ms-1 iconfont icon-youjiantou opacity-50"></view>
+            </view>
+            <!-- 单价和加减数量按钮 -->
             <view class="mt-1 d-flex justify-content-between align-items-center">
               <!-- 单价 -->
               <view class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1);font-family:'YouSheBiaoTiHei';">￥{{item.price}}</view>

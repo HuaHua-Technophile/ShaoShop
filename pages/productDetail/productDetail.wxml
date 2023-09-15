@@ -145,12 +145,13 @@
         <!-- 商品的规格详情与加入购物车数量选择 -->
         <view class="overflow-scroll noScrollBar">
           <!-- 商品的规格详情 -->
-          <view wx:for="{{SpecAndSpecValue}}" wx:key="indexi" wx:for-index="indexi" wx:for-item="i" class="overflow-hidden">
+          <view wx:for="{{SpecAndSpecValue}}" wx:for-item="i" wx:for-index="indexi" wx:key="indexi" class="overflow-hidden">
             <!-- 规格组名称与规格数量 -->
-            <view class="my-3">{{i.specificationsName}}({{i.productSpecificationsValueList.length}})</view>
+            <view class="my-3"><span class="fw-bold opacity-75">{{i.specificationsName}}</span><span class="opacity-50 ms-1">({{i.productSpecificationsValueList.length}})</span></view>
             <!-- 规格详情 -->
             <view wx:if="{{i.isShow}}" class="d-flex justify-content-between flex-wrap">
-              <view wx:for="{{i.productSpecificationsValueList}}" wx:key="indexj" wx:for-index="indexj" wx:for-item="j" class="rounded text-center {{currentSpecifications[i.specificationsName]==j.specificationsValueName?'bg-orange bg-opacity-10':'bg-dark bg-opacity-10'}}" style="width: 28vw;background-clip: padding-box;{{currentSpecifications[i.specificationsName]==j.specificationsValueName?'color:rgba(var(--theme-color-rgb),1);border:1px solid rgba(var(--theme-color-rgb),0.5)':'border:1px solid transparent'}}" bind:tap="selectThisNorm" data-optionname="{{i.specificationsName}}" data-option="{{j.specificationsValueName}}">
+            <!-- 当前已选项中的["键"]是否等于"值",例如:当前 -->
+              <view wx:for="{{i.productSpecificationsValueList}}" wx:for-item="j" wx:for-index="indexj" wx:key="indexj" class="rounded text-center {{currentSpecifications[i.specificationsName]==j.specificationsValueName?'bg-orange bg-opacity-10':'bg-dark bg-opacity-10'}}" style="width: 28vw;background-clip: padding-box;{{currentSpecifications[i.specificationsName]==j.specificationsValueName?'color:rgba(var(--theme-color-rgb),1);border:1px solid rgba(var(--theme-color-rgb),0.5)':'border:1px solid transparent'}}" bind:tap="selectThisNorm" data-optionname="{{i.specificationsName}}" data-option="{{j.specificationsValueName}}">
                 <view style="height:28vw;" class="w-100 mb-1">
                   <image src="{{j.specImage}}" mode="aspectFill" class="w-100 h-100 rounded" />
                 </view>

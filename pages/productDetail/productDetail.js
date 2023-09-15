@@ -26,9 +26,9 @@ Component({
     quantity: 1, //商品的要加入购物车的数量
   },
   computed: {
+    // 规格值在页面中的展现
     SelectedSpecification(data) {
-      // 注意：computed 函数中不能访问 this ，只有 data 对象可供访问
-      // 这个函数的返回值会被设置到 this.data.sum 字段中
+      //computed函数中不能访问this，只有data对象可访问，该函数的返回值会被设置到this.data.xxx字段中
       let arr = [];
       for (let key in data.currentSpecifications) {
         arr.push(data.currentSpecifications[key]);
@@ -50,7 +50,6 @@ Component({
         pageContainerShow: true,
         hiddenTabbarBtn: e.currentTarget.dataset.status,
       });
-      console.log("点击显示规格弹窗", e, this.data.hiddenTabbarBtn);
     },
     // 点击隐藏假页面容器
     hiddenPageContainer() {
@@ -59,30 +58,47 @@ Component({
     // 点击详细规格,展示价格,与切换预览图
     selectThisNorm(e) {
       const A = this.data.currentSpecifications; // 当前商品点击了哪些选项
-      const SpecAndStock = this.data.SpecAndStock; //商品的全部规格的排列组合
+      this.setData({ quantity: 1 }); //加购数量重置
       if (
         A[e.currentTarget.dataset.optionname] == e.currentTarget.dataset.option
       ) {
         A[e.currentTarget.dataset.optionname] = undefined; //清空赋值
         this.setData({
-          stock: -1,
+          stock: -1, //库存
           specCombId: -1,
           optionPrice: 0,
           currentSpecifications: A,
-          quantity: 1,
         });
+        console.log(
+          "取消选择了=>",
+          e.currentTarget.dataset.optionname,
+          e.currentTarget.dataset.option,
+          "=>",
+          A
+        );
       } else {
         A[e.currentTarget.dataset.optionname] = e.currentTarget.dataset.option; //赋值
+        console.log(
+          "选择了=>",
+          e.currentTarget.dataset.optionname,
+          e.currentTarget.dataset.option,
+          "=>",
+          A,
+          "第一项",
+          this.data.SpecAndStock[0]
+        );
+        //打印发现,this.data.SpecAndStock的第一项会在点击后被改变
         this.setData({ currentSpecifications: A });
         //商品的全部规格的排列组合
-        SpecAndStock.forEach((i) => {
+        this.data.SpecAndStock.forEach((i, index) => {
+          // console.log("送检对象", i.productSpecList, A);
           if (isObjectEqual(i.productSpecList, A)) {
             this.setData({
               optionPrice: i.price,
               specCombId: i.id,
               stock: i.stock,
-              quantity: 1,
             });
+            console.log("选择了组合=>", this.data.specCombId);
           }
         });
       }
@@ -92,18 +108,12 @@ Component({
       if (this.data.specCombId != -1 && this.data.stock > 0) {
         app
           .ajax({
-            /* path: "/shoppingCart/addGoodsBySpecId",
-            data: {
-              productId: this.data.id, //当前商品id
-              specCombId: this.data.specCombId, //当前规格组合的id
-            },
-            method: "POST", */
             path: "/shoppingCart/addGoodsBySpecId",
             method: "POST",
             data: {
-              specCombId: this.data.specCombId,
-              productId: this.data.id,
-              quantity: this.data.quantity,
+              specCombId: this.data.specCombId, //规格id
+              productId: this.data.id, //商品id
+              quantity: this.data.quantity, //数量
             },
           })
           .then((res) => {
@@ -120,9 +130,7 @@ Component({
     },
     // 修改要加入购物车的数量
     changeQuantity(e) {
-      let initialValue = this.data.quantity; //初始值
       let num = this.data.quantity;
-      console.log("初始值=>", initialValue);
       // 如果是点击加减按钮
       if (e.currentTarget.dataset.calculate) {
         if (e.currentTarget.dataset.calculate == "minus") num -= 1;
@@ -132,6 +140,7 @@ Component({
       else {
         num = e.detail.value;
       }
+      // 数值限制范围
       if (num >= 1) {
         if (num > this.data.stock) {
           wx.showToast({
@@ -147,9 +156,7 @@ Component({
         });
         num = 1;
       }
-      this.setData({
-        quantity: num,
-      });
+      this.setData({ quantity: num });
     },
     async onLoad(options) {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
@@ -200,6 +207,7 @@ Component({
         })
         .then((res) => {
           let SpecAndSpecValue = res.data.data.map((i) => {
+            // 商品图片拼接url
             if (i.isShow) {
               i.productSpecificationsValueList = i.productSpecificationsValueList.map(
                 (j) => {
@@ -211,7 +219,7 @@ Component({
             return i;
           });
           this.setData({ SpecAndSpecValue });
-          console.log("获取到了商品规格=>", res);
+          console.log("获取到了商品规格=>", this.data.SpecAndSpecValue);
         });
       // 获取商品标签
       app
@@ -251,17 +259,13 @@ Component({
         .then((res) => {
           this.setData({
             SpecAndStock: res.data.data,
+            currentSpecifications: res.data.data[0].productSpecList, // 当前商品点击了哪些选项
+            optionPrice: res.data.data[0].price, //当前选择项的价格
+            specCombId: res.data.data[0].id, //当前规格的排列组合的id
+            stock: res.data.data[0].stock, //当前规格的剩余库存
           });
           console.log("获取到了商品规格的排列组合=>", this.data.SpecAndStock);
         });
-      // 设置默认选择规格
-      console.log("设置默认选择规格", this.data.SpecAndStock);
-      this.setData({
-        currentSpecifications: this.data.SpecAndStock[0].productSpecList,
-        optionPrice: this.data.SpecAndStock[0].price,
-        specCombId: this.data.SpecAndStock[0].id,
-        stock: this.data.SpecAndStock[0].stock,
-      });
     },
     onReady() {},
     onShow() {},

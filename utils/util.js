@@ -20,10 +20,20 @@ const formatNumber = (n) => {
 const isObjectEqual = (obj1, obj2) => {
   const obj1Keys = Object.keys(obj1);
   const obj2Keys = Object.keys(obj2);
-  if (obj1Keys.length !== obj2Keys.length) return false;
-  for (let key of obj1Keys) {
-    if (obj1[key] !== obj2[key]) return false;
+  if (obj1Keys.length !== obj2Keys.length) {
+    // console.log("键数量不一,后面不用看了");
+    return false;
   }
+  for (let key of obj1Keys) {
+    if (obj1[key] == obj2[key]) {
+      // console.log(key, "值相等", obj1[key], obj2[key]);
+    }
+    if (obj1[key] !== obj2[key]) {
+      // console.log(key, "值不相等", obj1[key], obj2[key]);
+      return false;
+    }
+  }
+  // console.log("送检对象相等", obj1, obj2);
   return true;
 };
 module.exports = {
