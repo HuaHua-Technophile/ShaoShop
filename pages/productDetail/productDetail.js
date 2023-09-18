@@ -175,32 +175,41 @@ Component({
           url: `/pages/${e.currentTarget.dataset.pageurl}/${e.currentTarget.dataset.pageurl}`,
         });
     },
+    // 查询该商品可用的优惠卷
+    checkCoupon() {
+      app.ajax({ path: `/coupon/${this.data.id}` }).then((res) => {
+        console.log("当前商品可用优惠卷=>", res);
+        this.setData({ coupon: res.data.data });
+      });
+    },
     // 领取优惠卷
     receive(e) {
-      wx.showLoading({
-        title: "",
-        mask: true,
-      });
-      app
-        .ajax({
-          path: `/coupon/${e.currentTarget.dataset.id}`,
-          method: "POST",
-        })
-        .then((res) => {
-          console.log("领取成功=>", res);
-          wx.hideLoading();
-          if (res.data.code == 200) {
-            wx.showToast({
-              title: "领取成功",
-              icon: "success",
-            });
-          } else {
-            wx.showToast({
-              title: "领取失败",
-              icon: "error",
-            });
-          }
+      if (!e.currentTarget.dataset.receive) {
+        wx.showLoading({
+          title: "",
+          mask: true,
         });
+        app
+          .ajax({
+            path: `/coupon/${e.currentTarget.dataset.id}`,
+            method: "POST",
+          })
+          .then((res) => {
+            console.log("领取成功=>", res);
+            wx.hideLoading();
+            if (res.data.code == 200) {
+              wx.showToast({
+                title: "领取成功",
+                icon: "success",
+              });
+              this.checkCoupon();
+            } else
+              wx.showToast({
+                title: "领取失败",
+                icon: "error",
+              });
+          });
+      }
     },
     async onLoad(options) {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
@@ -308,11 +317,6 @@ Component({
           });
           console.log("获取到了商品规格的排列组合=>", this.data.SpecAndStock);
         });
-      // 查询该商品可用的优惠卷
-      app.ajax({ path: `/coupon/${this.data.id}` }).then((res) => {
-        console.log("当前商品可用优惠卷=>", res);
-        this.setData({ coupon: res.data.data });
-      });
     },
     onReady() {},
     onShow() {
@@ -334,6 +338,7 @@ Component({
         }
         this.setData({ shippingAddress });
       });
+      this.checkCoupon();
     },
     onHide() {},
     onUnload() {},

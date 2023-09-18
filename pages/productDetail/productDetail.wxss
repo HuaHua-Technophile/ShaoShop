@@ -1,0 +1,11 @@
+.outline::after {
+  display: block;
+  content: "";
+  position: absolute;
+  top: -15rpx;
+  right: -15rpx;
+  bottom: -15rpx;
+  left: -15rpx;
+  border: solid 8rpx rgba(var(--theme-color-rgb), 0.7);
+  border-radius: 99999px;
+}
