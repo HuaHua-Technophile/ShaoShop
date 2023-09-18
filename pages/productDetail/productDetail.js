@@ -13,6 +13,7 @@ Component({
     goodSwiper: [], //商品的头部轮播图
     activeIndex: 0, //商品的头部轮播图的激活序号
     productLabel: [], //商品标签
+    shippingAddress: [], //收货地址
     productIntro: [], //商品的下方介绍图
     cartTabbarHeight: 0, //底部"加购/购买"栏的高度
     pageContainerShow: false, //假页面容器显示状态
@@ -158,6 +159,12 @@ Component({
       }
       this.setData({ quantity: num });
     },
+    // 点击跳转新页面
+    newPage(e) {
+      wx.navigateTo({
+        url: `/pages/${e.currentTarget.dataset.pageurl}/${e.currentTarget.dataset.pageurl}`,
+      });
+    },
     async onLoad(options) {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
       // 查询底部"加购/购买"栏高度为多少
@@ -249,7 +256,7 @@ Component({
           });
         });
       // 获取商品规格的所有排列组合(包含价格\库存)
-      await app
+      app
         .ajax({
           path: "/product/querySpecAndStock",
           data: {
@@ -266,9 +273,32 @@ Component({
           });
           console.log("获取到了商品规格的排列组合=>", this.data.SpecAndStock);
         });
+      // 查询该商品可用的优惠卷
+      app.ajax({ path: `/coupon/${this.data.id}` }).then((res) => {
+        console.log("当前商品可用优惠卷=>", res);
+      });
     },
     onReady() {},
-    onShow() {},
+    onShow() {
+      // 查询收货地址,并展示一个默认地址
+      app.ajax({ path: "/address/queryAddress" }).then((res) => {
+        console.log("获取到了收货地址=>", res);
+        let shippingAddress = [];
+        res.data.data.forEach((i) => {
+          if (i.isDefault) {
+            shippingAddress[0] = i.areaName;
+            shippingAddress[1] = i.cityName;
+            shippingAddress[2] = i.provinceName;
+          }
+        });
+        if (shippingAddress.length == 0) {
+          shippingAddress[0] = res.data.data[0].areaName;
+          shippingAddress[1] = res.data.data[0].cityName;
+          shippingAddress[2] = res.data.data[0].provinceName;
+        }
+        this.setData({ shippingAddress });
+      });
+    },
     onHide() {},
     onUnload() {},
     onPullDownRefresh() {},

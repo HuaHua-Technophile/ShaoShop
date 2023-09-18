@@ -16,6 +16,9 @@ Page({
       userInfo: app.globalData.userInfo.UserInfo,
     });
     console.log("用户信息载入=>", this.data.userInfo);
+    app.ajax({ path: "/coupon/queryUserCoupon" }).then((res) => {
+      console.log("用户优惠卷=>", res);
+    });
   },
   onReady() {},
   onShow() {},

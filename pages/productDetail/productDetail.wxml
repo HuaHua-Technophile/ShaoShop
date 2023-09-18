@@ -54,10 +54,10 @@
         <view class="flex-grow-1 d-flex align-items-center justify-content-between opacity-50">韶关市</view>
       </view>
       <!-- 配送地址 -->
-      <view class="d-flex align-items-center">
+      <view class="d-flex align-items-center" bind:tap="newPage" data-pageurl="addressManagement">
         <view class="opacity-50 pe-2 border-end border-black me-2 fs-7 text-center flex-shrink-0 text-nowrap" style="width:65px">配送至</view>
         <view class="flex-grow-1 d-flex align-items-center justify-content-between">
-          <view>广东省 韶关市 曲江区</view>
+          <view><span wx:for="{{shippingAddress}}" wx:key="index" class="{{index<shippingAddress.length-1?'me-2':''}}">{{item}}</span></view>
           <view class="iconfont icon-xiangxiajiantou fs-2 lh-1"></view>
         </view>
       </view>
@@ -150,7 +150,7 @@
             <view class="my-3"><span class="fw-bold opacity-75">{{i.specificationsName}}</span><span class="opacity-50 ms-1">({{i.productSpecificationsValueList.length}})</span></view>
             <!-- 规格详情 -->
             <view wx:if="{{i.isShow}}" class="d-flex justify-content-between flex-wrap">
-            <!-- 当前已选项中的["键"]是否等于"值",例如:当前 -->
+              <!-- 当前已选项中的["键"]是否等于"值",例如:当前 -->
               <view wx:for="{{i.productSpecificationsValueList}}" wx:for-item="j" wx:for-index="indexj" wx:key="indexj" class="rounded text-center {{currentSpecifications[i.specificationsName]==j.specificationsValueName?'bg-orange bg-opacity-10':'bg-dark bg-opacity-10'}}" style="width: 28vw;background-clip: padding-box;{{currentSpecifications[i.specificationsName]==j.specificationsValueName?'color:rgba(var(--theme-color-rgb),1);border:1px solid rgba(var(--theme-color-rgb),0.5)':'border:1px solid transparent'}}" bind:tap="selectThisNorm" data-optionname="{{i.specificationsName}}" data-option="{{j.specificationsValueName}}">
                 <view style="height:28vw;" class="w-100 mb-1">
                   <image src="{{j.specImage}}" mode="aspectFill" class="w-100 h-100 rounded" />
