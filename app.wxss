@@ -42,6 +42,12 @@ picker {
 .bg-opacity-25 {
   --bs-bg-opacity: 0.25 !important;
 }
+.bg-opacity-50 {
+  --bs-bg-opacity: 0.5 !important;
+}
+.bg-opacity-75 {
+  --bs-bg-opacity: 0.75 !important;
+}
 .fs-7 {
   font-size: 0.9rem !important;
 }

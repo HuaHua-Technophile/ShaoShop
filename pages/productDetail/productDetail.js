@@ -9,15 +9,19 @@ Component({
   behaviors: [computedBehavior],
   data: {
     navBarFullHeight: 0, // 整个导航栏高度
-    goodData: {}, //商品的所有文本信息
+    coupon: [], //当前商品优惠卷
+    goodData: {}, //商品的所有数据(文本信息)
     goodSwiper: [], //商品的头部轮播图
     activeIndex: 0, //商品的头部轮播图的激活序号
     productLabel: [], //商品标签
     shippingAddress: [], //收货地址
     productIntro: [], //商品的下方介绍图
     cartTabbarHeight: 0, //底部"加购/购买"栏的高度
+
     pageContainerShow: false, //假页面容器显示状态
+    pageContainer: "", // 假页面容器展示规格选择还是优惠卷领取
     hiddenTabbarBtn: 0, //是同时展示加购/购买,还是其中一个
+
     SpecAndSpecValue: [], //商品的所有规格
     SpecAndStock: [], //商品的全部规格的排列组合
     currentSpecifications: {}, // 当前商品点击了哪些选项
@@ -49,6 +53,7 @@ Component({
     showPageContainer(e) {
       this.setData({
         pageContainerShow: true,
+        pageContainer: e.currentTarget.dataset.content,
         hiddenTabbarBtn: e.currentTarget.dataset.status,
       });
     },
@@ -161,9 +166,41 @@ Component({
     },
     // 点击跳转新页面
     newPage(e) {
-      wx.navigateTo({
-        url: `/pages/${e.currentTarget.dataset.pageurl}/${e.currentTarget.dataset.pageurl}`,
+      if (e.currentTarget.dataset.method == "navigateTo")
+        wx.navigateTo({
+          url: `/pages/${e.currentTarget.dataset.pageurl}/${e.currentTarget.dataset.pageurl}`,
+        });
+      if (e.currentTarget.dataset.method == "switchTab")
+        wx.switchTab({
+          url: `/pages/${e.currentTarget.dataset.pageurl}/${e.currentTarget.dataset.pageurl}`,
+        });
+    },
+    // 领取优惠卷
+    receive(e) {
+      wx.showLoading({
+        title: "",
+        mask: true,
       });
+      app
+        .ajax({
+          path: `/coupon/${e.currentTarget.dataset.id}`,
+          method: "POST",
+        })
+        .then((res) => {
+          console.log("领取成功=>", res);
+          wx.hideLoading();
+          if (res.data.code == 200) {
+            wx.showToast({
+              title: "领取成功",
+              icon: "success",
+            });
+          } else {
+            wx.showToast({
+              title: "领取失败",
+              icon: "error",
+            });
+          }
+        });
     },
     async onLoad(options) {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
@@ -200,9 +237,7 @@ Component({
         })
         .then((res) => {
           console.log("获取到了商品数据=>", res);
-          this.setData({
-            goodData: res.data.data.productDetails,
-          });
+          this.setData({ goodData: res.data.data });
         });
       // 获取商品规格
       app
@@ -276,6 +311,7 @@ Component({
       // 查询该商品可用的优惠卷
       app.ajax({ path: `/coupon/${this.data.id}` }).then((res) => {
         console.log("当前商品可用优惠卷=>", res);
+        this.setData({ coupon: res.data.data });
       });
     },
     onReady() {},

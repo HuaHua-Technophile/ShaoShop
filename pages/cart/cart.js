@@ -280,7 +280,7 @@ Component({
         })
         .then((res) => {
           let cart = res.data.data;
-          console.log("获取到了当前用户的购物车=>", cart);
+          console.log("获取到了当前用户的购物车=>", res.data);
           if (
             cart.businessAndItemsList &&
             cart.businessAndItemsList.length > 0
