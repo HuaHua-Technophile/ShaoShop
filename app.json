@@ -8,7 +8,8 @@
     "pages/addressManagement/addressManagement",
     "pages/newAddress/newAddress",
     "pages/searchInput/searchInput",
-    "pages/settlement/settlement"
+    "pages/settlement/settlement",
+    "pages/coupon/coupon"
   ],
   "window": {
     "navigationStyle": "custom"

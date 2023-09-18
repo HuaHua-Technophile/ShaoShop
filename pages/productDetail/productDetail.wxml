@@ -54,13 +54,13 @@
         <view class="flex-grow-1 d-flex align-items-center justify-content-between opacity-50">韶关市</view>
       </view>
       <!-- 配送地址 -->
-      <view class="d-flex align-items-center" bind:tap="newPage" data-pageurl="addressManagement" data-method="navigateTo">
+      <navigator class="d-flex align-items-center" url="/pages/addressManagement/addressManagement">
         <view class="opacity-50 pe-2 border-end border-black me-2 fs-7 text-center flex-shrink-0 text-nowrap" style="width:65px">配送至</view>
         <view class="flex-grow-1 d-flex align-items-center justify-content-between">
           <view><span wx:for="{{shippingAddress}}" wx:key="index" class="{{index<shippingAddress.length-1?'me-2':''}}">{{item}}</span></view>
           <view class="iconfont icon-xiangxiajiantou fs-2 lh-1 opacity-50"></view>
         </view>
-      </view>
+      </navigator>
       <!-- 商品优惠卷 -->
       <view wx:if="{{coupon.length>0}}" class="mt-2 d-flex align-items-center" bind:tap="showPageContainer" data-content="coupon">
         <view class="opacity-50 pe-2 border-end border-black me-2 fs-7 text-center flex-shrink-0 text-nowrap" style="width:65px">可用优惠</view>
@@ -126,7 +126,7 @@
       <!-- 其他信息/客服/店铺/ -->
       <view class="flex-grow-1 d-flex align-items-center justify-content-around">
         <view class="iconfont icon-kefu3" style="font-size: 2.1rem;text-shadow: rgba(0, 0, 0, .4) 0.5px 1px 2px;"></view>
-        <view class="iconfont icon-gouwuche" style="font-size: 2.1rem;text-shadow: rgba(0, 0, 0, .4) 0.5px 1px 2px;" bind:tap="newPage" data-pageurl="cart" data-method="switchTab"></view>
+        <navigator class="iconfont icon-gouwuche" style="font-size: 2.1rem;text-shadow: rgba(0, 0, 0, .4) 0.5px 1px 2px;" url="/pages/cart/cart" open-type="switchTab"></navigator>
       </view>
       <!-- 加购/购买按钮 -->
       <view class="h-100 text-light d-flex" style="width: 470rpx;">

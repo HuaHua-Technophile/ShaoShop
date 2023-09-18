@@ -164,17 +164,6 @@ Component({
       }
       this.setData({ quantity: num });
     },
-    // 点击跳转新页面
-    newPage(e) {
-      if (e.currentTarget.dataset.method == "navigateTo")
-        wx.navigateTo({
-          url: `/pages/${e.currentTarget.dataset.pageurl}/${e.currentTarget.dataset.pageurl}`,
-        });
-      if (e.currentTarget.dataset.method == "switchTab")
-        wx.switchTab({
-          url: `/pages/${e.currentTarget.dataset.pageurl}/${e.currentTarget.dataset.pageurl}`,
-        });
-    },
     // 查询该商品可用的优惠卷
     checkCoupon() {
       app.ajax({ path: `/coupon/${this.data.id}` }).then((res) => {

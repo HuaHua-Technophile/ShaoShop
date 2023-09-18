@@ -28,11 +28,6 @@ Component({
     },
   },
   methods: {
-    toSearch() {
-      wx.navigateTo({ url: "/pages/searchInput/searchInput" });
-    },
-    goBack() {
-      wx.navigateBack();
-    },
+    
   },
 });

@@ -4,9 +4,9 @@
     <!-- 顶栏内容区域 -->
     <view class="d-flex align-items-center justify-content-center position-relative" style="font-family:YouSheBiaoTiHei;height:{{navBarHeight+10}}px;">
       <!-- 放大镜 -->
-      <view class="iconfont icon-sousuo position-absolute start-0 top-50 translate-middle-y fs-2 ms-2 d-flex align-items-center justify-content-center" style="height:100%;width:{{navBarHeight}}px" wx:if="{{ShowSearch}}" bind:tap="toSearch"></view>
+      <navigator class="iconfont icon-sousuo position-absolute start-0 top-50 translate-middle-y fs-2 ms-2 d-flex align-items-center justify-content-center" style="height:100%;width:{{navBarHeight}}px" wx:if="{{ShowSearch}}" url="/pages/searchInput/searchInput"></navigator>
       <!-- 返回按钮 -->
-      <view class="iconfont icon-fanhui position-absolute start-0 top-50 translate-middle-y fs-2 ms-2 d-flex align-items-center justify-content-center opacity-50" style="height:100%;width:{{navBarHeight}}px" wx:if="{{ShowBackBtn}}" bind:tap="goBack"></view>
+      <navigator class="iconfont icon-fanhui position-absolute start-0 top-50 translate-middle-y fs-2 ms-2 d-flex align-items-center justify-content-center opacity-50" style="height:100%;width:{{navBarHeight}}px" wx:if="{{ShowBackBtn}}" open-type="navigateBack"></navigator>
       <!-- 商城品牌形象 -->
       <view class="text-center">
         <view class="fs-2" style="line-height: 100%;"><span style="color:rgb(var(--theme-color-rgb));">韶</span>商汇</view>
