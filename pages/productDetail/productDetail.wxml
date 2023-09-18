@@ -43,9 +43,9 @@
       <!-- 商品规格选择 -->
       <view class="d-flex align-items-center mb-3" bind:tap="showPageContainer" data-status="0" data-content="specifications">
         <view class="opacity-50 pe-2 border-end border-black me-2 fs-7 text-center flex-shrink-0 text-nowrap" style="width:65px">已选规格</view>
-        <view class="flex-grow-1 d-flex align-items-center justify-content-between">
-          <view><span wx:for="{{SelectedSpecification}}" wx:key="index">{{item}}<span wx:if="{{index < SelectedSpecification.length -1}}" class="mx-1 opacity-25">|</span></span></view>
-          <view class="iconfont icon-xiangxiajiantou fs-2 lh-1 opacity-50"></view>
+        <view class="flex-grow-1 overflow-hidden d-flex align-items-center justify-content-between">
+          <view class="flex-grow-1 text-nowrap text-truncate overflow-hidden"><span wx:for="{{SelectedSpecification}}" wx:key="index">{{item}}<span wx:if="{{index < SelectedSpecification.length -1}}" class="mx-1 opacity-25">|</span></span></view>
+          <view class="flex-shrink-0 iconfont icon-xiangxiajiantou fs-2 lh-1 opacity-50"></view>
         </view>
       </view>
       <!-- 发货地 -->

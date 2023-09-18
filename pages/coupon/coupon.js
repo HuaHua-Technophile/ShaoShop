@@ -10,7 +10,7 @@ Component({
     },
     onReady() {},
     onShow() {
-      app.ajax({ path: `/coupon/${this.data.id}` }).then((res) => {
+      app.ajax({ path: `/coupon/queryUserCoupon` }).then((res) => {
         console.log("当前商品可用优惠卷=>", res);
         this.setData({ coupon: res.data.data });
       });
