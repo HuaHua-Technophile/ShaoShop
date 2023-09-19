@@ -1,6 +1,32 @@
 <view>
   <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
   <view class="vh-100 noScrollBar overflow-scroll d-flex flex-column" style="padding-top: {{navBarFullHeight+15}}px;">
-    <view class="d-flex justify-content-center fs-4 fw-bold opacity-75">我的优惠卷</view>
+    <view class="d-flex justify-content-center align-items-center">
+      <span class="opacity-75 fs-4 fw-bold">我的优惠卷</span>
+      <span class="opacity-50">（{{coupon.length}}）</span>
+    </view>
+    <!-- 优惠卷 -->
+    <view wx:if="{{coupon.length >0}}" class="flex-grow-1 overflow-scroll noScrollBar px-3 mt-3">
+      <view wx:for="{{coupon}}" wx:key="index" class="rounded-4 bg-orange d-flex bg-opacity-10 align-items-center position-relative overflow-hidden shadow" style="color: rgba(var(--theme-color-rgb),1);height: 150rpx;">
+        <!-- 卷额 -->
+        <view class="flex-shrink-0 me-2 d-flex align-items-center justify-content-center rounded-start-4 position-relative overflow-hidden h-100" style="width: 215rpx;">
+          <span class="fw-bold" style="font-family:YouSheBiaoTiHei;font-size: 40rpx;">￥</span><span style="font-family:YouSheBiaoTiHei;font-size: 70rpx;margin-left: -10rpx;">{{item.amount}}</span>
+          <!-- 卷种类 -->
+          <view class="position-absolute top-0 start-0 w-100 fs-9 text-center bg-orange rounded-4 rounded-top-0 rounded-start-0 text-light">{{item.couponName}}</view>
+        </view>
+        <!-- 卷名/有效期截止时间 -->
+        <view class="flex-grow-1">
+          <view class="fs-9 opacity-75 mb-1">{{item.createBy}}</view>
+          <view>{{item.couponDesc}}</view>
+          <view class="fs-9 mt-1 opacity-75">截止{{item.endTime[0]+item.endTime[1]+item.endTime[2]+item.endTime[3]+'年'+item.endTime[5]+item.endTime[6]+'月'+item.endTime[8]+item.endTime[9]+'日'}}</view>
+        </view>
+        <!-- 去使用 -->
+        <view class="flex-shrink-0 d-flex align-items-center px-3 fw-bold h-100" style="border-left: 5rpx dotted rgba(0, 0, 0, .4);">去使用</view>
+      </view>
+    </view>
+    <!-- 无优惠卷 -->
+    <view wx:else>暂无优惠卷</view>
+    <!-- 下方安全区域 -->
+    <view class="flex-shrink-0 safe-area-inset-bottom" style="height:calc(env(safe-area-inset-bottom) - 28rpx);"></view>
   </view>
 </view>

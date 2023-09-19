@@ -196,7 +196,7 @@
         <view class="opacity-75 mb-2"><span class="fw-bold me-1">{{goodData.store}}</span>({{coupon.length}})</view>
         <!-- 优惠卷 -->
         <view class="flex-grow-1 overflow-scroll noScrollBar">
-          <view wx:for="{{coupon}}" wx:key="index" class="rounded-4 bg-orange d-flex bg-opacity-10 align-items-center position-relative overflow-hidden" style="color: rgba(var(--theme-color-rgb),1);height: 150rpx;" bindtap="receive" data-id="{{item.id}}" data-receive="{{item.receive}}">
+          <view wx:for="{{coupon}}" wx:key="index" class="rounded-4 bg-orange d-flex bg-opacity-10 align-items-center position-relative overflow-hidden shadow" style="color: rgba(var(--theme-color-rgb),1);height: 150rpx;" bindtap="receive" data-id="{{item.id}}" data-receive="{{item.receive}}">
             <!-- 卷额 -->
             <view class="flex-shrink-0 me-2 d-flex align-items-center justify-content-center rounded-start-4 position-relative overflow-hidden h-100" style="width: 215rpx;">
               <span class="fw-bold" style="font-family:YouSheBiaoTiHei;font-size: 40rpx;">￥</span><span style="font-family:YouSheBiaoTiHei;font-size: 70rpx;margin-left: -10rpx;">{{item.amount}}</span>
