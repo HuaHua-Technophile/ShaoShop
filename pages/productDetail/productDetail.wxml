@@ -34,8 +34,11 @@
         </view>
       </view>
       <!-- 商品标签 -->
-      <view class="d-flex mt-2">
-        <view wx:for="{{productLabel}}" wx:key="index" class="rounded fs-9 me-2" style="padding:1px 4px;color:rgba(var(--theme-color-rgb),0.7);border:1px solid rgba(var(--theme-color-rgb),0.3);">{{item.labelName}}</view>
+      <view class="d-flex mt-2 flex-wrap">
+        <!-- 信息标签 -->
+        <view wx:for="{{productLabel}}" wx:key="index" class="rounded fs-9 me-2 mb-1" style="padding:1px 4px;color:rgba(var(--theme-color-rgb),0.7);border:1px solid rgba(var(--theme-color-rgb),0.3);">{{item.labelName}}</view>
+        <!-- 满减标签 -->
+        <view wx:for="{{reductionRules}}" wx:key="index" class="rounded fs-9 me-2 mb-1" style="padding:1px 4px;color:rgba(var(--theme-color-rgb),0.7);border:1px solid rgba(var(--theme-color-rgb),0.3);">满{{item.minAmount}}减{{item.discountAmount}}</view>
       </view>
     </view>
     <!-- 商品选择规格\发货地\配送地址\是否包邮\优惠卷(如果有) -->

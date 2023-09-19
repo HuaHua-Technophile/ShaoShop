@@ -14,6 +14,8 @@ Component({
     goodSwiper: [], //商品的头部轮播图
     activeIndex: 0, //商品的头部轮播图的激活序号
     productLabel: [], //商品标签
+    reductionRules: [], //满减规则
+
     shippingAddress: [], //收货地址
     productIntro: [], //商品的下方介绍图
     cartTabbarHeight: 0, //底部"加购/购买"栏的高度
@@ -311,6 +313,11 @@ Component({
           });
           console.log("获取到了商品规格的排列组合=>", this.data.SpecAndStock);
         });
+      // 获取商品所有满减信息
+      app.ajax({ path: `/reductionRule/${this.data.id}` }).then((res) => {
+        console.log("当前商品适用满减规则=>", res);
+        this.setData({ reductionRules: res.data.data });
+      });
     },
     onReady() {},
     onShow() {
