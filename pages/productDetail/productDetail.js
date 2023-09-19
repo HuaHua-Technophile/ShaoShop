@@ -112,6 +112,10 @@ Component({
     // 加入购物车/添加购物车
     addCart() {
       if (this.data.specCombId != -1 && this.data.stock > 0) {
+        wx.showLoading({
+          title: "",
+          mask: true,
+        });
         app
           .ajax({
             path: "/shoppingCart/addGoodsBySpecId",
@@ -123,6 +127,7 @@ Component({
             },
           })
           .then((res) => {
+            wx.hideLoading();
             wx.showToast({ title: "添加成功" });
             this.setData({ pageContainerShow: false });
             console.log(

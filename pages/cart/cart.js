@@ -198,6 +198,10 @@ Component({
     deleteGoods() {
       // 判断当前勾选了多少商品
       if (this.data.allSelect) {
+        wx.showLoading({
+          title: "",
+          mask: true,
+        });
         console.log("全选了,全部清空");
         app
           .ajax({
@@ -205,14 +209,19 @@ Component({
             method: "DELETE",
           })
           .then((res) => {
+            wx.hideLoading();
             console.log("删除成功=>", res);
             if (res.data.code == 200) {
               this.onShow();
-              this.setData({ allSelect: false });
+              this.setData({ allSelect: false, allPrice: null });
             }
           });
       } else {
         if (this.data.specCombIds.length > 0) {
+          wx.showLoading({
+            title: "",
+            mask: true,
+          });
           console.log("勾选了这些规格组合=>", this.data.specCombIds);
           app
             .ajax({
@@ -223,9 +232,11 @@ Component({
               method: "POST",
             })
             .then((res) => {
+              wx.hideLoading();
               console.log("删除成功=>", res);
               if (res.data.code == 200) {
                 this.onShow();
+                this.setData({ allPrice: null });
               }
             });
         } else {
