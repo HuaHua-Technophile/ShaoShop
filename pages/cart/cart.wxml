@@ -51,14 +51,16 @@
       </view>
     </view>
     <!-- 购物车为空 -->
-    <view wx:else class="flex-grow-1 opacity-50 w-100 d-flex flex-column align-items-center justify-content-center">
-      <view class="position-relative">
-        <!-- 购物车为空的补充视觉效果 -->
+    <view wx:else class="flex-grow-1 w-100 d-flex flex-column align-items-center justify-content-center">
+      <!-- <view class="position-relative">
         <view class="cart-nothing"></view>
         <view class="iconfont icon-gouwuche mb-2" style="font-size: 100px;"></view>
       </view>
       <view>购物车空空如也</view>
-      <view>来挑几件好货吧!</view>
+      <view>来挑几件好货吧!</view> -->
+      <image src="http://192.168.1.13:8080/image/shopping-cart.png" mode="aspectFit" class="ms-5 mb-5" />
+      <view class="opacity-25">购物车空空如也</view>
+      <view class="opacity-25">去挑几件好货吧!</view>
     </view>
     <!-- 底栏 -->
     <view class="flex-shrink-0 checkout-tabbar shadow-lg w-100 d-flex align-items-center justify-content-between px-3 py-2 bg-white">
@@ -69,8 +71,8 @@
       <view class="fs-7 d-flex flex-column align-items-end">
         <view><span class="opacity-75">
             <!-- 运费:￥<span class="fw-bolder">0</span>, -->合计:
-          </span><span class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1);font-family:'YouSheBiaoTiHei';">￥{{allPrice.discountedPrice}}</span></view>
-        <view class="opacity-50">已减:￥<span class="fw-bolder">{{allPrice.reductionTotalPrice}}</span>,优惠明细</view>
+          </span><span class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1);font-family:'YouSheBiaoTiHei';">￥{{allPrice.discountedPrice||0}}</span></view>
+        <view class="opacity-50">已减:￥<span class="fw-bolder">{{allPrice.reductionTotalPrice||0}}</span>,优惠明细</view>
       </view>
       <view class="flex-shrink-0 rounded-pill text-light py-2 px-4" style="background: rgba(var(--theme-color-rgb), 1);box-shadow: 0px 2px 5px rgb(194.4, 51.2, 10.4);" bind:tap="toSettlement">去结算</view>
     </view>

@@ -25,7 +25,10 @@
       </view>
     </view>
     <!-- 无优惠卷 -->
-    <view wx:else>暂无优惠卷</view>
+    <view wx:else="" class="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+      <image src="http://192.168.1.13:8080/image/coupon.png" mode="aspectFit" />
+      <view class="fs-4 opacity-25 mt-5">暂无优惠卷</view>
+    </view>
     <!-- 下方安全区域 -->
     <view class="flex-shrink-0 safe-area-inset-bottom" style="height:calc(env(safe-area-inset-bottom) - 28rpx);"></view>
   </view>
