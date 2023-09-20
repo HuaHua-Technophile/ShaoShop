@@ -23,7 +23,7 @@
           <!-- 勾选框 -->
           <radio checked="{{cart.businessAndItemsList[ii].shoppingCartItemInfoDTOList[index].checked}}" color="rgba(243,64,13,1)" bind:tap="selectThisGoods" data-out="{{ii}}" data-index="{{index}}" />
           <!-- 购物车商品图片 -->
-          <image src="{{item.specImages}}" mode="aspectFill" class="flex-shrink-0 rounded-4 ms-2 me-3 shadow-sm" style="width:170rpx !important;height:170rpx !important" bind:tap="toProductDetail" data-id="{{item.id}}" />
+          <image src="{{item.specImages}}" mode="aspectFill" class="flex-shrink-0 rounded-4 ms-2 me-3 shadow-sm" style="width:170rpx !important;height:170rpx !important" bind:tap="toProductDetail" data-id="{{item.productId}}" />
           <!-- 右侧购物车商品信息 -->
           <view class="flex-grow-1 overflow-hidden">
             <!-- 商品名 -->

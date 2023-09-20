@@ -107,6 +107,7 @@ Component({
     },
     // 点击跳转商品详情
     toProductDetail(e) {
+      console.log("跳转查看商品=>", e.currentTarget.dataset.id);
       wx.navigateTo({
         url: `/pages/productDetail/productDetail?id=${e.currentTarget.dataset.id}`,
       });
@@ -285,6 +286,7 @@ Component({
     },
     onReady() {},
     onShow() {
+      this.setData({ allSelect: false });
       app
         .ajax({
           path: "/shoppingCart/queryShopCartList",

@@ -275,7 +275,7 @@ Component({
           data: { productId: this.data.id },
         })
         .then((res) => {
-          console.log("获取到了商品标签=>", res);
+          console.log("获取到了商品标签=>", this.data.id, res);
           this.setData({
             productLabel: res.data.data,
           });
@@ -311,7 +311,7 @@ Component({
             specCombId: res.data.data[0].id, //当前规格的排列组合的id
             stock: res.data.data[0].stock, //当前规格的剩余库存
           });
-          console.log("获取到了商品规格的排列组合=>", this.data.SpecAndStock);
+          console.log("获取到了商品规格的排列组合=>", res.data.data);
         });
       // 获取商品所有满减信息
       app.ajax({ path: `/reductionRule/${this.data.id}` }).then((res) => {
@@ -321,6 +321,7 @@ Component({
     },
     onReady() {},
     onShow() {
+      console.log("当前查看的是商品=>", this.data.id);
       // 查询收货地址,并展示一个默认地址
       app.ajax({ path: "/address/queryAddress" }).then((res) => {
         console.log("获取到了收货地址=>", res);
