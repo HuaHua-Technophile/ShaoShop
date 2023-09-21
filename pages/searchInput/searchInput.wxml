@@ -1,6 +1,10 @@
 <view>
   <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
   <view class="vh-100 noScrollBar overflow-scroll d-flex flex-column" style="padding-top: {{navBarFullHeight+15}}px;">
-
+    <!-- 搜索框 -->
+    <view class="rounded-5 bg-body-secondary border border-4 d-flex align-items-center px-3 mb-2 mx-3" style="height:40px;box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25);">
+      <view class="iconfont icon-sousuo fs-4"></view>
+      <input class="flex-grow-1 text-center opacity-50" placeholder="请输入您要搜索的商品名" />
+    </view>
   </view>
 </view>

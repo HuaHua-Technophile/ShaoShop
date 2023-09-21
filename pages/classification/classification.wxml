@@ -2,10 +2,10 @@
   <custom-navbar ShowSearch="{{false}}"></custom-navbar>
   <view class="vh-100 noScrollBar overflow-scroll px-3 classification-page" style="padding-top: {{navBarFullHeight+15}}px;">
     <!-- 搜索框 -->
-    <view class="w-100 rounded-5 bg-body-secondary border border-4 d-flex align-items-center px-3 mb-2" style="height:40px;box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25);">
+    <navigator class="w-100 rounded-5 bg-body-secondary border border-4 d-flex align-items-center px-3 mb-2" style="height:40px;box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25);" url="/pages/searchInput/searchInput">
       <view class="iconfont icon-sousuo fs-4"></view>
       <view class="flex-grow-1 text-center opacity-50">请输入您要搜索的商品名</view>
-    </view>
+    </navigator>
     <!-- 分类本体 -->
     <view class="d-flex ">
       <!-- 分类左侧一级分类 -->
