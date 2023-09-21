@@ -82,7 +82,7 @@
   </view>
   <!-- 假页面容器 -->
   <page-container show="{{pageContainerShow}}" custom-style="background: transparent !important;backdrop-filter: blur(6px);display:flex;justify-content:center;">
-    <view class="w-100 pt-3 px-3 d-flex flex-column rounded-top-5 position-relative text-light" style="height: 40vh;">
+    <view class="w-100 pt-3 px-3 d-flex flex-column rounded-top-5 position-relative text-light">
       <!-- 关闭按钮 -->
       <view class="iconfont icon-guanbi-xianxing3-0 position-absolute end-0 top-0 opacity-75 me-3 z-3" style="font-size: 2.2rem;" bind:tap="hiddenPageContainerShow"></view>
       <view class="text-center fs-4 fw-bold opacity-50">金额明细</view>
@@ -90,8 +90,8 @@
       <!-- 商品原本总价 -->
       <view class="d-flex align-items-center justify-content-between opacity-75"><span class="fw-bold" style="font-size: 1.1rem;">商品总价</span><span style="font-family: YouSheBiaoTiHei;font-size: 2.2rem;">￥{{allPrice.totalPrice}}</span></view>
       <view class="d-flex align-items-center justify-content-between"><span class="fw-bold opacity-75" style="font-size: 1.1rem;">总优惠</span><span class="d-flex align-items-center" style="font-family: YouSheBiaoTiHei;font-size: 2rem;color: rgba(var(--theme-color-rgb), 1) !important;"><span style="font-size: 1.5rem;">减</span>￥{{allPrice.discountTotal}}</span></view>
-      <view class="d-flex align-items-center justify-content-between"><span class="fw-bold opacity-50">店铺满减</span><span class="d-flex align-items-center opacity-75" style="font-family: YouSheBiaoTiHei;font-size: 1.6rem;color: rgba(var(--theme-color-rgb), 1) !important;">￥{{allPrice.reductionTotalPrice}}</span></view>
-      <view class="d-flex align-items-center justify-content-between"><span class="fw-bold opacity-50">商品优惠</span><span class="d-flex align-items-center opacity-75" style="font-family: YouSheBiaoTiHei;font-size: 1.6rem;color: rgba(var(--theme-color-rgb), 1) !important;">￥{{allPrice.couponTotalPrice}}</span></view>
+      <view class="d-flex align-items-center justify-content-between"><span class="opacity-50">店铺满减</span><span class="d-flex align-items-center opacity-75" style="font-family: YouSheBiaoTiHei;font-size: 1.5rem;color: rgba(var(--theme-color-rgb), 1) !important;">￥{{allPrice.reductionTotalPrice}}</span></view>
+      <view class="d-flex align-items-center justify-content-between"><span class="opacity-50">商品优惠</span><span class="d-flex align-items-center opacity-75" style="font-family: YouSheBiaoTiHei;font-size: 1.5rem;color: rgba(var(--theme-color-rgb), 1) !important;">￥{{allPrice.couponTotalPrice}}</span></view>
       <view class="d-flex align-items-center justify-content-between opacity-75"><span class="fw-bold" style="font-size: 1.1rem;">合计</span><span style="font-family: YouSheBiaoTiHei;font-size: 2.2rem;">￥{{allPrice.discountedPrice}}</span></view>
     </view>
   </page-container>

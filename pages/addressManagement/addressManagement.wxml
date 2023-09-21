@@ -13,7 +13,7 @@
           <!-- 收货人姓名/电话 -->
           <view class="opacity-50 mt-1 ">
             <span class="fw-bold me-2">{{item.name}}</span>
-            {{item.mobile[0]+item.mobile[1]+item.mobile[2]+item.mobile[3]+"****"+item.mobile[7]+item.mobile[8]+item.mobile[9]+item.mobile[10]}}
+            {{item.mobile[0]+item.mobile[1]+item.mobile[2]+"****"+item.mobile[7]+item.mobile[8]+item.mobile[9]+item.mobile[10]}}
           </view>
         </view>
         <!-- 右侧编辑图标/多选 -->

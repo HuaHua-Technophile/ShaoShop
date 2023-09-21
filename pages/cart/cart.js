@@ -252,23 +252,18 @@ Component({
     // 点击结算
     toSettlement() {
       if (this.data.specCombIds.length > 0) {
-        let productId = [];
-        this.data.cart.businessAndItemsList.forEach((i) => {
-          if (i.checked) productId.push(i.id);
+        wx.navigateTo({
+          url: `/pages/settlement/settlement?specCombIds=${JSON.stringify(
+            this.data.specCombIds
+          )}`,
         });
-        console.log(
-          "准备结算，传productId和specCombIds两个数组=>",
-          productId,
-          this.data.specCombIds
-        );
-        app
+        /* app
           .ajax({
-            path: "/shoppingCart/getSettlement",
-            data: { productId: productId, specCombIds: this.data.specCombIds },
+            path: `/shoppingCart/getSettlement/${this.data.specCombIds}`,
           })
           .then((res) => {
             console.log("进入结算=>", res);
-          });
+          }); */
       } else {
         wx.showToast({
           title: "您未勾选商品",

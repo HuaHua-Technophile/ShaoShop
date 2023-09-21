@@ -16,7 +16,7 @@ Component({
     productLabel: [], //商品标签
     reductionRules: [], //满减规则
 
-    shippingAddress: [], //收货地址
+    shoppingAddress: [], //收货地址
     productIntro: [], //商品的下方介绍图
     cartTabbarHeight: 0, //底部"加购/购买"栏的高度
 
@@ -333,20 +333,20 @@ Component({
       // 查询收货地址,并展示一个默认地址
       app.ajax({ path: "/address/queryAddress" }).then((res) => {
         console.log("获取到了收货地址=>", res);
-        let shippingAddress = [];
+        let shoppingAddress = [];
         res.data.data.forEach((i) => {
           if (i.isDefault) {
-            shippingAddress[0] = i.areaName;
-            shippingAddress[1] = i.cityName;
-            shippingAddress[2] = i.provinceName;
+            shoppingAddress[0] = i.areaName;
+            shoppingAddress[1] = i.cityName;
+            shoppingAddress[2] = i.provinceName;
           }
         });
-        if (shippingAddress.length == 0) {
-          shippingAddress[0] = res.data.data[0].areaName;
-          shippingAddress[1] = res.data.data[0].cityName;
-          shippingAddress[2] = res.data.data[0].provinceName;
+        if (shoppingAddress.length == 0) {
+          shoppingAddress[0] = res.data.data[0].areaName;
+          shoppingAddress[1] = res.data.data[0].cityName;
+          shoppingAddress[2] = res.data.data[0].provinceName;
         }
-        this.setData({ shippingAddress });
+        this.setData({ shoppingAddress });
       });
       this.checkCoupon();
     },

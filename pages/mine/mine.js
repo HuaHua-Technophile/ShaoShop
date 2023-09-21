@@ -5,6 +5,9 @@ Page({
     userInfo: null, //用户信息
     couponQuantity: 0, //优惠卷数量
   },
+  chooseAvatar(e) {
+    console.log("点击选择了头像=>", e);
+  },
   onLoad(options) {
     this.setData({
       navBarFullHeight: app.globalData.navBarFullHeight,

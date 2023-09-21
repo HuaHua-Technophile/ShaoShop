@@ -3,8 +3,8 @@
   <view class="vh-100 noScrollBar overflow-scroll" style="padding-top: {{navBarFullHeight+15}}px;">
     <!-- 用户信息(头像,昵称,id) -->
     <view class="rounded-4 d-flex align-items-center py-3 px-4 mx-3 bg-body-tertiary shadow" style="height: calc(80px + 2rem);">
-      <!-- 用户头像 -->
-      <button open-type="chooseAvatar" class="rounded-4 shadow-sm ms-0 me-4 p-0 bg-body h-100" style="width: 80px;">
+      <!-- 用户头像(点击修改) -->
+      <button open-type="chooseAvatar" bindchooseavatar="chooseAvatar" class="rounded-4 shadow-sm ms-0 me-4 p-0 bg-body h-100" style="width: 80px;">
         <image src="{{userInfo.avatarUrl}}" mode="aspectFill" class="w-100 h-100" />
       </button>
       <!-- 用户信息 -->

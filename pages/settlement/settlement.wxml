@@ -1,6 +1,75 @@
 <view>
   <custom-navbar ShowSearch="{{false}}" ShowBackBtn="{{true}}"></custom-navbar>
   <view class="vh-100 noScrollBar overflow-scroll d-flex flex-column" style="padding-top: {{navBarFullHeight+15}}px;">
-
+    <!-- 内容区域 -->
+    <view class="flex-grow-1 overflow-hidden">
+      <!-- 确认订单 -->
+      <!-- <view class="opacity-75 fw-bold fs-3 text-center">确认订单</view> -->
+      <!-- 配送地址选择 -->
+      <navigator class="shadow bg-white mx-3 mb-3 rounded-4 overflow-hidden position-relative" url="/pages/addressManagement/addressManagement">
+        <view class="text-center bg-Solitude py-1 text-dark text-opacity-50">订单配送至↓<span class="ms-2 fs-8">(点击修改)</span></view>
+        <view class="d-flex align-items-center p-3 pt-2">
+          <view class="flex-grow-1">
+            <!-- 二级详细地址 -->
+            <view class="fs-5 fw-bold mt-1 opacity-75">{{shoppingAddress.address}}</view>
+            <!-- 收货人姓名/电话 -->
+            <view class="opacity-50 mt-1 ">
+              <span class="fw-bold me-2">{{shoppingAddress.name}}</span>
+              {{shoppingAddress.mobile[0]+shoppingAddress.mobile[1]+shoppingAddress.mobile[2]+"****"+shoppingAddress.mobile[7]+shoppingAddress.mobile[8]+shoppingAddress.mobile[9]+shoppingAddress.mobile[10]}}
+            </view>
+          </view>
+          <!-- 编辑 -->
+          <view class="flex-shrink-0 iconfont icon-bianji3 opacity-25 me-1" style="font-size: 40rpx;" bind:tap="editThis" data-index="{{index}}"></view>
+        </view>
+      </navigator>
+      <!-- 商品列表 -->
+      <view class="flex-grow-1">
+        <!-- 最外层商家 -->
+        <view wx:for="{{orderConfirmDTOList}}" wx:for-item="i" wx:for-index="ii" wx:key="ii" class="px-3 pt-3 overflow-hidden rounded-4 m-3 shadow">
+          <!-- 店家名称 -->
+          <view class="d-flex mb-4"><span class="fw-bold opacity-75 me-1 lh-1">{{i.businessName}}</span>
+            <view class="iconfont icon-youjiantou lh-1 opacity-50" style="margin-bottom: -3rpx;"></view>
+          </view>
+          <!-- 每个商品信息 -->
+          <view wx:for="{{i.orderConfirmShoppingCartItemInfoVoList}}" wx:key="index" class="d-flex align-items-center mb-4">
+            <!-- 购物车商品图片 -->
+            <image src="{{item.specImages}}" mode="aspectFill" class="flex-shrink-0 rounded-4 ms-2 me-3 shadow-sm" style="width:170rpx !important;height:170rpx !important" bind:tap="toProductDetail" data-id="{{item.productId}}" />
+            <!-- 右侧购物车商品信息 -->
+            <view class="flex-grow-1 overflow-hidden">
+              <!-- 商品名 -->
+              <view>{{item.productName}}</view>
+              <!-- 商品当前规格/限制一行 -->
+              <view class="mt-1 fs-7 py-1 px-2 rounded bg-body-secondary d-flex align-items-center">
+                <view class="flex-grow-1 text-truncate">
+                  <span wx:for="{{item.productSpec}}" wx:for-item="j" wx:for-index="indexj" wx:key="indexj" class="opacity-75">{{j}}<span wx:if="{{indexj < item.productSpec.length -1}}" class="mx-1 opacity-25">|</span></span>
+                </view>
+                <view class="flex-shrink-0 ms-1 iconfont icon-youjiantou opacity-50"></view>
+              </view>
+              <!-- 单价和加减数量按钮 -->
+              <view class="mt-1 d-flex justify-content-between align-items-center">
+                <!-- 单价 -->
+                <view class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1) !important;font-family:'YouSheBiaoTiHei';">￥{{item.price}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 底栏 -->
+    <view class="flex-shrink-0">
+      <!-- 底栏 -->
+      <view class="checkout-tabbar w-100 d-flex align-items-center justify-content-end px-3 py-2">
+        <!-- 中间预估价格 -->
+        <view class="fs-7 d-flex flex-column align-items-end" bind:tap="priceBreakdown">
+          <view><span class="opacity-75">
+              <!-- 运费:￥<span class="fw-bolder">0</span>, -->合计:
+            </span><span class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1) !important;font-family:'YouSheBiaoTiHei';">￥{{allPrice.discountedPrice||0}}</span></view>
+          <view class="opacity-50">已减:￥<span class="fw-bolder">{{allPrice.discountTotal||0}}</span></view>
+        </view>
+        <!-- 右侧结算按钮 -->
+        <view class="flex-shrink-0 rounded-pill text-light py-2 px-4 ms-4" style="background: rgba(var(--theme-color-rgb), 1);box-shadow: 0px 2px 5px rgb(194.4, 51.2, 10.4);" bind:tap="toSettlement">确认订单</view>
+      </view>
+      <view class="safe-area-inset-bottom" style="height:calc(env(safe-area-inset-bottom) - 28rpx);"></view>
+    </view>
   </view>
 </view>
