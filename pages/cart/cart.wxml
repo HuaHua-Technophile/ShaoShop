@@ -38,7 +38,7 @@
             <!-- 单价和加减数量按钮 -->
             <view class="mt-1 d-flex justify-content-between align-items-center">
               <!-- 单价 -->
-              <view class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1);font-family:'YouSheBiaoTiHei';">￥{{item.price}}</view>
+              <view class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1) !important;font-family:'YouSheBiaoTiHei';">￥{{item.price}}</view>
               <!-- 商品数量加减 -->
               <view class="border border-secondary-subtle shadow-sm rounded-pill d-inline-flex justify-content-center align-items-center fs-8 opacity-50" style="height:45rpx;padding:0 18rpx;">
                 <view class="iconfont icon-function_minus" bind:tap="changeGoodsNum" data-calculate="minus" data-index="{{index}}"></view>
@@ -64,17 +64,35 @@
     </view>
     <!-- 底栏 -->
     <view class="flex-shrink-0 checkout-tabbar shadow-lg w-100 d-flex align-items-center justify-content-between px-3 py-2 bg-white">
+      <!-- 左侧全选 -->
       <view class="flex-shrink-0 d-flex align-items-center" bind:tap="allSelectChange">
         <radio checked="{{allSelect}}" color="rgba(243,64,13,1)" disabled="{{!cart.businessAndItemsList||cart.businessAndItemsList.length==0}}" />
         <view>全选</view>
       </view>
-      <view class="fs-7 d-flex flex-column align-items-end">
+      <!-- 中间预估价格 -->
+      <view class="fs-7 d-flex flex-column align-items-end" bind:tap="priceBreakdown">
         <view><span class="opacity-75">
             <!-- 运费:￥<span class="fw-bolder">0</span>, -->合计:
-          </span><span class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1);font-family:'YouSheBiaoTiHei';">￥{{allPrice.discountedPrice||0}}</span></view>
-        <view class="opacity-50">已减:￥<span class="fw-bolder">{{allPrice.reductionTotalPrice||0}}</span>,优惠明细</view>
+          </span><span class="fs-4 opacity-100" style="color: rgba(var(--theme-color-rgb), 1) !important;font-family:'YouSheBiaoTiHei';">￥{{allPrice.discountedPrice||0}}</span></view>
+        <view class="opacity-50">已减:￥<span class="fw-bolder">{{allPrice.discountTotal||0}}</span>,优惠明细<span class="iconfont icon-xiangshang fs-9"></span></view>
       </view>
+      <!-- 右侧结算按钮 -->
       <view class="flex-shrink-0 rounded-pill text-light py-2 px-4" style="background: rgba(var(--theme-color-rgb), 1);box-shadow: 0px 2px 5px rgb(194.4, 51.2, 10.4);" bind:tap="toSettlement">去结算</view>
     </view>
   </view>
+  <!-- 假页面容器 -->
+  <page-container show="{{pageContainerShow}}" custom-style="background: transparent !important;backdrop-filter: blur(6px);display:flex;justify-content:center;">
+    <view class="w-100 pt-3 px-3 d-flex flex-column rounded-top-5 position-relative text-light" style="height: 40vh;">
+      <!-- 关闭按钮 -->
+      <view class="iconfont icon-guanbi-xianxing3-0 position-absolute end-0 top-0 opacity-75 me-3 z-3" style="font-size: 2.2rem;" bind:tap="hiddenPageContainerShow"></view>
+      <view class="text-center fs-4 fw-bold opacity-50">金额明细</view>
+      <view class="mt-2 text-center fs-7 opacity-25">实际优惠数额以结算页面为主</view>
+      <!-- 商品原本总价 -->
+      <view class="d-flex align-items-center justify-content-between opacity-75"><span class="fw-bold" style="font-size: 1.1rem;">商品总价</span><span style="font-family: YouSheBiaoTiHei;font-size: 2.2rem;">￥{{allPrice.totalPrice}}</span></view>
+      <view class="d-flex align-items-center justify-content-between"><span class="fw-bold opacity-75" style="font-size: 1.1rem;">总优惠</span><span class="d-flex align-items-center" style="font-family: YouSheBiaoTiHei;font-size: 2rem;color: rgba(var(--theme-color-rgb), 1) !important;"><span style="font-size: 1.5rem;">减</span>￥{{allPrice.discountTotal}}</span></view>
+      <view class="d-flex align-items-center justify-content-between"><span class="fw-bold opacity-50">店铺满减</span><span class="d-flex align-items-center opacity-75" style="font-family: YouSheBiaoTiHei;font-size: 1.6rem;color: rgba(var(--theme-color-rgb), 1) !important;">￥{{allPrice.reductionTotalPrice}}</span></view>
+      <view class="d-flex align-items-center justify-content-between"><span class="fw-bold opacity-50">商品优惠</span><span class="d-flex align-items-center opacity-75" style="font-family: YouSheBiaoTiHei;font-size: 1.6rem;color: rgba(var(--theme-color-rgb), 1) !important;">￥{{allPrice.couponTotalPrice}}</span></view>
+      <view class="d-flex align-items-center justify-content-between opacity-75"><span class="fw-bold" style="font-size: 1.1rem;">合计</span><span style="font-family: YouSheBiaoTiHei;font-size: 2.2rem;">￥{{allPrice.discountedPrice}}</span></view>
+    </view>
+  </page-container>
 </view>

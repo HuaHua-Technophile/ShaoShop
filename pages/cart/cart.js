@@ -8,9 +8,10 @@ Component({
     goodsNum: 0, //一共有多少商品
     specCombIds: [], //已勾选的组合id
     allSelect: false, //是否购物车全选
-    allPrice: 0, //所有商品的价格
+    allPrice: null, //所有商品的价格
     checkoutTabbarHeight: 0, //底部"结算"栏高度
     productSpecList: [], // 每个商品规格排列组合的展示
+    pageContainerShow: false, //假页面容器的显示状态控制
   },
   /* computed: {
     SelectedSpecification(data) {
@@ -255,14 +256,18 @@ Component({
         this.data.cart.businessAndItemsList.forEach((i) => {
           if (i.checked) productId.push(i.id);
         });
-        console.log("准备结算=>", productId, this.data.specCombIds);
+        console.log(
+          "准备结算，传productId和specCombIds两个数组=>",
+          productId,
+          this.data.specCombIds
+        );
         app
           .ajax({
             path: "/shoppingCart/getSettlement",
             data: { productId: productId, specCombIds: this.data.specCombIds },
           })
           .then((res) => {
-            console.log("点击进入结算=>", res);
+            console.log("进入结算=>", res);
           });
       } else {
         wx.showToast({
@@ -270,6 +275,15 @@ Component({
           icon: "error",
         });
       }
+    },
+    // 点击展示价格计算明细
+    priceBreakdown() {
+      if (this.data.allPrice && this.data.allPrice.totalPrice != 0)
+        this.setData({ pageContainerShow: true });
+    },
+    // 点击隐藏页面假容器
+    hiddenPageContainerShow() {
+      this.setData({ pageContainerShow: false });
     },
     onLoad(options) {
       this.setData({ navBarFullHeight: app.globalData.navBarFullHeight });
