@@ -234,16 +234,7 @@ Component({
             }),
           });
         });
-      // 获取商品详情文本
-      app
-        .ajax({
-          path: "/product/queryProductDetail",
-          data: { productId: this.data.id },
-        })
-        .then((res) => {
-          console.log("获取到了商品数据=>", res);
-          this.setData({ goodData: res.data.data });
-        });
+
       // 获取商品规格
       app
         .ajax({
@@ -313,11 +304,28 @@ Component({
           });
           console.log("获取到了商品规格的排列组合=>", res.data.data);
         });
+
+      // 获取商品数据详情文本
+      await app
+        .ajax({
+          path: "/product/queryProductDetail",
+          data: { productId: this.data.id },
+        })
+        .then((res) => {
+          console.log("获取到了商品数据=>", res);
+          this.setData({ goodData: res.data.data });
+        });
       // 获取商品所有满减信息
-      app.ajax({ path: `/reductionRule/${this.data.id}` }).then((res) => {
-        console.log("当前商品适用满减规则=>", res);
-        this.setData({ reductionRules: res.data.data });
-      });
+      app
+        .ajax({ path: `/reductionRule/${this.data.goodData.businessId}` })
+        .then((res) => {
+          console.log(
+            "当前商品适用满减规则=>",
+            res,
+            this.data.goodData.businessId
+          );
+          this.setData({ reductionRules: res.data.data });
+        });
     },
     onReady() {},
     onShow() {
